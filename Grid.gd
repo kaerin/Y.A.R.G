@@ -44,11 +44,10 @@ func get_new_position(child, direction):
 		new_pos = map_to_world(new_pos) + half_tile_size
 		return new_pos
 		
-func set_cell_kill(child, direction):
+func set_kill_me(child):
 	var cur_pos = world_to_map(child.get_position())
-	var new_pos = cur_pos + direction
-	grid[new_pos.x][new_pos.y].queue_free()	
-	grid[new_pos.x][new_pos.y] = null
+	grid[cur_pos.x][cur_pos.y].queue_free()	
+	grid[cur_pos.x][cur_pos.y] = null
 
 
 

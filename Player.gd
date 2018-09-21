@@ -33,15 +33,20 @@ func _process(delta):
 		elif Input.is_action_just_pressed("ui_down_right"):
 			direction = RIGHT + DOWN
 		if not direction == Vector2():
+			
 			#check target cell contents in gridmap 
 			var grid_contents = grid_map.get_cell_contents(self, direction)
 			print(grid_contents)
+			
 			#if empty move to position
 			if grid_contents == null: 
 				position = grid_map.get_new_position(self, direction)
-			#else kill contents of cell
+				
+			#else set contact with object
 			else:
-				grid_map.set_cell_kill(self, direction)
+				#onlz basic damage transfer test, not final.
+				var damage = 2
+				grid_contents.set_contact(damage)
 
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.
