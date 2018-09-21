@@ -4,18 +4,15 @@ extends Node
 # var a = 2
 # var b = "textvar"
 
-onready var dictionaries = get_tree().get_root().get_node("Dictionaries/Items")
-onready var weapon = get_parent().get_parent().get_parent().get_node("Dictionaries/Items")
+onready var dic_items = get_parent().get_parent().get_parent().get_node("Dictionaries/Items")
 
 var cur_weapon
 
 
 
 func _ready():
-	cur_weapon = weapon.weapon[0]
+	cur_weapon = dic_items.weapon[dic_items.WEAPON.DAGGER]
 	pass
-
-
 
 
 func get_damage():
@@ -25,11 +22,11 @@ func get_damage():
 
 
 
-#TODO temporary function for testing chaging weapons
+#TODO temporary basic function for testing chaging weapons
 func set_change_weapon():
 	if cur_weapon.base_name == "dagger":
-		cur_weapon = weapon.weapon[0]
+		cur_weapon = dic_items.weapon[dic_items.WEAPON.SWORD]
 		print('changed to sword')
 	else:
-		cur_weapon = weapon.weapon[1]
+		cur_weapon = dic_items.weapon[dic_items.WEAPON.DAGGER]
 		print('changed to dagger')

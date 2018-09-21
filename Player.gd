@@ -6,7 +6,7 @@ const LEFT 	= Vector2(-1, 0)
 const RIGHT	= Vector2(1 , 0)
 
 onready var grid_map = get_parent()
-onready var dictionaries = get_tree().get_root().get_node("Dictionaries/Items")
+onready var dic_items = get_tree().get_root().get_node("Dictionaries/Items")
 onready var inventory = get_node("Inventory")
 
 
@@ -45,6 +45,7 @@ func _process(delta):
 			direction = RIGHT + DOWN
 		if not direction == Vector2():
 			
+			#check grid map array bounds
 			if grid_map.is_target_inside_grid(self, direction):
 				
 				#check target cell contents in gridmap 
@@ -55,7 +56,10 @@ func _process(delta):
 				if grid_contents == null: 
 					position = grid_map.get_new_position(self, direction)
 					
-				#else set contact with object
+				#else set contact/damage with object
 				else:
 					var damage = inventory.get_damage()
 					grid_contents.set_contact(damage)
+					
+				grid_map.set_enemy_move()
+		direction = Vector2()
