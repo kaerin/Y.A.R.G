@@ -27,37 +27,38 @@ func set_contact(damage):
 		
 #after player moves all enemies are triggered to move from Grid_Map		
 func set_move():
-	var temp = randi() % 9 + 1
-	if temp == 1:
-		direction = DOWN + LEFT
-	elif temp == 2:
-		direction = LEFT
-	elif temp == 3:
-		direction = UP + LEFT
-	elif temp == 4:
-		direction = UP
-	elif temp == 5:
-		direction = UP + RIGHT
-	elif temp == 6:
-		direction = RIGHT
-	elif temp == 7:
-		direction = DOWN + RIGHT
-	elif temp == 8:
-		direction = DOWN
-	elif temp == 9:
-		direction = Vector2()
-		
-	if not direction == Vector2():
-		
-			#check grid map array bounds
-			if grid_map.is_target_inside_grid(self, direction):
-				
-				#check target cell contents in gridmap 
-				var grid_contents = grid_map.get_cell_contents(self, direction)
-				
-				#if empty move to position
-				if grid_contents == null: 
-					position = grid_map.get_new_position(self, direction)		
+	if not is_queued_for_deletion(): #necessary, otherwise grid is updated with new position before being deleted
+		var temp = randi() % 9 + 1
+		if temp == 1:
+			direction = DOWN + LEFT
+		elif temp == 2:
+			direction = LEFT
+		elif temp == 3:
+			direction = UP + LEFT
+		elif temp == 4:
+			direction = UP
+		elif temp == 5:
+			direction = UP + RIGHT
+		elif temp == 6:
+			direction = RIGHT
+		elif temp == 7:
+			direction = DOWN + RIGHT
+		elif temp == 8:
+			direction = DOWN
+		elif temp == 9:
+			direction = Vector2()
+			
+		if not direction == Vector2():
+			
+				#check grid map array bounds
+				if grid_map.is_target_inside_grid(self, direction):
+					
+					#check target cell contents in gridmap 
+					var grid_contents = grid_map.get_cell_contents(self, direction)
+					
+					#if empty move to position
+					if grid_contents == null: 
+						position = grid_map.get_new_position(self, direction)		
 
 		
 	

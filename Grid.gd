@@ -66,15 +66,15 @@ func set_kill_me(child):
 			
 
 
-
+#After player action, trigger all enemies to move
 func set_enemy_move():
 	var children = get_children()
 	var children_enemy = []
 	
-	for enemy in children:
-		if enemy.is_in_group("Enemy"):
-			children_enemy.append(enemy)
+	for child in children:
+		if child.is_in_group("Enemy"):
+			children_enemy.append(child)
 			
-	for enemy in children_enemy:
-		enemy.set_move()
+	for child in children_enemy:
+		child.set_move()
 	
