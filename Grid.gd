@@ -49,7 +49,14 @@ func set_kill_me(child):
 	grid[cur_pos.x][cur_pos.y].queue_free()	
 	grid[cur_pos.x][cur_pos.y] = null
 
-
+func is_target_inside_grid(child, direction):
+	var cur_pos = world_to_map(child.get_position())
+	var new_pos = cur_pos + direction
+	if new_pos.x < grid_size.x and new_pos.x >= 0:
+		if new_pos.y < grid_size.y and new_pos.y >= 0:
+			return true
+			
+		
 
 
 #func _process(delta):

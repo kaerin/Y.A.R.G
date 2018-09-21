@@ -45,15 +45,17 @@ func _process(delta):
 			direction = RIGHT + DOWN
 		if not direction == Vector2():
 			
-			#check target cell contents in gridmap 
-			var grid_contents = grid_map.get_cell_contents(self, direction)
-			print(grid_contents)
-			
-			#if empty move to position
-			if grid_contents == null: 
-				position = grid_map.get_new_position(self, direction)
+			if grid_map.is_target_inside_grid(self, direction):
 				
-			#else set contact with object
-			else:
-				var damage = inventory.get_damage()
-				grid_contents.set_contact(damage)
+				#check target cell contents in gridmap 
+				var grid_contents = grid_map.get_cell_contents(self, direction)
+				print(grid_contents)
+				
+				#if empty move to position
+				if grid_contents == null: 
+					position = grid_map.get_new_position(self, direction)
+					
+				#else set contact with object
+				else:
+					var damage = inventory.get_damage()
+					grid_contents.set_contact(damage)
