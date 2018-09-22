@@ -50,15 +50,12 @@ func set_move():
 			
 		if not direction == Vector2():
 			
-				#check grid map array bounds
-				if grid_map.is_target_inside_grid(self, direction):
-					
-					#check target cell contents in gridmap 
-					var grid_contents = grid_map.get_cell_contents(self, direction)
-					
+			if grid_map.is_target_grid_valid(self,direction):		
+				#check target cell contents in gridmap 
+				var grid_contents = grid_map.has_target_grid_obsticle(self, direction)
 					#if empty move to position
-					if grid_contents == null: 
-						position = grid_map.get_new_position(self, direction)		
+				if grid_contents == null: 
+					position = grid_map.set_new_grid_pos(self, direction)
 
 		
 	

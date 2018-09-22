@@ -44,22 +44,18 @@ func _process(delta):
 		elif Input.is_action_just_pressed("ui_down_right"):
 			direction = RIGHT + DOWN
 		if not direction == Vector2():
-			
-			#check grid map array bounds
-			if grid_map.is_target_inside_grid(self, direction):
-				
+
+			#Check target grid point is valid
+			if grid_map.is_target_grid_valid(self,direction):		
 				#check target cell contents in gridmap 
-				var grid_contents = grid_map.get_cell_contents(self, direction)
-				print(grid_contents)
-				
-				#if empty move to position
+				var grid_contents = grid_map.has_target_grid_obsticle(self, direction)
+				#if empty move to player position
 				if grid_contents == null: 
-					position = grid_map.get_new_position(self, direction)
-					
-				#else set contact/damage with object
+					position = grid_map.set_new_grid_pos(self, direction)
+				#TODO else set contact/damage with object
 				else:
 					var damage = inventory.get_damage()
 					grid_contents.set_contact(damage)
-					
+				#Only trigger turn if movement was valid	
 				grid_map.set_enemy_move()
 		direction = Vector2()

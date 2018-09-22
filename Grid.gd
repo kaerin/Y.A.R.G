@@ -6,6 +6,8 @@ var half_tile_size = tile_size / 2
 var grid_size = Vector2(10,10)
 var grid = []
 
+const INVALID = -999
+
 onready var object = preload("res://testobject.tscn")
 
 func _ready():
@@ -33,24 +35,21 @@ func _ready():
 
 
 
-func is_target_inside_grid(child, direction):
-	var cur_pos = world_to_map(child.get_position())
-	var new_pos = cur_pos + direction
+func is_target_grid_valid(child, direction):
+	var new_pos = world_to_map(child.get_position()) + direction
 	if new_pos.x < grid_size.x and new_pos.x >= 0:
 		if new_pos.y < grid_size.y and new_pos.y >= 0:
 			return true
 	
-func get_cell_contents(child, direction):
-	var cell = world_to_map(child.position) + direction
-	
-	if cell.x < grid_size.x and cell.x >= 0:
-		if cell.y < grid_size.y and cell.y >= 0:
-			return grid[cell.x][cell.y]
-
-func get_new_position(child, direction):
+func has_target_grid_obsticle(child, direction):
+		var new_pos = world_to_map(child.position) + direction
+		return grid[new_pos.x][new_pos.y]
+		
+func set_new_grid_pos(child, direction):
+		#delete old positon
 		var cur_pos = world_to_map(child.get_position())
 		grid[cur_pos.x][cur_pos.y] = null
-
+		#set new positon
 		var new_pos = cur_pos + direction
 		grid[new_pos.x][new_pos.y] = child
 		new_pos = map_to_world(new_pos) + half_tile_size

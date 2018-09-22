@@ -6,7 +6,7 @@
 [ext_resource path="res://icon.png" type="Texture" id=4]
 [ext_resource path="res://Inventory/Inventory.gd" type="Script" id=5]
 
-[node name="BaseNode" type="Node2D" index="0"]
+[node name="BaseNode" type="Node"]
 
 [node name="Dictionaries" type="Node" parent="." index="0"]
 
@@ -34,6 +34,7 @@ occluder_light_mask = 1
 format = 1
 tile_data = PoolIntArray(  )
 script = ExtResource( 2 )
+_sections_unfolded = [ "Cell" ]
 
 [node name="Player" type="KinematicBody2D" parent="Grid" index="0"]
 
