@@ -1,4 +1,4 @@
-extends Node2D
+extends KinematicBody2D
 
 # class member variables go here, for example:
 # var a = 2
@@ -9,12 +9,17 @@ const DOWN 	= Vector2(0 , 1)
 const LEFT 	= Vector2(-1, 0)
 const RIGHT	= Vector2(1 , 0)
 
-var hp = 5
+var hp = 0
 var direction = Vector2()
 
 onready var grid_map = get_parent()
+onready var dic_enemies = get_parent().get_parent().get_node("Dictionaries/Enemies").enemies
 
 func _ready():
+	#TODO random instancing of enemies in dictionary
+	var rnd_enemy = randi() % dic_enemies.size()
+	hp = randi() % (dic_enemies[rnd_enemy].max_hp - dic_enemies[rnd_enemy].min_hp) + dic_enemies[rnd_enemy].min_hp
+	$Sprite/Label.text = dic_enemies[rnd_enemy].base_name
 	pass
 	
 #expand for interaction between player and object
@@ -50,11 +55,11 @@ func set_move():
 			
 		if not direction == Vector2():
 			
-			if grid_map.is_target_grid_valid(self,direction):		
+			if grid_map.is_target_grid_valid(self,direction):
 				#check target cell contents in gridmap 
-				var grid_contents = grid_map.has_target_grid_obsticle(self, direction)
+				var obsticle = grid_map.has_target_grid_obsticle(self, direction)
 					#if empty move to position
-				if grid_contents == null: 
+				if obsticle == null: 
 					position = grid_map.set_new_grid_pos(self, direction)
 
 		

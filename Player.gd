@@ -48,14 +48,18 @@ func _process(delta):
 			#Check target grid point is valid
 			if grid_map.is_target_grid_valid(self,direction):		
 				#check target cell contents in gridmap 
-				var grid_contents = grid_map.has_target_grid_obsticle(self, direction)
+				var obsticle = grid_map.has_target_grid_obsticle(self, direction)
 				#if empty move to player position
-				if grid_contents == null: 
+				if obsticle == null: 
 					position = grid_map.set_new_grid_pos(self, direction)
 				#TODO else set contact/damage with object
 				else:
 					var damage = inventory.get_damage()
-					grid_contents.set_contact(damage)
+					obsticle.set_contact(damage)
 				#Only trigger turn if movement was valid	
 				grid_map.set_enemy_move()
 		direction = Vector2()
+
+#DEL ME
+func set_contact(damage):
+	pass
