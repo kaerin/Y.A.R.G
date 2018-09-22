@@ -3,24 +3,38 @@ extends TileMap
 var tile_size = get_cell_size()
 var half_tile_size = tile_size / 2
 
-var grid_size = Vector2(3,3)
+var grid_size = Vector2(8,8)
 var grid = []
 
 const INVALID = -999
 
-onready var object = preload("res://testobject.tscn")
+onready var enemy = preload("res://Enemies/Enemy.tscn")
+onready var item  = preload("res://Items/Item.tscn")
 
 func _ready():
 	for x in range (grid_size.x):
 		grid.append([])
 		for y in range (grid_size.y):
 			grid[x].append([])
-			print (grid)
 
 
-	#TODO random object placement for testing
+	#TEMP add random enemies for testing
 	var positions = []
 	randomize()
+	
+	for n in range (3):
+		var grid_pos = Vector2(randi() % int(grid_size.x), randi() % int(grid_size.y))
+		if not grid_pos in positions:
+			positions.append(grid_pos)
+	
+	for pos in positions:
+		var new_object = enemy.instance()
+		new_object.set_position(map_to_world(pos) + half_tile_size)
+		grid[pos.x][pos.y].append(new_object)
+		add_child(new_object)
+
+	#TEMP add random objects for testing
+	positions.clear()
 	
 	for n in range (1):
 		var grid_pos = Vector2(randi() % int(grid_size.x), randi() % int(grid_size.y))
@@ -28,10 +42,11 @@ func _ready():
 			positions.append(grid_pos)
 	
 	for pos in positions:
-		var new_object = object.instance()
+		var new_object = item.instance()
 		new_object.set_position(map_to_world(pos) + half_tile_size)
 		grid[pos.x][pos.y].append(new_object)
 		add_child(new_object)
+
 
 
 
@@ -48,28 +63,51 @@ func has_target_grid_obsticle(child, direction):
 			for obsticle in grid[new_pos.x][new_pos.y]:
 				if obsticle.is_in_group("Player") or obsticle.is_in_group("Enemy"):
 			 		return obsticle
-		
+
+
 func set_new_grid_pos(child, direction):
 		#delete old positon
 		var cur_pos = world_to_map(child.get_position())
-		grid[cur_pos.x][cur_pos.y].remove(grid[cur_pos.x][cur_pos.y].find(child))
+		var child_idx = grid[cur_pos.x][cur_pos.y].find(child)
+		grid[cur_pos.x][cur_pos.y].remove(child_idx)
 		
 		#grid[cur_pos.x][cur_pos.y] = null
 		#set new positon
 		var new_pos = cur_pos + direction
 		grid[new_pos.x][new_pos.y].append(child)
 		new_pos = map_to_world(new_pos) + half_tile_size
-		print(grid)
 		return new_pos
+
+
+func get_item(child):
+	var cur_pos = world_to_map(child.get_position())
+	if not grid[cur_pos.x][cur_pos.y].empty():
+		#print (grid[cur_pos.x][cur_pos.y].size())
+		for object in grid[cur_pos.x][cur_pos.y]:
+			if object.is_in_group("Item"):
+				var item = object.items
+				grid[cur_pos.x][cur_pos.y].remove(grid[cur_pos.x][cur_pos.y].find(object))
+				object.queue_free()
+				return item
+
 
 
 
 
 func set_kill_me(child):
 	var cur_pos = world_to_map(child.get_position())
-	var temp = grid[cur_pos.x][cur_pos.y].find(child)
-	grid[cur_pos.x][cur_pos.y][temp].queue_free()
-	grid[cur_pos.x][cur_pos.y].remove(temp)
+	
+	if not child.inventory.empty():
+		for object in child.inventory:
+			var new_object = item.instance()
+			new_object.set_position(map_to_world(cur_pos) + half_tile_size)
+			grid[cur_pos.x][cur_pos.y].append(new_object)
+			add_child(new_object)		
+
+		
+	var child_idx = grid[cur_pos.x][cur_pos.y].find(child)
+	grid[cur_pos.x][cur_pos.y][child_idx].queue_free()
+	grid[cur_pos.x][cur_pos.y].remove(child_idx)
 			
 
 

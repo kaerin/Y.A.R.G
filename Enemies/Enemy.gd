@@ -11,18 +11,23 @@ const RIGHT	= Vector2(1 , 0)
 
 var hp = 0
 var direction = Vector2()
+var inventory = []
 
 onready var grid_map = get_parent()
 onready var dic_enemies = get_parent().get_parent().get_node("Dictionaries/Enemies").enemies
+onready var dic_items = get_parent().get_parent().get_node("Dictionaries/Items").items
 
 func _ready():
 	#TODO random instancing of enemies in dictionary
 	var rnd_enemy = randi() % dic_enemies.size()
 	hp = randi() % (dic_enemies[rnd_enemy].max_hp - dic_enemies[rnd_enemy].min_hp) + dic_enemies[rnd_enemy].min_hp
 	$Sprite/Label.text = dic_enemies[rnd_enemy].base_name
-	pass
 	
-#expand for interaction between player and object
+	#TEMP ONLY random item in inventory to test dropping
+	var rnd_item = randi() % dic_items.size()
+	inventory.append(dic_items[rnd_item])
+	
+#TEMP ONLY for basic player enemy interaction test.
 func set_contact(damage):
 	hp -= damage
 	print(name, ' hp: ', hp)

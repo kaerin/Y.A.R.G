@@ -4,16 +4,17 @@ extends Node
 # var a = 2
 # var b = "textvar"
 
-enum	WEAPON {SWORD, DAGGER}
+enum	ITEMS {SWORD, DAGGER, CLUB, SPEAR}
 
-var weapon = {}
+var items = {}
 
 
 
 func _ready():
-	weapon[SWORD] = {base_name = "sword", min_damage = 2, max_damage = 8 }
-	weapon[DAGGER] = {base_name = "dagger", min_damage = 1, max_damage = 4}
-	print(weapon)
+	items[SWORD] = {base_name = "Sword", min_damage = 6, max_damage = 12 }
+	items[DAGGER] = {base_name = "Dagger", min_damage = 1, max_damage = 4}
+	items[CLUB] = {base_name = "Club", min_damage = 2, max_damage = 6}
+	items[SPEAR] = {base_name = "Spear", min_damage = 1, max_damage = 10}
 	
 		# Called when the node is added to the scene for the first time.
 	# Initialization here

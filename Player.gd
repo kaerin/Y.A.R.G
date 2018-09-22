@@ -17,10 +17,10 @@ func _ready():
 	
 		
 func _process(delta):
-	
-	#TODO only temporary to test weapon changes
-	if Input.is_action_just_pressed("ui_select"):
-		get_node("Inventory").set_change_weapon()
+
+	if Input.is_action_just_pressed("ui_p"):
+		var item = grid_map.get_item(self)
+		inventory.set_add_item(item)
 
 	#Handles movement in 8 directions
 	var is_moving = Input.is_action_pressed("ui_up") or Input.is_action_pressed("ui_down") or Input.is_action_pressed("ui_left") or Input.is_action_pressed("ui_right") or Input.is_action_pressed("ui_up_right") or Input.is_action_pressed("ui_up_left") or Input.is_action_pressed("ui_down_right") or Input.is_action_pressed("ui_down_left")
@@ -54,12 +54,9 @@ func _process(delta):
 					position = grid_map.set_new_grid_pos(self, direction)
 				#TODO else set contact/damage with object
 				else:
+					#TEMP basic attack for testing
 					var damage = inventory.get_damage()
 					obsticle.set_contact(damage)
 				#Only trigger turn if movement was valid	
 				grid_map.set_enemy_move()
 		direction = Vector2()
-
-#DEL ME
-func set_contact(damage):
-	pass
