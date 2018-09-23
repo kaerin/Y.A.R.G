@@ -1,7 +1,7 @@
 extends Node
 
 onready var grid_map = get_parent()
-onready var dic_items = get_parent().get_parent().get_node("Dictionaries/Items").items
+onready var dic_items = get_parent().get_parent().get_node("Dictionaries/Items").weapons
 
 var items = {}
 

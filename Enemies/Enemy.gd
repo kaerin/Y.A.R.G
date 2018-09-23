@@ -11,7 +11,7 @@ var inventory = []
 
 onready var grid_map = get_parent()
 onready var dic_enemies = get_parent().get_parent().get_node("Dictionaries/Enemies").enemies
-onready var dic_items = get_parent().get_parent().get_node("Dictionaries/Items").items
+onready var dic_items = get_parent().get_parent().get_node("Dictionaries/Items").weapons
 
 func _ready():
 	#TODO random instancing of enemies in dictionary

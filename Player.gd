@@ -15,12 +15,6 @@ func _process(delta):
 		var item = grid_map.get_item(self)
 		inventory.set_add_item(item)
 	
-
-
-	#Handles movement in 8 directions
-#	var is_moving = Input.is_action_pressed("ui_up") or Input.is_action_pressed("ui_down") or Input.is_action_pressed("ui_left") or Input.is_action_pressed("ui_right") or Input.is_action_pressed("ui_up_right") or Input.is_action_pressed("ui_up_left") or Input.is_action_pressed("ui_down_right") or Input.is_action_pressed("ui_down_left")
-#	if is_moving: #Why test for a direction to set a variable only then to test for a direction to set a variable?
-	
 	var direction = Vector2()
 	if Input.is_action_just_pressed("ui_up"):
 		direction = UP
@@ -38,10 +32,8 @@ func _process(delta):
 		direction = LEFT + DOWN
 	elif Input.is_action_just_pressed("ui_down_right"):
 		direction = RIGHT + DOWN
-	#if not direction == Vector2(): #an emtpy vector will be false only need to test that the vector has any value
+		
 	if direction:
-		var is_moving = true #What is_moving used for?
-		#Check target grid point is valid
 		if grid_map.is_target_grid_valid(self,direction):		
 			#check target cell contents in gridmap 
 			var obsticle = grid_map.has_target_grid_obsticle(self, direction)
@@ -55,4 +47,3 @@ func _process(delta):
 				obsticle.set_contact(damage)
 			#Only trigger turn if movement was valid	
 			grid_map.set_enemy_move()
-	direction = Vector2()
