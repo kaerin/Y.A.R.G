@@ -1,18 +1,13 @@
 extends Node
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
-
 onready var dic_items = get_parent().get_parent().get_parent().get_node("Dictionaries/Items")
 
 var cur_weapon
 var inventory = []
-
-
+var cur_num = 0
 
 func _ready():
-	cur_weapon = dic_items.items[dic_items.ITEMS.DAGGER]
+	cur_weapon = dic_items.items[dic_items.ITEMS.FIST]
 	pass
 
 
@@ -26,3 +21,23 @@ func set_add_item(item):
 	if not item == null:
 		inventory.append(item)
 		print(inventory)
+		
+func next_weap():
+	var size = inventory.size()
+	if size:
+		cur_num = cur_num + 1
+		if cur_num > size:
+			cur_num = size
+		change_weapon(cur_num)
+	
+func prev_weap():
+	var size = inventory.size()
+	if size:
+		cur_num = cur_num - 1
+		if cur_num < 1:
+			cur_num = 1
+		change_weapon(cur_num)
+	
+func change_weapon(num):
+	cur_weapon = inventory[num-1]
+	print("Weapon: ",cur_weapon.base_name)

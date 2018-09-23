@@ -1,14 +1,8 @@
 extends Node
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
-
 enum	ENEMIES {RAT, ANT, MOLE, BEE}
 
 var enemies = {}
-
-
 
 func _ready():
 	enemies[RAT] = {base_name = "Rat", min_hp = 4, max_hp = 8 }

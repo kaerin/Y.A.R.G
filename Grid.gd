@@ -47,10 +47,6 @@ func _ready():
 		grid[pos.x][pos.y].append(new_object)
 		add_child(new_object)
 
-
-
-
-
 func is_target_grid_valid(child, direction):
 	var new_pos = world_to_map(child.get_position()) + direction
 	if new_pos.x < grid_size.x and new_pos.x >= 0:
@@ -89,10 +85,6 @@ func get_item(child):
 				grid[cur_pos.x][cur_pos.y].remove(grid[cur_pos.x][cur_pos.y].find(object))
 				object.queue_free()
 				return item
-
-
-
-
 
 func set_kill_me(child):
 	var cur_pos = world_to_map(child.get_position())
