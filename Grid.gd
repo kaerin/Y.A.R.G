@@ -96,7 +96,6 @@ func set_kill_me(child):
 			grid[cur_pos.x][cur_pos.y].append(new_object)
 			add_child(new_object)		
 
-		
 	var child_idx = grid[cur_pos.x][cur_pos.y].find(child)
 	grid[cur_pos.x][cur_pos.y][child_idx].queue_free()
 	grid[cur_pos.x][cur_pos.y].remove(child_idx)
