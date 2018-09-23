@@ -3,13 +3,18 @@ extends Node
 onready var dic_items = get_parent().get_parent().get_parent().get_node("Dictionaries/Items")
 onready var inv = load("res://Inventory/Inventory.tscn")
 
-var cur_weapon
+enum EQUIPPED {HEAD, CHEST, HANDS, FEET, LEGS, ARMS, WEAPON}
+
 var inventory = []
 var cur_num = 0
 var inv_state = false
+var equipped = []
+
 
 func _ready():
-	cur_weapon = dic_items.items[dic_items.ITEMS.FIST]
+	equipped.resize(EQUIPPED.size())
+	equipped[WEAPON] = dic_items.weapons[dic_items.WEAPONS.FIST]
+
 
 func _process(delta):
 	if Input.is_action_just_pressed("ui_next_weap"):
@@ -17,12 +22,13 @@ func _process(delta):
 	if Input.is_action_just_pressed("ui_prev_weap"):
 		prev_weap()
 	if Input.is_action_just_pressed("ui_inv"):
-		_inventory()
+		var toggle = true
+		_inventory(toggle)
 	
 
 func get_damage():
-		var damage = randi() % (cur_weapon.max_damage - cur_weapon.min_damage) + cur_weapon.min_damage
-		print(cur_weapon.base_name, ' ',damage, ' damage')
+		var damage = randi() % (equipped[WEAPON].max_damage + 1 - equipped[WEAPON].min_damage) + equipped[WEAPON].min_damage
+		print(equipped[WEAPON].base_name, ' ',damage, ' damage')
 		return(damage)
 
 
@@ -30,7 +36,11 @@ func set_add_item(item):
 	if not item == null:
 		inventory.append(item)
 		print(inventory)
-		
+		_inventory(false)
+
+# This section needs to be change eventually to drag and drop system from inventory to equipped --------------------
+# and handle various item types in "Equipped" enum array above
+
 func next_weap():
 	var size = inventory.size()
 	if size:
@@ -48,25 +58,49 @@ func prev_weap():
 		change_weapon(cur_num)
 	
 func change_weapon(num):
-	cur_weapon = inventory[num-1]
-	print("Weapon: ",cur_weapon.base_name)
+	equipped[WEAPON] = inventory[num-1]
+	print("Weapon: ",equipped[WEAPON].base_name)
 	if inv_state:
-		_inventory()
-	
-func _inventory():
-	if inv_state:
+		_inventory(false)
+		
+		
+# ---------------------------------------------------------------------------------------------------------		
+func _inventory(toggle):
+
+	if inv_state and toggle:
 		$Inventory.queue_free()
 		inv_state = false
 	else:
+	
+		inv_state = true
+			
 		var inv_dialog = inv.instance()
 		add_child(inv_dialog)
+		
+		var inv_list = $Inventory/HBox/VBox_Inv.get_children()
+		for n in inv_list:
+			if not n.get_name() == "Title":
+				n.queue_free()
+				
 		var i = 1
 		for inv_item in inventory:
-			var entry = $Inventory/VBox/Item.duplicate()
-			$Inventory/VBox.add_child(entry)
+			var entry = $Inventory/Template/Item.duplicate()
+			$Inventory/HBox/VBox_Inv.add_child(entry)
 			entry.get_child(1).text = inv_item.base_name
 			entry.get_child(1).show()
-			if i == cur_num:
-				entry.get_child(0).show()
-			i = i +1
-		inv_state = true
+	#		if i == cur_num:
+	#				entry.get_child(0).show()
+	#		i = i +1
+	
+	
+		var equip_list = $Inventory/HBox/VBox_Equip.get_children()
+		for n in equip_list:
+			if not n.get_name() == "Title":
+				n.queue_free()
+	
+		for equip_item in equipped:
+			if not equip_item == null:
+				var entry = Label.new()#$Inventory/HBox/VBox_Equip/Label.new()
+				$Inventory/HBox/VBox_Equip.add_child(entry)
+				entry.text = equipped[WEAPON].base_name
+			
