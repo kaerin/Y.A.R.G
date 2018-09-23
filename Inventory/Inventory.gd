@@ -7,7 +7,7 @@ enum EQUIPPED {HEAD, CHEST, HANDS, FEET, LEGS, ARMS, WEAPON}
 
 var inventory = []
 var cur_num = 0
-var inv_state = false
+var inv_visible = false
 var equipped = []
 
 
@@ -35,11 +35,11 @@ func get_damage():
 func set_add_item(item):
 	if not item == null:
 		inventory.append(item)
-		print(inventory)
-		_inventory(false)
+		if inv_visible:
+			_inventory(false)
 
 # This section needs to be change eventually to drag and drop system from inventory to equipped --------------------
-# and handle various item types in "Equipped" enum array above
+# and handle various item types in "Equipped" as in enum array above
 
 func next_weap():
 	var size = inventory.size()
@@ -60,19 +60,19 @@ func prev_weap():
 func change_weapon(num):
 	equipped[WEAPON] = inventory[num-1]
 	print("Weapon: ",equipped[WEAPON].base_name)
-	if inv_state:
+	if inv_visible:
 		_inventory(false)
 		
 		
 # ---------------------------------------------------------------------------------------------------------		
 func _inventory(toggle):
 
-	if inv_state and toggle:
+	if inv_visible and toggle:
 		$Inventory.queue_free()
-		inv_state = false
+		inv_visible = false
 	else:
 	
-		inv_state = true
+		inv_visible = true
 			
 		var inv_dialog = inv.instance()
 		add_child(inv_dialog)

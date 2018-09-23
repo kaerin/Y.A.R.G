@@ -11,7 +11,8 @@ var inventory = []
 
 onready var grid_map = get_parent()
 onready var dic_enemies = get_parent().get_parent().get_node("Dictionaries/Enemies").enemies
-onready var dic_items = get_parent().get_parent().get_node("Dictionaries/Items").weapons
+onready var dic_weapon = get_parent().get_parent().get_node("Dictionaries/Items").weapons
+onready var dic_chest = get_parent().get_parent().get_node("Dictionaries/Items").chest
 
 func _ready():
 	#TODO random instancing of enemies in dictionary
@@ -20,8 +21,15 @@ func _ready():
 	$Sprite/Label.text = dic_enemies[rnd_enemy].base_name
 	
 	#TEMP ONLY random item in inventory to test dropping
-	var rnd_item = randi() % dic_items.size()
-	inventory.append(dic_items[rnd_item])
+	var temp = randi() % 2 + 1
+	if temp == 1:
+		var rnd_item = randi() % dic_weapon.size() 
+		inventory.append(dic_weapon[rnd_item])
+	elif temp == 2:
+		var rnd_item = randi() % dic_chest.size()
+		inventory.append(dic_chest[rnd_item])
+
+
 	
 #TEMP ONLY for basic player enemy interaction test.
 func set_contact(damage):
