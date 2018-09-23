@@ -15,11 +15,7 @@ func _process(delta):
 		var item = grid_map.get_item(self)
 		inventory.set_add_item(item)
 	
-	if Input.is_action_just_pressed("ui_next_weap"):
-		inventory.next_weap()
-	if Input.is_action_just_pressed("ui_prev_weap"):
-		inventory.prev_weap()
-		
+
 
 	#Handles movement in 8 directions
 #	var is_moving = Input.is_action_pressed("ui_up") or Input.is_action_pressed("ui_down") or Input.is_action_pressed("ui_left") or Input.is_action_pressed("ui_right") or Input.is_action_pressed("ui_up_right") or Input.is_action_pressed("ui_up_left") or Input.is_action_pressed("ui_down_right") or Input.is_action_pressed("ui_down_left")
