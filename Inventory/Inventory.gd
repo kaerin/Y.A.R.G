@@ -38,7 +38,7 @@ func set_add_item(item):
 		if inv_displayed:
 			_inventory(false)
 
-# This section needs to be change eventually to drag and drop system from inventory to equipped --------------------
+# This section needs to be changed eventually to drag and drop system from inventory to equipped --------------------
 # and handle various item types in "Equipped" as in enum array above
 
 func next_weap():
@@ -58,8 +58,11 @@ func prev_weap():
 		change_weapon(cur_num)
 	
 func change_weapon(num):
-	equipped[WEAPON] = inventory[num-1]
-	print("Weapon: ",equipped[WEAPON].base_name)
+	if inventory[num-1].base_type == 'Weapon':		#QUICK FIX to stop equipping Chest armor as weapon, not final solution.
+		equipped[WEAPON] = inventory[num-1]
+		print("Weapon: ",equipped[WEAPON].base_name)
+	else:
+		print('num: ',num, ' not a weapon')
 	if inv_displayed:
 		_inventory(false)
 		
