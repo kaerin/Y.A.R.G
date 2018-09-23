@@ -7,7 +7,7 @@ enum EQUIPPED {HEAD, CHEST, HANDS, FEET, LEGS, ARMS, WEAPON}
 
 var inventory = []
 var cur_num = 0
-var inv_visible = false
+var inv_displayed = false
 var equipped = []
 
 
@@ -35,7 +35,7 @@ func get_damage():
 func set_add_item(item):
 	if not item == null:
 		inventory.append(item)
-		if inv_visible:
+		if inv_displayed:
 			_inventory(false)
 
 # This section needs to be change eventually to drag and drop system from inventory to equipped --------------------
@@ -60,23 +60,24 @@ func prev_weap():
 func change_weapon(num):
 	equipped[WEAPON] = inventory[num-1]
 	print("Weapon: ",equipped[WEAPON].base_name)
-	if inv_visible:
+	if inv_displayed:
 		_inventory(false)
 		
 		
 # ---------------------------------------------------------------------------------------------------------		
 func _inventory(toggle):
 
-	if inv_visible and toggle:
+	if inv_displayed and toggle:
 		$Inventory.queue_free()
-		inv_visible = false
+		inv_displayed = false
 	else:
-	
-		inv_visible = true
-			
-		var inv_dialog = inv.instance()
-		add_child(inv_dialog)
-		
+
+		if not inv_displayed:
+			var inv_dialog = inv.instance()
+			add_child(inv_dialog)
+
+		inv_displayed = true
+				
 		var inv_list = $Inventory/HBox/VBox_Inv.get_children()
 		for n in inv_list:
 			if not n.get_name() == "Title":
