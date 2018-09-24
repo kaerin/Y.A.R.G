@@ -8,13 +8,19 @@ const RIGHT	= Vector2(1 , 0)
 onready var grid_map = get_parent()
 onready var dic_items = get_tree().get_root().get_node("Dictionaries/Items")
 onready var inventory = get_node("Inventory")
+onready var weapons = load("res://Items/Weapons.gd") #load class
 
 var Dialog
-	
+var weap #weapon class
+
+func _ready():
+	weap = weapons.new() #create
+
 func _process(delta):
 	if Input.is_action_just_pressed("ui_p"):
 		var item = grid_map.get_item(self)
 		inventory.set_add_item(item)
+		weap.print() #use class
 	
 	if Input.is_action_just_pressed("add_enemy"):
 		Dialog = get_node("/root/BaseNode/Grid/Dialog")
