@@ -9,11 +9,18 @@ onready var grid_map = get_parent()
 onready var dic_items = get_tree().get_root().get_node("Dictionaries/Items")
 onready var inventory = get_node("Inventory")
 
+var Dialog
 	
 func _process(delta):
 	if Input.is_action_just_pressed("ui_p"):
 		var item = grid_map.get_item(self)
 		inventory.set_add_item(item)
+	
+	if Input.is_action_just_pressed("add_enemy"):
+		Dialog = get_node("/root/BaseNode/Grid/Dialog")
+		Dialog.set_label("You have added an enemy")
+		Dialog.show_label() #Find label, Set label then show it, will timeout and hide after 1 second
+		grid_map.add_enemies()
 	
 	var direction = Vector2()
 	if Input.is_action_just_pressed("ui_up"):

@@ -20,13 +20,14 @@ func _ready():
 		grid.append([])
 		for y in range (grid_size.y):
 			grid[x].append([])
-
+	add_enemies(3)
 
 	#TEMP add random enemies for testing
+
+func add_enemies(num = 1):
 	var positions = []
 	randomize()
-	
-	for n in range (3):
+	for n in range (num):
 		var grid_pos = Vector2(randi() % int(grid_size.x), randi() % int(grid_size.y))
 		if not grid_pos in positions:
 			positions.append(grid_pos)
