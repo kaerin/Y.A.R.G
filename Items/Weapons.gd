@@ -1,6 +1,30 @@
 extends Reference
 
-#every item class
+
+func print():
+	print("Executed print function from weapon class")
+
+
+#DELME below only for example	
+
+func create_rnd_item(item):
+	var rnd = randi() % item.size()
+	return item[rnd]
+
+func preamble(item):
+	var temp = item.duplicate()	# duplicate seperates original data from duplicated data, otherwise is passed by reference
+	temp.base_name = str('crappy ', temp.base_name)
+	return temp
+
+func postamble(item):
+	var temp = item.duplicate()
+	temp.base_name = str(temp.base_name, ' of utter crapness')
+	return temp
+
+#DELME to here	
+	
+	
+#every item class, instead of just weapons
 #perhaps a single item class could work for every item type
 #meaning everything has a min max damage, armor class, etc etc.
 #anything unecessary eg. damage for armor is set to null and ignored
@@ -12,7 +36,7 @@ extends Reference
 #would result in only one data structure being used everywhere. shoudl alos
 #allow for easy future expansion of "features" 
 #below is just an example of random junk with exagerated variable names for readability.
-# mostly me writing ideas down that how it should be.
+# mostly me writing ideas down than how it should be.
 
 
 #var type	#dictates location for equip
@@ -33,8 +57,7 @@ extends Reference
 #var fatigue_rate	#if ever wanted to add fatigue system later.
 
 
-func print():
-	print("Executed print function from weapon class")
+
 
 
 #func init_item(base_item_to_create) #eg sword

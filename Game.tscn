@@ -9,6 +9,8 @@
 
 [node name="BaseNode" type="Node"]
 
+_sections_unfolded = [ "Pause" ]
+
 [node name="Dictionaries" type="Node" parent="." index="0"]
 
 [node name="Items" type="Node" parent="Dictionaries" index="0"]

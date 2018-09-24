@@ -6,7 +6,7 @@ const LEFT 	= Vector2(-1, 0)
 const RIGHT	= Vector2(1 , 0)
 
 onready var grid_map = get_parent()
-onready var dic_items = get_tree().get_root().get_node("Dictionaries/Items")
+onready var dic_weapon = get_node("/root/BaseNode/Dictionaries/Items").weapons
 onready var inventory = get_node("Inventory")
 onready var weapons = load("res://Items/Weapons.gd") #load class
 
@@ -21,6 +21,16 @@ func _process(delta):
 		var item = grid_map.get_item(self)
 		inventory.set_add_item(item)
 		weap.print() #use class
+		
+		# DELME example only below
+		var rnd_item = weap.create_rnd_item(dic_weapon) # so something like this then ? Preamble postamble would likely be internal calls in new class, instead of here
+		print(rnd_item)
+		print(rnd_item.base_name)
+		var pre_item = weap.preamble(rnd_item)
+		print(pre_item.base_name)
+		var new_name = weap.postamble(pre_item)
+		print(new_name.base_name)
+		#DELME to here
 	
 	if Input.is_action_just_pressed("add_enemy"):
 		Dialog = get_node("/root/BaseNode/Grid/Dialog")
