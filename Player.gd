@@ -8,6 +8,7 @@ const RIGHT	= Vector2(1 , 0)
 onready var grid_map = get_parent()
 onready var dic_items = get_tree().get_root().get_node("Dictionaries/Items")
 onready var inventory = get_node("Inventory")
+onready var dialog = load("res://Dialog/Msg.gd")
 
 func _process(delta):
 

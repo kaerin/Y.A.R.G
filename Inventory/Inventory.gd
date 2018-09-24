@@ -70,7 +70,7 @@ func change_weapon(num):
 # ---------------------------------------------------------------------------------------------------------		
 func _inventory(toggle):
 
-	if inv_displayed and toggle:
+	if inv_displayed and toggle: #You assign toggle to a variable previously then pass that variable then reference the same variable
 		$Inventory.queue_free()
 		inv_displayed = false
 	else:
@@ -78,8 +78,7 @@ func _inventory(toggle):
 		if not inv_displayed:
 			var inv_dialog = inv.instance()
 			add_child(inv_dialog)
-
-		inv_displayed = true
+			inv_displayed = true #To keep things clean only need to set something when its not
 				
 		var inv_list = $Inventory/HBox/VBox_Inv.get_children()
 		for n in inv_list:
