@@ -9,7 +9,7 @@ var inventory = []
 var cur_num = 0
 var inv_displayed = false
 var equipped = []
-
+var Dialog
 
 func _ready():
 	equipped.resize(EQUIPPED.size())
@@ -37,6 +37,9 @@ func set_add_item(item):
 		inventory.append(item)
 		if inv_displayed:
 			_inventory(false)
+		Dialog = get_node("/root/BaseNode/Grid/Dialog")
+		Dialog.set_label("You have collected a " + item.base_type + " " + item.base_name)
+		Dialog.show_label() #Find label, Set label then show it, will timeout and hide after 1 second
 
 # This section needs to be changed eventually to drag and drop system from inventory to equipped --------------------
 # and handle various item types in "Equipped" as in enum array above
