@@ -3,10 +3,12 @@ extends Node
 enum	WEAPONS {FIST, SWORD, DAGGER, CLUB, SPEAR}
 enum	TYPE	{CLOTH, LEATHER, CHAIN, PLATE}
 enum	LOC		{CHEST, HEAD, ARMS, LEGS}
+enum	WEAR	{AMULET, RING}
 
 var weapons = {}
 var chest	= {}
 var armour	= []
+var wear	= {}
 
 func _ready():
 	for i in range(2):
@@ -41,3 +43,6 @@ func _ready():
 	armour[HEAD][LEATHER]	= {base_type = 'Armour', location = HEAD, loc_name = 'Head', base_name = 'Leather', armor_class = 4, res_slash = 1, res_stab = 0, res_blunt = 2, to_hit = 0, weight = 6}
 	armour[HEAD][CHAIN] 	= {base_type = 'Armour', location = HEAD, loc_name = 'Head', base_name = 'Chain', armor_class = 6, res_slash = 2, res_stab = 1, res_blunt = 2, to_hit = -1, weight = 6}
 	armour[HEAD][PLATE] 	= {base_type = 'Armour', location = HEAD, loc_name = 'Head', base_name = 'Plate', armor_class = 8, res_slash = 4, res_stab = 2, res_blunt = 4, to_hit = -2, weight = 6}
+	
+	wear[AMULET] = {base_type = 'Wearable', type = 'Amulet', base_name = 'Necklace', bonus_ac = 0, bonus_dmg = 0}
+	wear[RING] = {base_type = 'Wearable', type = 'Ring', base_name = 'Mood Ring', bonus_ac = 0, bonus_dmg = 0}

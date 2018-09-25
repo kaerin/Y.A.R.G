@@ -30,8 +30,8 @@ func add_armour(item):
 	inventory[0].set_location(item.location)
 	inventory[0].set_loc_name(item.loc_name)
 	inventory[0].set_ac(item.armor_class)
-	active[CHEST] = active[CHEST] + 1 #hack
-	active[HEAD] = active[HEAD] + 1 #hack
+	active[CHEST] = active[CHEST] + 1 #hack, dumb way of doing it, dont repeat, use an index
+	active[HEAD] = active[HEAD] + 1 #hack, dumb way of doing it, dont repeat, use an index
 
 func get_name(i):
 	return inventory[i].get_name()

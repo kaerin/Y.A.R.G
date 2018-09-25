@@ -4,6 +4,7 @@ onready var dic_items = get_parent().get_parent().get_parent().get_node("Diction
 onready var inv = load("res://Inventory/Inventory.tscn")
 onready var Weapon = load("res://Items/Weapon.gd")
 onready var Armour = load("res://Items/Armour.gd")
+onready var Wearable = load("res://Items/Wearable.gd")
 onready var Game = get_node("/root/BaseNode") #Get the Game node for diallog
 enum	LOC		{CHEST, HEAD, ARMS, LEGS}
 enum EQUIPPED {CHEST, HEAD, HANDS, FEET, LEGS, ARMS, WEAPON}
@@ -13,6 +14,7 @@ var inv_displayed = false
 var equipped = []
 var weapon
 var armour
+var wearable
 
 func _ready():
 	
@@ -20,6 +22,7 @@ func _ready():
 	equipped[WEAPON] = dic_items.weapons[dic_items.WEAPONS.FIST]
 	weapon = Weapon.new() #enemies can be given the same weapon class and weapon inventory
 	armour = Armour.new()
+	wearable = Wearable.new()
 	#could also have npc and companions to also have the same weapon class and inventory	
 	#have helper functions like auto-equip highest dmg weapon to use for player or others
 
@@ -68,6 +71,9 @@ func set_add_item(item):
 		if item.base_type == "Armour":
 			armour.add_armour(item)
 			Game.Dialog.print_label("You just collected some: " + armour.get_name(0) + " for your " + str(armour.get_loc_name(0)), 2 )
+		if item.base_type == "Wearable":
+			wearable.add_wearable(item)
+			Game.Dialog.print_label("You just collected a " + wearable.get_name(0), 2 )
 
 # This section needs to be changed eventually to drag and drop system from inventory to equipped --------------------
 # and handle various item types in "Equipped" as in enum array above
