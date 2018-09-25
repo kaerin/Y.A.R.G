@@ -3,6 +3,7 @@ extends Node
 onready var dic_items = get_parent().get_parent().get_parent().get_node("Dictionaries/Items")
 onready var inv = load("res://Inventory/Inventory.tscn")
 onready var Weapon = load("res://Items/Weapon.gd")
+onready var Armour = load("res://Items/Armour.gd")
 onready var Game = get_node("/root/BaseNode") #Get the Game node for diallog
 
 enum EQUIPPED {HEAD, CHEST, HANDS, FEET, LEGS, ARMS, WEAPON}
@@ -11,12 +12,14 @@ var inventory = []
 var inv_displayed = false
 var equipped = []
 var weapon
+var armour
 
 func _ready():
 	
 	equipped.resize(EQUIPPED.size())
 	equipped[WEAPON] = dic_items.weapons[dic_items.WEAPONS.FIST]
 	weapon = Weapon.new() #enemies can be given the same weapon class and weapon inventory
+	armour = Armour.new()
 	#could also have npc and companions to also have the same weapon class and inventory	
 	#have helper functions like auto-equip highest dmg weapon to use for player or others
 
@@ -31,6 +34,8 @@ func _process(delta):
 		_inventory(toggle)
 		for i in weapon.inventory: #print weapon inventory
 			print(i.get_name())
+	if Input.is_action_just_pressed("set_armour"):
+		set_armour() #cycles through armour and sets
 	
 
 func get_damage():
@@ -55,9 +60,22 @@ func set_add_item(item):
 		if item.base_type == "Weapon":
 			weapon.add_weapon(item) #adding weapon to weapon class inventory
 			print("You just collected a weapon name: ", weapon.get_name(0), " type: ", weapon.get_type(0) )
+		if item.base_type == "Chest": #?? Shoulld be armour, dictionary should have a 'location' key
+			armour.add_armour(item)
 
 # This section needs to be changed eventually to drag and drop system from inventory to equipped --------------------
 # and handle various item types in "Equipped" as in enum array above
+
+func set_armour():
+	var i = armour.active
+	var size = armour.inventory.size() - 1
+	i = i + 1
+	if i > size:
+		i = 0
+	armour.equip_armour(i)
+	Game.Dialog.print_label("Your equiped armour: " + armour.get_name(), 2)
+	if inv_displayed:
+		_inventory(false)
 
 func next_weap():
 	var i = weapon.active
@@ -121,7 +139,10 @@ func _inventory(toggle):
 		for n in equip_list:
 			if not n.get_name() == "Title":
 				n.queue_free()
-	
+		var armour_list = $Inventory/HBox/VBox_Armour.get_children()
+		for a in armour_list:
+			if not a.get_name() == "Title":
+				a.queue_free()
 		
 		var equip_item = weapon.get_name()
 		if not equip_item == null:
@@ -129,4 +150,10 @@ func _inventory(toggle):
 			$Inventory/HBox/VBox_Equip.add_child(entry)
 #				entry.text = equipped[WEAPON].base_name
 			entry.text = equip_item
-			
+		
+		var equip_armour = armour.get_name()
+		if not equip_armour == null:
+			var entry = Label.new()#$Inventory/HBox/VBox_Equip/Label.new()
+			$Inventory/HBox/VBox_Armour.add_child(entry)
+#				entry.text = equipped[WEAPON].base_name
+			entry.text = equip_armour	

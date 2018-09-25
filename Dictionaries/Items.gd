@@ -16,7 +16,7 @@ func _ready():
 	weapons[DAGGER] = {base_type = 'Weapon', base_name = 'Dagger', min_damage = 1, max_damage = 4, damage_type = 'Stab', weight = 4}
 	weapons[CLUB] 	= {base_type = 'Weapon', base_name = 'Club', min_damage = 2, max_damage = 6, damage_type = 'Blunt', weight = 6}
 	weapons[SPEAR] 	= {base_type = 'Weapon', base_name = 'Spear', min_damage = 1, max_damage = 10, damage_type = 'Stab', weight = 5}
-	weapons[FIST] 	= {base_type = 'Weapon', base_name = 'Fist', min_damage = 99, max_damage = 99, damage_type = 'Blunt', weight = 0} #power punch for testing
+	weapons[FIST] 	= {base_type = 'Weapon', base_name = 'Fist', min_damage = 90, max_damage = 99, damage_type = 'Blunt', weight = 0} #power punch for testing
 	
 
 # ------------------------------- #

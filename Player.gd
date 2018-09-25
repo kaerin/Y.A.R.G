@@ -32,7 +32,7 @@ func _process(delta):
 #		var new_name = weap.postamble(pre_item)
 #		print(new_name.base_name)
 		#DELME to here
-	
+		
 	if Input.is_action_just_pressed("add_enemy"):
 		Game.Dialog.print_label("You have added an enemy")
 		grid_map.add_enemies()

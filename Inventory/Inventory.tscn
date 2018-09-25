@@ -144,7 +144,7 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 
-[node name="VBox_Equip2" type="VBoxContainer" parent="HBox" index="4"]
+[node name="VBox_Armour" type="VBoxContainer" parent="HBox" index="4"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -161,7 +161,7 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 alignment = 0
 
-[node name="Title" type="Label" parent="HBox/VBox_Equip2" index="0"]
+[node name="Title" type="Label" parent="HBox/VBox_Armour" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0

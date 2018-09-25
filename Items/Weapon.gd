@@ -5,11 +5,11 @@ var active = 0
 var inventory = []
 
 func _init():
-	print("weapon reference initialised, adding fist as first weapon")
+	print("Weapon reference initialised, adding fist as first weapon")
 	var w = Weapons.new()
 	inventory.push_front(w)
 	inventory[0].set_name("Fist")
-	inventory[0].set_type("Blunt")
+	inventory[0].set_dmg_type("Blunt")
 	inventory[0].set_damage(50,99)
 	active = 0
 
@@ -24,14 +24,15 @@ func add_weapon(item):
 	var w = Weapons.new()
 	inventory.push_front(w)
 	inventory[0].set_name(item.base_name)
-	inventory[0].set_type(item.damage_type)
+	inventory[0].set_dmg_type(item.damage_type)
 	inventory[0].set_damage(item.min_damage,item.max_damage)
+	active = active + 1
 
 func get_name(i = active):
 	return inventory[i].get_name()
 
 func get_type(i = active):
-	return inventory[i].get_type()
+	return inventory[i].get_dmg_type()
 
 func equip_weapon(i):
 	active = i
