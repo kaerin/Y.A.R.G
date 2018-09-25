@@ -104,7 +104,7 @@ func set_armour(loc):
 		if i > size:
 			i = 0	
 	armour.equip_armour(loc, i)
-	Game.Dialog.print_label("You equiped " + str(armour.get_loc_name(i)) + " armour: " + armour.get_name(i), 2)
+	Game.Dialog.print_label("You equiped " + str(armour.get_loc_name(i)) + " armour: " + armour.get_name(i) + " AC:" + str(armour.get_armour_ac(i)) + " bonus:" + str(armour.get_bonus_ac(i)), 2)
 	if inv_displayed:
 		_inventory(false)
 

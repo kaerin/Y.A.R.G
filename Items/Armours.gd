@@ -5,8 +5,8 @@ extends Reference
 var Name
 var Location
 var LocName
-var ArmourClass
-var BonusAC
+var ArmourClass = 0
+var BonusAC = 0
 
 #set data
 func set_name(i):

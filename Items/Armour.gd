@@ -52,8 +52,13 @@ func get_equip_name(loc):
 func get_equip(loc):
 	return active[loc]
 
-func get_ac():
-	return inventory[active].get_ac() #needs fixings
+func get_ac(loc):
+	return inventory[get_equip(loc)].get_ac() #needs fixing
+func get_armour_ac(loc):
+	return inventory[get_equip(loc)].get_armour_ac() #needs fixing
+func get_bonus_ac(loc):
+	return inventory[get_equip(loc)].get_bonus_ac() #needs fixing
+
 
 func alter_stats(i,rng):
 	var pre = ["Rusted", "Shiny", "Glowing", "Sparkly", "Red", "Golden", "Crappy", "Normal", "Mood"]
