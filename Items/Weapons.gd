@@ -35,3 +35,6 @@ func get_damage(): #weapon total damage
 
 func get_weapon_damage(): #weapon damage
 	return randi() % (MaxDamage - MinDamage) + MinDamage
+	
+func get_bonus_damage(): #weapon total damage
+	return BonusDamage

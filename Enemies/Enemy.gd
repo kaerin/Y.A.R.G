@@ -24,7 +24,7 @@ func _ready():
 	
 	#TEMP ONLY random item in inventory to test dropping
 	var temp = randi() % 3 + 1 #testing
-	temp = 3 #testing
+	#temp = 3 #testing
 	if temp == 1:
 		var rnd_item = randi() % dic_weapon.size() 
 		inventory.append(dic_weapon[rnd_item])

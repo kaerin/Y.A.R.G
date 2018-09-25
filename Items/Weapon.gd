@@ -27,6 +27,7 @@ func add_weapon(item):
 	inventory[0].set_dmg_type(item.damage_type)
 	inventory[0].set_damage(item.min_damage,item.max_damage)
 	active += 1 #hack, dont do it this way
+	alter_stats(0,10)
 
 func get_name(i = active):
 	return inventory[i].get_name()
@@ -39,7 +40,14 @@ func equip_weapon(i):
 	
 func get_damage():
 	return inventory[active].get_damage()
-		
+func get_bonus_damage():
+	return inventory[active].get_bonus_damage()
+
+func alter_stats(i,rng):
+	var pre = ["Rusted", "Sharp", "Spikey", "Red", "Golden", "Crappy", "Normal", "Basic", "Serrated"]
+	var post = ["of spikes", "of bluntness", "that is on fire", "made of plastic"]
+	inventory[0].set_name(pre[randi() % pre.size()] + " " + get_name(0) + " " + post[randi() % post.size()])
+	inventory[0].set_bonus_dmg(randi() % rng)
 
 #DELME below only for example	
 

@@ -32,6 +32,7 @@ func add_armour(item):
 	inventory[0].set_ac(item.armor_class)
 	active[CHEST] += 1 #hack, dumb way of doing it, dont repeat, use an index
 	active[HEAD] += 1 #hack, dumb way of doing it, dont repeat, use an index
+	alter_stats(0,10)
 
 func get_name(i):
 	return inventory[i].get_name()
@@ -52,4 +53,10 @@ func get_equip(loc):
 	return active[loc]
 
 func get_ac():
-	return inventory[active].get_ac()
+	return inventory[active].get_ac() #needs fixings
+
+func alter_stats(i,rng):
+	var pre = ["Rusted", "Shiny", "Glowing", "Sparkly", "Red", "Golden", "Crappy", "Normal", "Mood"]
+	var post = ["of brightness.", "of spikes", "of gas", "that glows", "of colors", "that tastes funny"]
+	inventory[0].set_name(pre[randi() % pre.size()] + " " + get_name(0) + " " + post[randi() % post.size()])
+	inventory[0].set_bonus_ac(randi() % rng)

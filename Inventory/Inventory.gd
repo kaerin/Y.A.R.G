@@ -93,7 +93,6 @@ func set_wear(type): #armour could be done this way
 		msg += wearable.get_amulet_name()  + " AC: " + str(wearable.get_amulet_bonus_ac()) + " Dmg: " + str(wearable.get_amulet_bonus_dmg())
 	Game.Dialog.print_label(msg,2)
 
-
 func set_armour(loc):
 	var i = armour.active[loc]
 	var size = armour.inventory.size() - 1
@@ -132,7 +131,7 @@ func change_weapon(num):
 #	else:
 #		print('num: ',num, ' not a weapon')
 	weapon.equip_weapon(num)
-	Game.Dialog.print_label("Your equiped weapon: " + weapon.get_name(), 2)
+	Game.Dialog.print_label("Your equiped weapon: " + weapon.get_name() + " Bonus dmg:" + str(weapon.get_bonus_damage()), 2 )
 	if inv_displayed:
 		_inventory(false)
 		

@@ -35,7 +35,10 @@ func get_loc_name():
 	return LocName
 	
 func get_ac(): #weapon total damage
-	return get_armour_ac() + BonusAC
+	return get_armour_ac() + get_bonus_ac()
 
 func get_armour_ac(): #weapon damage
 	return ArmourClass
+
+func get_bonus_ac():
+	return BonusAC
