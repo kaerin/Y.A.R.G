@@ -8,7 +8,7 @@ const RIGHT	= Vector2(1 , 0)
 onready var grid_map = get_parent()
 onready var dic_weapon = get_node("/root/BaseNode/Dictionaries/Items").weapons
 onready var inventory = get_node("Inventory")
-onready var weapons = load("res://Items/Weapons.gd") #load class
+onready var weapons = load("res://Items/Weapon.gd") #load class
 
 var Dialog
 var weap #weapon class

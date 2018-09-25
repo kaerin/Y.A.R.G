@@ -2,6 +2,7 @@ extends Node
 
 onready var dic_items = get_parent().get_parent().get_parent().get_node("Dictionaries/Items")
 onready var inv = load("res://Inventory/Inventory.tscn")
+onready var Weapon = load("res://Items/Weapon.gd")
 
 enum EQUIPPED {HEAD, CHEST, HANDS, FEET, LEGS, ARMS, WEAPON}
 
@@ -10,10 +11,13 @@ var cur_num = 0
 var inv_displayed = false
 var equipped = []
 var Dialog
+var weapon
 
 func _ready():
 	equipped.resize(EQUIPPED.size())
 	equipped[WEAPON] = dic_items.weapons[dic_items.WEAPONS.FIST]
+	weapon = Weapon.new()
+	
 
 
 func _process(delta):
@@ -29,6 +33,7 @@ func _process(delta):
 func get_damage():
 		var damage = randi() % (equipped[WEAPON].max_damage + 1 - equipped[WEAPON].min_damage) + equipped[WEAPON].min_damage
 		print(equipped[WEAPON].base_name, ' ',damage, ' damage')
+		print("Weapon damage: ", weapon.get_damage() ) #get the currently equppied weapons damage from the class
 		return(damage)
 
 
@@ -40,11 +45,16 @@ func set_add_item(item):
 		Dialog = get_node("/root/BaseNode/Grid/Dialog")
 		Dialog.set_label("You have collected a " + item.base_type + " " + item.base_name)
 		Dialog.show_label() #Find label, Set label then show it, will timeout and hide after 1 second
+		
+		if item.base_type == "Weapon":
+			weapon.add_weapon(item) #adding weapon to weapon class inventory
+			print("You just collected a weapon name: ", weapon.get_name(0), " type: ", weapon.get_type(0) )
 
 # This section needs to be changed eventually to drag and drop system from inventory to equipped --------------------
 # and handle various item types in "Equipped" as in enum array above
 
 func next_weap():
+	weapon.equip_weapon(0) #always equip most recent weapon 
 	var size = inventory.size()
 	if size:
 		cur_num = cur_num + 1
