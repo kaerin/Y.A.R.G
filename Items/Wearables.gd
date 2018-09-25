@@ -4,8 +4,8 @@ extends Reference
 
 var Name
 var Type
-var BonusAC
-var BonusDmg
+var BonusAC = 0
+var BonusDmg = 0
 
 #set data
 func set_name(i):

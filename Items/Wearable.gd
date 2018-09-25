@@ -12,13 +12,10 @@ func _init():
 	inventory[0].set_name("Clock Amulet of the 80s")
 	inventory[0].set_type("Amulet")
 	inventory[0].set_bonus_ac(-1)
-	inventory[0].set_bonus_dmg(0)
 	w = Wearables.new()
 	inventory.append(w)
 	inventory[1].set_name("no ring")
 	inventory[1].set_type("Ring")
-	inventory[1].set_bonus_ac(0)
-	inventory[1].set_bonus_dmg(0)
 
 func print():
 	print("Executed debug print function from wearable class")

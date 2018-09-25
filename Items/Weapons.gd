@@ -4,8 +4,8 @@ extends Reference
 
 var Name
 var DmgType
-var MinDamage
-var MaxDamage
+var MinDamage = 1
+var MaxDamage = 1
 var BonusDamage = 0
 
 
