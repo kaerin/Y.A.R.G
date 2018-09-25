@@ -8,6 +8,7 @@ onready var Wearable = load("res://Items/Wearable.gd")
 onready var Game = get_node("/root/BaseNode") #Get the Game node for diallog
 enum	LOC		{CHEST, HEAD, ARMS, LEGS}
 enum EQUIPPED {CHEST, HEAD, HANDS, FEET, LEGS, ARMS, WEAPON}
+enum WEAR {RING, AMULET}
 
 var inventory = []
 var inv_displayed = false
@@ -44,6 +45,10 @@ func _process(delta):
 	if Input.is_action_just_pressed("set_head_armour"):
 #		var loc = HEAD #location needs to be settablle some how
 		set_armour(HEAD) #cycles through armour and sets
+	if Input.is_action_just_pressed("set_ring"):
+		set_wear(RING)
+	if Input.is_action_just_pressed("set_amulet"):
+		set_wear(AMULET)
 	
 
 func get_damage():
@@ -52,7 +57,7 @@ func get_damage():
 		print("Weapon damage: ", weapon.get_damage() ) #get the currently equppied weapons damage from the class
 		#can do this add all damage and bonuses together
 		#damage = weapon.get_damage() + ring.get_dmg_bonus() + amulet.get_dmg_bonus() 
-		damage = weapon.get_damage() #get damage from equipped weapon class, the same as inventory.weapon.get_damage() called from the player class
+		damage = weapon.get_damage() + wearable.get_bonus_dmg() #get damage from equipped weapon class, the same as inventory.weapon.get_damage() called from the player class
 		Game.Dialog.print_label("Your weapon: " + weapon.get_name() + " did " + str(damage) + " damage.", 2)
 		return(damage) 
 
@@ -78,14 +83,23 @@ func set_add_item(item):
 # This section needs to be changed eventually to drag and drop system from inventory to equipped --------------------
 # and handle various item types in "Equipped" as in enum array above
 
+func set_wear(type): #armour could be done this way
+	if type == RING:
+		wearable.equip_ring(wearable.get_next_ring())
+		Game.Dialog.print_label("You equiped " + wearable.get_ring_name())
+	if type == AMULET:
+		wearable.equip_amulet(wearable.get_next_amulet())
+		Game.Dialog.print_label("You equiped " + wearable.get_amulet_name())
+
+
 func set_armour(loc):
 	var i = armour.active[loc]
 	var size = armour.inventory.size() - 1
-	i = i + 1
+	i += 1
 	if i > size:
 		i = 0
 	while not loc == armour.get_location(i):
-		i = i + 1
+		i += 1
 		if i > size:
 			i = 0	
 	armour.equip_armour(loc, i)
@@ -96,7 +110,7 @@ func set_armour(loc):
 func next_weap():
 	var i = weapon.active
 	var size = weapon.inventory.size() - 1
-	i = i + 1
+	i += 1
 	if i > size:
 		i = size
 	change_weapon(i)
@@ -104,7 +118,7 @@ func next_weap():
 func prev_weap():
 	var i = weapon.active
 	var size = weapon.inventory.size()
-	i = i - 1
+	i -= 1
 	if i < 0:
 		i = 0
 	change_weapon(i)

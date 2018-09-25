@@ -15,7 +15,7 @@ func _init():
 	inventory[0].set_bonus_dmg(0)
 	w = Wearables.new()
 	inventory.append(w)
-	inventory[1].set_name("")
+	inventory[1].set_name("no ring")
 	inventory[1].set_type("Ring")
 	inventory[1].set_bonus_ac(0)
 	inventory[1].set_bonus_dmg(0)
@@ -36,11 +36,32 @@ func add_wearable(item):
 	inventory[0].set_bonus_dmg(item.bonus_dmg)
 	if item.type == "Ring":
 		active_ring = 0 #hack, dont do it this way
-		active_amulet = active_amulet + 1 #hack, dont do it this way
+		active_amulet += 1 #hack, dont do it this way
 	if item.type == "Amulet":
 		active_amulet = 0 #hack, dont do it this way
-		active_ring = active_ring + 1 #hack, dont do it this way
+		active_ring += 1 #hack, dont do it this way
 
+func get_next_ring(i = active_ring):
+	var size = inventory.size()
+	i += 1
+	if i == size:
+		i = 0
+	while not get_type(i) == 'Ring':
+		i += 1
+		if i == size:
+			i = 0
+	return i
+
+func get_next_amulet(i = active_amulet):
+	var size = inventory.size()
+	i += 1
+	if i == size:
+		i = 0
+	while not get_type(i) == 'Amulet':
+		i += 1
+		if i == size:
+			i = 0
+	return i
 
 func get_ring_name(i = active_ring):
 	return inventory[i].get_name()

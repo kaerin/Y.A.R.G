@@ -26,7 +26,7 @@ func add_weapon(item):
 	inventory[0].set_name(item.base_name)
 	inventory[0].set_dmg_type(item.damage_type)
 	inventory[0].set_damage(item.min_damage,item.max_damage)
-	active = active + 1 #hack, dont do it this way
+	active += 1 #hack, dont do it this way
 
 func get_name(i = active):
 	return inventory[i].get_name()

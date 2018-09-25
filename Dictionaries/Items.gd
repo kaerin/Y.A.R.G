@@ -3,7 +3,8 @@ extends Node
 enum	WEAPONS {FIST, SWORD, DAGGER, CLUB, SPEAR}
 enum	TYPE	{CLOTH, LEATHER, CHAIN, PLATE}
 enum	LOC		{CHEST, HEAD, ARMS, LEGS}
-enum	WEAR	{AMULET, RING}
+enum	WEAR	{AMULET, NECKLACE, RING, EARING}
+
 
 var weapons = {}
 var chest	= {}
@@ -44,5 +45,7 @@ func _ready():
 	armour[HEAD][CHAIN] 	= {base_type = 'Armour', location = HEAD, loc_name = 'Head', base_name = 'Chain', armor_class = 6, res_slash = 2, res_stab = 1, res_blunt = 2, to_hit = -1, weight = 6}
 	armour[HEAD][PLATE] 	= {base_type = 'Armour', location = HEAD, loc_name = 'Head', base_name = 'Plate', armor_class = 8, res_slash = 4, res_stab = 2, res_blunt = 4, to_hit = -2, weight = 6}
 	
-	wear[AMULET] = {base_type = 'Wearable', type = 'Amulet', base_name = 'Necklace', bonus_ac = 0, bonus_dmg = 0}
-	wear[RING] = {base_type = 'Wearable', type = 'Ring', base_name = 'Mood Ring', bonus_ac = 0, bonus_dmg = 0}
+	wear[AMULET] = {base_type = 'Wearable', type = 'Amulet', base_name = 'Amulet', bonus_ac = 0, bonus_dmg = 0}
+	wear[NECKLACE] = {base_type = 'Wearable', type = 'Amulet', base_name = 'Necklace', bonus_ac = 0, bonus_dmg = 0}
+	wear[RING] = {base_type = 'Wearable', type = 'Ring', base_name = 'Ring', bonus_ac = 0, bonus_dmg = 0}
+	wear[EARING] = {base_type = 'Wearable', type = 'Ring', base_name = 'Ear Ring', bonus_ac = 0, bonus_dmg = 0}
