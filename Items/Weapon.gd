@@ -1,7 +1,7 @@
 extends Reference
 
 var Weapons = load("res://Items/Weapons.gd")
-var active
+var active = 0
 var inventory = []
 
 func _init():
@@ -27,10 +27,10 @@ func add_weapon(item):
 	inventory[0].set_type(item.damage_type)
 	inventory[0].set_damage(item.min_damage,item.max_damage)
 
-func get_name(i):
+func get_name(i = active):
 	return inventory[i].get_name()
 
-func get_type(i):
+func get_type(i = active):
 	return inventory[i].get_type()
 
 func equip_weapon(i):

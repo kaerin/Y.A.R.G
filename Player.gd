@@ -8,6 +8,7 @@ const RIGHT	= Vector2(1 , 0)
 onready var grid_map = get_parent()
 onready var dic_weapon = get_node("/root/BaseNode/Dictionaries/Items").weapons
 onready var inventory = get_node("Inventory")
+onready var Game = get_node("/root/BaseNode")
 #onready var weapons = load("res://Items/Weapon.gd") #load class
 
 var Dialog
@@ -33,9 +34,7 @@ func _process(delta):
 		#DELME to here
 	
 	if Input.is_action_just_pressed("add_enemy"):
-		Dialog = get_node("/root/BaseNode/Grid/Dialog")
-		Dialog.set_label("You have added an enemy")
-		Dialog.show_label() #Find label, Set label then show it, will timeout and hide after 1 second
+		Game.Dialog.print_label("You have added an enemy")
 		grid_map.add_enemies()
 	
 	var direction = Vector2()

@@ -5,17 +5,14 @@ var half_tile_size = tile_size / 2
 
 var grid_size = Vector2(8,8)
 var grid = []
-var Dialog
+
 
 const INVALID = -999
 
 onready var enemy = preload("res://Enemies/Enemy.tscn")
 onready var item  = preload("res://Items/Item.tscn")
-onready var dialog = preload("res://Dialog/Msg.tscn")
 
 func _ready():
-	Dialog = dialog.instance()
-	add_child(Dialog) #Create then show hide label as needed
 	for x in range (grid_size.x):
 		grid.append([])
 		for y in range (grid_size.y):

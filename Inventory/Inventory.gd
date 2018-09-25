@@ -3,17 +3,17 @@ extends Node
 onready var dic_items = get_parent().get_parent().get_parent().get_node("Dictionaries/Items")
 onready var inv = load("res://Inventory/Inventory.tscn")
 onready var Weapon = load("res://Items/Weapon.gd")
+onready var Game = get_node("/root/BaseNode") #Get the Game node for diallog
 
 enum EQUIPPED {HEAD, CHEST, HANDS, FEET, LEGS, ARMS, WEAPON}
 
 var inventory = []
-var cur_num = 0
 var inv_displayed = false
 var equipped = []
-var Dialog
 var weapon
 
 func _ready():
+	
 	equipped.resize(EQUIPPED.size())
 	equipped[WEAPON] = dic_items.weapons[dic_items.WEAPONS.FIST]
 	weapon = Weapon.new() #enemies can be given the same weapon class and weapon inventory
@@ -39,7 +39,9 @@ func get_damage():
 		print("Weapon damage: ", weapon.get_damage() ) #get the currently equppied weapons damage from the class
 		#can do this add all damage and bonuses together
 		#damage = weapon.get_damage() + ring.get_dmg_bonus() + amulet.get_dmg_bonus() 
-		return(weapon.get_damage()) #get damage from equipped weapon class, the same as inventory.weapon.get_damage() called from the player class
+		damage = weapon.get_damage() #get damage from equipped weapon class, the same as inventory.weapon.get_damage() called from the player class
+		Game.Dialog.print_label("Your weapon: " + weapon.get_name() + " did " + str(damage) + " damage.", 2)
+		return(damage) 
 
 
 func set_add_item(item):
@@ -47,9 +49,8 @@ func set_add_item(item):
 		inventory.append(item)
 		if inv_displayed:
 			_inventory(false)
-		Dialog = get_node("/root/BaseNode/Grid/Dialog")
-		Dialog.set_label("You have collected a " + item.base_type + " " + item.base_name)
-		Dialog.show_label() #Find label, Set label then show it, will timeout and hide after 1 second
+		#var Dialog = get_node("/root/BaseNode/Grid/Dialog")
+		Game.Dialog.print_label("You have collected a " + item.base_type + " " + item.base_name) #Set the label, Show label will timeout and hide after 1 second
 		
 		if item.base_type == "Weapon":
 			weapon.add_weapon(item) #adding weapon to weapon class inventory
@@ -59,28 +60,29 @@ func set_add_item(item):
 # and handle various item types in "Equipped" as in enum array above
 
 func next_weap():
-	weapon.equip_weapon(0) #always equip most recent weapon 
-	var size = inventory.size()
-	if size:
-		cur_num = cur_num + 1
-		if cur_num > size:
-			cur_num = size
-		change_weapon(cur_num)
+	var i = weapon.active
+	var size = weapon.inventory.size() - 1
+	i = i + 1
+	if i > size:
+		i = size
+	change_weapon(i)
 	
 func prev_weap():
-	var size = inventory.size()
-	if size:
-		cur_num = cur_num - 1
-		if cur_num < 1:
-			cur_num = 1
-		change_weapon(cur_num)
+	var i = weapon.active
+	var size = weapon.inventory.size()
+	i = i - 1
+	if i < 0:
+		i = 0
+	change_weapon(i)
 	
 func change_weapon(num):
-	if inventory[num-1].base_type == 'Weapon':		#QUICK FIX to stop equipping Chest armor as weapon, not final solution.
-		equipped[WEAPON] = inventory[num-1]
-		print("Weapon: ",equipped[WEAPON].base_name)
-	else:
-		print('num: ',num, ' not a weapon')
+#	if inventory[num-1].base_type == 'Weapon':		#QUICK FIX to stop equipping Chest armor as weapon, not final solution.
+#		equipped[WEAPON] = inventory[num-1]
+#		print("Weapon: ",equipped[WEAPON].base_name)
+#	else:
+#		print('num: ',num, ' not a weapon')
+	weapon.equip_weapon(num)
+	Game.Dialog.print_label("Your equiped weapon: " + weapon.get_name(), 2)
 	if inv_displayed:
 		_inventory(false)
 		
@@ -104,6 +106,7 @@ func _inventory(toggle):
 				n.queue_free()
 				
 		var i = 1
+		
 		for inv_item in inventory:
 			var entry = $Inventory/Template/Item.duplicate()
 			$Inventory/HBox/VBox_Inv.add_child(entry)
@@ -119,9 +122,11 @@ func _inventory(toggle):
 			if not n.get_name() == "Title":
 				n.queue_free()
 	
-		for equip_item in equipped:
-			if not equip_item == null:
-				var entry = Label.new()#$Inventory/HBox/VBox_Equip/Label.new()
-				$Inventory/HBox/VBox_Equip.add_child(entry)
-				entry.text = equipped[WEAPON].base_name
+		
+		var equip_item = weapon.get_name()
+		if not equip_item == null:
+			var entry = Label.new()#$Inventory/HBox/VBox_Equip/Label.new()
+			$Inventory/HBox/VBox_Equip.add_child(entry)
+#				entry.text = equipped[WEAPON].base_name
+			entry.text = equip_item
 			

@@ -1,8 +1,10 @@
 extends Control
 
 onready var Label = get_node("Margin/Label")
+var timer_default = 1
 
-func show_label():
+func show_label(time = timer_default):
+	$Timer.wait_time = time
 	Label.show()
 	$Timer.start()
 
@@ -14,3 +16,7 @@ func _on_Timer_timeout():
 	
 func hide_label():
 	Label.hide()
+
+func print_label(text, time = timer_default):
+	set_label(text)
+	show_label(time)
