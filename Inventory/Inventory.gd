@@ -16,8 +16,9 @@ var weapon
 func _ready():
 	equipped.resize(EQUIPPED.size())
 	equipped[WEAPON] = dic_items.weapons[dic_items.WEAPONS.FIST]
-	weapon = Weapon.new()
-	
+	weapon = Weapon.new() #enemies can be given the same weapon class and weapon inventory
+	#could also have npc and companions to also have the same weapon class and inventory	
+	#have helper functions like auto-equip highest dmg weapon to use for player or others
 
 
 func _process(delta):
@@ -28,13 +29,17 @@ func _process(delta):
 	if Input.is_action_just_pressed("ui_inv"):
 		var toggle = true
 		_inventory(toggle)
+		for i in weapon.inventory: #print weapon inventory
+			print(i.get_name())
 	
 
 func get_damage():
 		var damage = randi() % (equipped[WEAPON].max_damage + 1 - equipped[WEAPON].min_damage) + equipped[WEAPON].min_damage
 		print(equipped[WEAPON].base_name, ' ',damage, ' damage')
 		print("Weapon damage: ", weapon.get_damage() ) #get the currently equppied weapons damage from the class
-		return(damage)
+		#can do this add all damage and bonuses together
+		#damage = weapon.get_damage() + ring.get_dmg_bonus() + amulet.get_dmg_bonus() 
+		return(weapon.get_damage()) #get damage from equipped weapon class, the same as inventory.weapon.get_damage() called from the player class
 
 
 func set_add_item(item):

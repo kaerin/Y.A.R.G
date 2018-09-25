@@ -1,16 +1,24 @@
 extends Reference
 
 var Weapons = load("res://Items/Weapons.gd")
-var active = -1 #shouldnt be -1
+var active
+var inventory = []
+
+func _init():
+	print("weapon reference initialised, adding fist as first weapon")
+	var w = Weapons.new()
+	inventory.push_front(w)
+	inventory[0].set_name("Fist")
+	inventory[0].set_type("Blunt")
+	inventory[0].set_damage(50,99)
+	active = 0
 
 func print():
-	print("Executed print function from weapon class")
+	print("Executed debug print function from weapon class")
 
 #Each item type has its own class: wepaon, armour, misc
 #Weapons class contain weapons in inventory
 #Repeat class for armor
-
-var inventory = []
 
 func add_weapon(item):
 	var w = Weapons.new()
@@ -29,10 +37,7 @@ func equip_weapon(i):
 	active = i
 	
 func get_damage():
-	if active == -1 :
-		return 99 #Fists
-	else:
-		return inventory[active].get_damage()
+	return inventory[active].get_damage()
 		
 
 #DELME below only for example	
