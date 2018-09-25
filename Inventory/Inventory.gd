@@ -5,8 +5,8 @@ onready var inv = load("res://Inventory/Inventory.tscn")
 onready var Weapon = load("res://Items/Weapon.gd")
 onready var Armour = load("res://Items/Armour.gd")
 onready var Game = get_node("/root/BaseNode") #Get the Game node for diallog
-
-enum EQUIPPED {HEAD, CHEST, HANDS, FEET, LEGS, ARMS, WEAPON}
+enum	LOC		{CHEST, HEAD, ARMS, LEGS}
+enum EQUIPPED {CHEST, HEAD, HANDS, FEET, LEGS, ARMS, WEAPON}
 
 var inventory = []
 var inv_displayed = false
@@ -32,10 +32,15 @@ func _process(delta):
 	if Input.is_action_just_pressed("ui_inv"):
 		var toggle = true
 		_inventory(toggle)
-		for i in weapon.inventory: #print weapon inventory
-			print(i.get_name())
-	if Input.is_action_just_pressed("set_armour"):
-		set_armour() #cycles through armour and sets
+#		for i in weapon.inventory: #print weapon inventory
+#			print(i.get_name())
+		print(armour.get_equip_name(CHEST), armour.get_equip_name(HEAD))
+	if Input.is_action_just_pressed("set_chest_armour"):
+#		var loc = CHEST #location needs to be settablle some how
+		set_armour(CHEST) #cycles through armour and sets
+	if Input.is_action_just_pressed("set_head_armour"):
+#		var loc = HEAD #location needs to be settablle some how
+		set_armour(HEAD) #cycles through armour and sets
 	
 
 func get_damage():
@@ -55,25 +60,30 @@ func set_add_item(item):
 		if inv_displayed:
 			_inventory(false)
 		#var Dialog = get_node("/root/BaseNode/Grid/Dialog")
-		Game.Dialog.print_label("You have collected a " + item.base_type + " " + item.base_name) #Set the label, Show label will timeout and hide after 1 second
+#		Game.Dialog.print_label("You have collected a " + item.base_type + " " + item.base_name) #Set the label, Show label will timeout and hide after 1 second
 		
 		if item.base_type == "Weapon":
 			weapon.add_weapon(item) #adding weapon to weapon class inventory
-			print("You just collected a weapon name: ", weapon.get_name(0), " type: ", weapon.get_type(0) )
-		if item.base_type == "Chest": #?? Shoulld be armour, dictionary should have a 'location' key
+			Game.Dialog.print_label("You just collected a weapon name: " + weapon.get_name(0) + " type: " + weapon.get_type(0), 2 )
+		if item.base_type == "Armour":
 			armour.add_armour(item)
+			Game.Dialog.print_label("You just collected some: " + armour.get_name(0) + " for your " + str(armour.get_loc_name(0)), 2 )
 
 # This section needs to be changed eventually to drag and drop system from inventory to equipped --------------------
 # and handle various item types in "Equipped" as in enum array above
 
-func set_armour():
-	var i = armour.active
+func set_armour(loc):
+	var i = armour.active[loc]
 	var size = armour.inventory.size() - 1
 	i = i + 1
 	if i > size:
 		i = 0
-	armour.equip_armour(i)
-	Game.Dialog.print_label("Your equiped armour: " + armour.get_name(), 2)
+	while not loc == armour.get_location(i):
+		i = i + 1
+		if i > size:
+			i = 0	
+	armour.equip_armour(loc, i)
+	Game.Dialog.print_label("You equiped " + str(armour.get_loc_name(i)) + " armour: " + armour.get_name(i), 2)
 	if inv_displayed:
 		_inventory(false)
 
@@ -151,9 +161,9 @@ func _inventory(toggle):
 #				entry.text = equipped[WEAPON].base_name
 			entry.text = equip_item
 		
-		var equip_armour = armour.get_name()
-		if not equip_armour == null:
-			var entry = Label.new()#$Inventory/HBox/VBox_Equip/Label.new()
-			$Inventory/HBox/VBox_Armour.add_child(entry)
-#				entry.text = equipped[WEAPON].base_name
-			entry.text = equip_armour	
+		for equip_armour in [armour.get_equip_name(CHEST),armour.get_equip_name(HEAD)]:
+			if not equip_armour == null:
+				var entry = Label.new()#$Inventory/HBox/VBox_Equip/Label.new()
+				$Inventory/HBox/VBox_Armour.add_child(entry)
+	#				entry.text = equipped[WEAPON].base_name
+				entry.text = equip_armour

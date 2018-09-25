@@ -13,6 +13,7 @@ onready var grid_map = get_parent()
 onready var dic_enemies = get_parent().get_parent().get_node("Dictionaries/Enemies").enemies
 onready var dic_weapon = get_parent().get_parent().get_node("Dictionaries/Items").weapons
 onready var dic_chest = get_parent().get_parent().get_node("Dictionaries/Items").chest
+onready var dic_armour = get_parent().get_parent().get_node("Dictionaries/Items").armour
 
 func _ready():
 	#TODO random instancing of enemies in dictionary
@@ -21,13 +22,15 @@ func _ready():
 	$Sprite/Label.text = dic_enemies[rnd_enemy].base_name
 	
 	#TEMP ONLY random item in inventory to test dropping
-	var temp = randi() % 2 + 1
+	var temp = randi() % 2 + 1 #testing
+	temp = 2 #testing
 	if temp == 1:
 		var rnd_item = randi() % dic_weapon.size() 
 		inventory.append(dic_weapon[rnd_item])
 	elif temp == 2:
-		var rnd_item = randi() % dic_chest.size()
-		inventory.append(dic_chest[rnd_item])
+		var rnd_item = randi() % dic_armour[0].size() #change pick random location then random armour
+		var i = randi() % 2
+		inventory.append(dic_armour[i][rnd_item]) #0 should be random
 
 
 	

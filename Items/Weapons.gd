@@ -5,7 +5,7 @@ extends Reference
 var Name
 var DmgType
 var MinDamage
-var MaxDamage #etc
+var MaxDamage
 var BonusDamage = 0
 
 

@@ -1,12 +1,16 @@
 extends Node
 
 enum	WEAPONS {FIST, SWORD, DAGGER, CLUB, SPEAR}
-enum	CHEST	{CLOTH, LEATHER, CHAIN, PLATE}
+enum	TYPE	{CLOTH, LEATHER, CHAIN, PLATE}
+enum	LOC		{CHEST, HEAD, ARMS, LEGS}
 
 var weapons = {}
 var chest	= {}
+var armour	= []
 
 func _ready():
+	for i in range(2):
+		armour.append({})
 
 # ------------------------------- #
 # ---------- WEAPONS ------------ #
@@ -23,9 +27,17 @@ func _ready():
 # ---------- ARMOR -------------- #
 # ------------------------------- #
 
-	chest[CLOTH] 	= {base_type = 'Chest', base_name = 'Cloth', armor_class = 2, res_slash = 0, res_stab = 0, res_blunt = 0, to_hit = 0, weight = 6}
-	chest[LEATHER] 	= {base_type = 'Chest', base_name = 'Leather', armor_class = 4, res_slash = 1, res_stab = 0, res_blunt = 2, to_hit = 0, weight = 6}
-	chest[CHAIN] 	= {base_type = 'Chest', base_name = 'Chain', armor_class = 6, res_slash = 2, res_stab = 1, res_blunt = 2, to_hit = -1, weight = 6}
-	chest[PLATE] 	= {base_type = 'Chest', base_name = 'Plate', armor_class = 8, res_slash = 4, res_stab = 2, res_blunt = 4, to_hit = -2, weight = 6}
+#	chest[CLOTH] 	= {base_type = 'Armour', location = 'Chest', base_name = 'Cloth', armor_class = 2, res_slash = 0, res_stab = 0, res_blunt = 0, to_hit = 0, weight = 6}
+#	chest[LEATHER] 	= {base_type = 'Armour', location = 'Chest', base_name = 'Leather', armor_class = 4, res_slash = 1, res_stab = 0, res_blunt = 2, to_hit = 0, weight = 6}
+#	chest[CHAIN] 	= {base_type = 'Armour', location = 'Chest', base_name = 'Chain', armor_class = 6, res_slash = 2, res_stab = 1, res_blunt = 2, to_hit = -1, weight = 6}
+#	chest[PLATE] 	= {base_type = 'Armour', location = 'Chest', base_name = 'Plate', armor_class = 8, res_slash = 4, res_stab = 2, res_blunt = 4, to_hit = -2, weight = 6}
 	
+	armour[CHEST][CLOTH] 	= {base_type = 'Armour', location = CHEST, loc_name = 'Chest', base_name = 'Cloth', armor_class = 2, res_slash = 0, res_stab = 0, res_blunt = 0, to_hit = 0, weight = 6}
+	armour[CHEST][LEATHER]	= {base_type = 'Armour', location = CHEST, loc_name = 'Chest', base_name = 'Leather', armor_class = 4, res_slash = 1, res_stab = 0, res_blunt = 2, to_hit = 0, weight = 6}
+	armour[CHEST][CHAIN] 	= {base_type = 'Armour', location = CHEST, loc_name = 'Chest', base_name = 'Chain', armor_class = 6, res_slash = 2, res_stab = 1, res_blunt = 2, to_hit = -1, weight = 6}
+	armour[CHEST][PLATE] 	= {base_type = 'Armour', location = CHEST, loc_name = 'Chest', base_name = 'Plate', armor_class = 8, res_slash = 4, res_stab = 2, res_blunt = 4, to_hit = -2, weight = 6}
 	
+	armour[HEAD][CLOTH] 	= {base_type = 'Armour', location = HEAD, loc_name = 'Head', base_name = 'Cloth', armor_class = 2, res_slash = 0, res_stab = 0, res_blunt = 0, to_hit = 0, weight = 6}
+	armour[HEAD][LEATHER]	= {base_type = 'Armour', location = HEAD, loc_name = 'Head', base_name = 'Leather', armor_class = 4, res_slash = 1, res_stab = 0, res_blunt = 2, to_hit = 0, weight = 6}
+	armour[HEAD][CHAIN] 	= {base_type = 'Armour', location = HEAD, loc_name = 'Head', base_name = 'Chain', armor_class = 6, res_slash = 2, res_stab = 1, res_blunt = 2, to_hit = -1, weight = 6}
+	armour[HEAD][PLATE] 	= {base_type = 'Armour', location = HEAD, loc_name = 'Head', base_name = 'Plate', armor_class = 8, res_slash = 4, res_stab = 2, res_blunt = 4, to_hit = -2, weight = 6}
