@@ -38,7 +38,7 @@ func _process(delta):
 		_inventory(toggle)
 #		for i in weapon.inventory: #print weapon inventory
 #			print(i.get_name())
-		print(armour.get_equip_name(CHEST), armour.get_equip_name(HEAD))
+		print(armour.get_equip_name(CHEST), " ", armour.get_equip_name(HEAD), " ", wearable.get_bonus_dmg())
 	if Input.is_action_just_pressed("set_chest_armour"):
 #		var loc = CHEST #location needs to be settablle some how
 		set_armour(CHEST) #cycles through armour and sets
@@ -84,12 +84,14 @@ func set_add_item(item):
 # and handle various item types in "Equipped" as in enum array above
 
 func set_wear(type): #armour could be done this way
+	var msg = "You equiped "
 	if type == RING:
 		wearable.equip_ring(wearable.get_next_ring())
-		Game.Dialog.print_label("You equiped " + wearable.get_ring_name())
+		msg += wearable.get_ring_name()  + " AC: " + str(wearable.get_ring_bonus_ac()) + " Dmg: " + str(wearable.get_ring_bonus_dmg())
 	if type == AMULET:
 		wearable.equip_amulet(wearable.get_next_amulet())
-		Game.Dialog.print_label("You equiped " + wearable.get_amulet_name())
+		msg += wearable.get_amulet_name()  + " AC: " + str(wearable.get_amulet_bonus_ac()) + " Dmg: " + str(wearable.get_amulet_bonus_dmg())
+	Game.Dialog.print_label(msg,2)
 
 
 func set_armour(loc):

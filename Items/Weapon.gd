@@ -10,7 +10,7 @@ func _init():
 	inventory.push_front(w)
 	inventory[0].set_name("Fist")
 	inventory[0].set_dmg_type("Blunt")
-	inventory[0].set_damage(50,99)
+	inventory[0].set_damage(1,2)
 	active = 0
 
 func print():
