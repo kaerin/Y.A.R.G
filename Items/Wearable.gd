@@ -27,6 +27,10 @@ func print():
 #Weapons class contain weapons in inventory
 #Repeat class for armor
 
+func collect_wearable(item):
+	inventory.push_front(item)
+	active_ring += 1 #hack, dont do it this way
+	active_amulet += 1 #hack, dont do it this way
 func add_wearable(item, i = false):
 	var w = Wearables.new()
 	inventory.push_front(w)

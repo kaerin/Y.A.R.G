@@ -19,8 +19,13 @@ var Dialog
 
 func _process(delta):
 	if Input.is_action_just_pressed("ui_p"):
-		var item = grid_map.get_item(self)
-		inventory.set_add_item(item)
+		var item2 = grid_map.get_item2(self)
+		inventory.add_item(item2)
+		
+		var item = grid_map.get_item(self) #needed for the moment as it cleans up items fro grid
+#		inventory.set_add_item(item)
+		
+		
 #		weap.print() #use class
 		
 		# DELME example only below

@@ -2,6 +2,7 @@ extends Reference
 
 #Class to store all wepaon information
 
+var BaseType = G.BaseType.Armour
 var Name
 var Location
 var LocName

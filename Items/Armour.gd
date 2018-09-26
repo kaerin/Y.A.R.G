@@ -25,6 +25,10 @@ func _init(i):
 func print():
 	print("Executed debug print function from armour class")
 
+func collect_armour(item):
+	inventory.push_front(item)
+	active[G.LOC.CHEST] += 1 #hack, dumb way of doing it, dont repeat, use an index
+	active[G.LOC.HEAD] += 1 #hack, dumb way of doing it, dont repeat, use an index
 func add_armour(item, i = false):
 	var a = Armours.new()
 	inventory.push_front(a)

@@ -74,6 +74,13 @@ func get_item(child):
 				object.queue_free()
 				return item
 
+func get_item2(child): #Returns dropped item
+	var cur_pos = world_to_map(child.get_position())
+	if not grid[cur_pos.x][cur_pos.y].empty():
+		#print (grid[cur_pos.x][cur_pos.y].size())
+		for object in grid[cur_pos.x][cur_pos.y]:
+			return object.item
+
 func set_kill_me(child):
 	var cur_pos = world_to_map(child.get_position())
 	
@@ -82,7 +89,13 @@ func set_kill_me(child):
 			var new_object = item.instance()
 			new_object.set_position(map_to_world(cur_pos) + half_tile_size)
 			grid[cur_pos.x][cur_pos.y].append(new_object)
-			new_object.object = object			
+			new_object.object = object
+			if child.weapon.inventory.size(): #if statements because the enemies are currentlly created with only item
+				new_object.item = child.weapon.inventory[0] #Fully equipped enemeies carry many items, these needs to change
+			elif child.armour.inventory.size():
+				new_object.item = child.armour.inventory[0]
+			elif child.wearable.inventory.size():
+				new_object.item = child.wearable.inventory[0] #Drop a single item			
 			add_child(new_object)
 
 	var child_idx = grid[cur_pos.x][cur_pos.y].find(child)

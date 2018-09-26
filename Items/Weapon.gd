@@ -22,7 +22,9 @@ func print():
 #Each item type has its own class: wepaon, armour, misc
 #Weapons class contain weapons in inventory
 #Repeat class for armor
-
+func collect_weapon(item):
+	inventory.push_front(item) #directly copy dropped item into inventory
+	active += 1 #hack, dont do it this way
 func add_weapon(item, i = false):
 	var w = Weapons.new()
 	inventory.push_front(w)

@@ -2,6 +2,7 @@ extends Reference
 
 #Class to store all wepaon information
 
+var BaseType = G.BaseType.Weap
 var Name
 var DmgType
 var MinDamage = 1

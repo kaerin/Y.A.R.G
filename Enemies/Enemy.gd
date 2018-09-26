@@ -10,6 +10,7 @@ var direction = Vector2()
 var inventory = []
 var weapon
 var armour
+var wearable
 
 onready var grid_map = get_parent()
 onready var dic_enemies = get_parent().get_parent().get_node("Dictionaries/Enemies").enemies
@@ -19,10 +20,12 @@ onready var dic_armour = get_parent().get_parent().get_node("Dictionaries/Items"
 onready var dic_wear = get_parent().get_parent().get_node("Dictionaries/Items").wear
 onready var Weapon = load("res://Items/Weapon.gd")
 onready var Armour = load("res://Items/Armour.gd")
+onready var Wearable = load("res://Items/Wearable.gd")
 
 func _ready():
 	weapon = Weapon.new(G.CHAR.ENEMY) #enemies can be given the same weapon class and weapon inventory
 	armour = Armour.new(G.CHAR.ENEMY)
+	wearable = Wearable.new(G.CHAR.ENEMY)
 	#TODO random instancing of enemies in dictionary
 	var rnd_enemy = randi() % dic_enemies.size()
 	hp = randi() % (dic_enemies[rnd_enemy].max_hp - dic_enemies[rnd_enemy].min_hp) + dic_enemies[rnd_enemy].min_hp
@@ -30,18 +33,20 @@ func _ready():
 	
 	#TEMP ONLY random item in inventory to test dropping
 	var temp = randi() % 3 + 1 #testing
-#	temp = 1 #testing
+#	temp = 3 #testing
 	if temp == 1:
 		var rnd_item = randi() % dic_weapon.size() 
 		inventory.append(dic_weapon[rnd_item])
-		weapon.add_weapon(dic_weapon[rnd_item])
+		weapon.add_weapon(dic_weapon[rnd_item]) #equip enemy with random base weapon
 	elif temp == 2:
 		var rnd_item = randi() % dic_armour[0].size() #change pick random location then random armour
 		var i = randi() % 2
 		inventory.append(dic_armour[i][rnd_item]) #0 should be random
+		armour.add_armour(dic_armour[i][rnd_item])
 	elif temp == 3:
 		var rnd_item = randi() % dic_wear.size() 
 		inventory.append(dic_wear[rnd_item])
+		wearable.add_wearable(dic_wear[rnd_item])
 
 
 	
