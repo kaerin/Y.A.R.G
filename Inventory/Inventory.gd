@@ -6,6 +6,10 @@ onready var Weapon = load("res://Items/Weapon.gd")
 onready var Armour = load("res://Items/Armour.gd")
 onready var Wearable = load("res://Items/Wearable.gd")
 onready var Game = get_node("/root/BaseNode") #Get the Game node for diallog
+onready var new_inventory = load("res://Dev/Adrian/Inventory_window.tscn")
+
+
+
 #enum	LOC		{CHEST, HEAD, ARMS, LEGS}
 #enum 	EQUIPPED {CHEST, HEAD, HANDS, FEET, LEGS, ARMS, WEAPON}
 #enum 	WEAR {RING, AMULET}
@@ -158,8 +162,13 @@ func change_weapon(num):
 # Then pass data to that script for displaying and setting
 func _inventory(toggle):
 
+	#Temp load new inventory page
+
+
+
 	if inv_displayed and toggle: #You assign toggle to a variable previously then pass that variable then reference the same variable
-		$Inventory.queue_free()
+		$Inventory.queue_free()		#mainly becuase "i" wasnt then only thing accesing inventory, change weapon etc would all close inventory
+		$New_Inventory.queue_free()
 		inv_displayed = false
 	else:
 
@@ -167,6 +176,10 @@ func _inventory(toggle):
 			var inv_dialog = inv.instance()
 			add_child(inv_dialog)
 			inv_displayed = true #To keep things clean only need to set something when its not
+			
+			var new_inv = new_inventory.instance()
+			add_child(new_inv)
+			new_inv.show_inventory(weapon, armour, wearable)
 				
 		var inv_list = $Inventory/HBox/VBox_Inv.get_children()
 		for n in inv_list:
