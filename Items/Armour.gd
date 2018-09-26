@@ -1,23 +1,23 @@
 extends Reference
 
-enum	LOC		{CHEST, HEAD, ARMS, LEGS}
 var Armours = load("res://Items/Armours.gd")
 var active = [0,1,0,0]
 var inventory = []
 
 func _init():
 	print("Armour reference initialised, adding t-shirt")
+	print(G.LOC.CHEST)
 	var a = Armours.new()
 	inventory.append(a)
 	a = Armours.new()
 	inventory.append(a)
 	inventory[0].set_name("T-Shirt")
-	inventory[0].set_location(CHEST)
-	inventory[0].set_loc_name("Chest")
+	inventory[0].set_location(G.LOC.CHEST)
+	inventory[0].set_loc_name(G.Loc.Chest)
 	inventory[0].set_ac(1)
 	inventory[1].set_name("Hat")
-	inventory[1].set_location(HEAD)
-	inventory[1].set_loc_name("Head")
+	inventory[1].set_location(G.LOC.HEAD)
+	inventory[1].set_loc_name(G.Loc.Head)
 	inventory[1].set_ac(1)
 
 func print():
@@ -30,8 +30,8 @@ func add_armour(item):
 	inventory[0].set_location(item.location)
 	inventory[0].set_loc_name(item.loc_name)
 	inventory[0].set_ac(item.armor_class)
-	active[CHEST] += 1 #hack, dumb way of doing it, dont repeat, use an index
-	active[HEAD] += 1 #hack, dumb way of doing it, dont repeat, use an index
+	active[G.LOC.CHEST] += 1 #hack, dumb way of doing it, dont repeat, use an index
+	active[G.LOC.HEAD] += 1 #hack, dumb way of doing it, dont repeat, use an index
 	alter_stats(0,10)
 
 func get_name(i):

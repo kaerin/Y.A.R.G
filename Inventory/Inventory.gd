@@ -6,9 +6,9 @@ onready var Weapon = load("res://Items/Weapon.gd")
 onready var Armour = load("res://Items/Armour.gd")
 onready var Wearable = load("res://Items/Wearable.gd")
 onready var Game = get_node("/root/BaseNode") #Get the Game node for diallog
-enum	LOC		{CHEST, HEAD, ARMS, LEGS}
-enum EQUIPPED {CHEST, HEAD, HANDS, FEET, LEGS, ARMS, WEAPON}
-enum WEAR {RING, AMULET}
+#enum	LOC		{CHEST, HEAD, ARMS, LEGS}
+#enum 	EQUIPPED {CHEST, HEAD, HANDS, FEET, LEGS, ARMS, WEAPON}
+#enum 	WEAR {RING, AMULET}
 
 var inventory = []
 var inv_displayed = false
@@ -19,8 +19,8 @@ var wearable
 
 func _ready():
 	
-	equipped.resize(EQUIPPED.size())
-	equipped[WEAPON] = dic_items.weapons[dic_items.WEAPONS.FIST]
+#	equipped.resize(EQUIPPED.size())
+#	equipped[WEAPON] = dic_items.weapons[dic_items.WEAPONS.FIST]
 	weapon = Weapon.new() #enemies can be given the same weapon class and weapon inventory
 	armour = Armour.new()
 	wearable = Wearable.new()
@@ -38,22 +38,23 @@ func _process(delta):
 		_inventory(toggle)
 #		for i in weapon.inventory: #print weapon inventory
 #			print(i.get_name())
-		print(armour.get_equip_name(CHEST), " ", armour.get_equip_name(HEAD), " ", wearable.get_bonus_dmg())
+		print(armour.get_equip_name(G.LOC.CHEST), " ", armour.get_equip_name(G.LOC.HEAD), " ", wearable.get_bonus_dmg())
 	if Input.is_action_just_pressed("set_chest_armour"):
 #		var loc = CHEST #location needs to be settablle some how
-		set_armour(CHEST) #cycles through armour and sets
+		set_armour(G.LOC.CHEST) #cycles through armour and sets
 	if Input.is_action_just_pressed("set_head_armour"):
 #		var loc = HEAD #location needs to be settablle some how
-		set_armour(HEAD) #cycles through armour and sets
+		set_armour(G.LOC.HEAD) #cycles through armour and sets
 	if Input.is_action_just_pressed("set_ring"):
-		set_wear(RING)
+		set_wear(G.WEAR.RING)
 	if Input.is_action_just_pressed("set_amulet"):
-		set_wear(AMULET)
+		set_wear(G.WEAR.AMULET)
 	
 
 func get_damage():
-		var damage = randi() % (equipped[WEAPON].max_damage + 1 - equipped[WEAPON].min_damage) + equipped[WEAPON].min_damage
-		print(equipped[WEAPON].base_name, ' ',damage, ' damage')
+		var damage #= randi() % (equipped[WEAPON].max_damage + 1 - equipped[WEAPON].min_damage) + equipped[WEAPON].min_damage
+		
+#		print(equipped[WEAPON].base_name, ' ',damage, ' damage')
 		print("Weapon damage: ", weapon.get_damage() ) #get the currently equppied weapons damage from the class
 		#can do this add all damage and bonuses together
 		#damage = weapon.get_damage() + ring.get_dmg_bonus() + amulet.get_dmg_bonus() 
@@ -70,13 +71,13 @@ func set_add_item(item):
 		#var Dialog = get_node("/root/BaseNode/Grid/Dialog")
 #		Game.Dialog.print_label("You have collected a " + item.base_type + " " + item.base_name) #Set the label, Show label will timeout and hide after 1 second
 		
-		if item.base_type == "Weapon":
+		if item.base_type == G.BaseType.Weap:
 			weapon.add_weapon(item) #adding weapon to weapon class inventory
 			Game.Dialog.print_label("You just collected a weapon name: " + weapon.get_name(0) + " type: " + weapon.get_type(0), 2 )
-		if item.base_type == "Armour":
+		if item.base_type == G.BaseType.Armour:
 			armour.add_armour(item)
 			Game.Dialog.print_label("You just collected some: " + armour.get_name(0) + " for your " + str(armour.get_loc_name(0)), 2 )
-		if item.base_type == "Wearable":
+		if item.base_type == G.BaseType.Wear:
 			wearable.add_wearable(item)
 			Game.Dialog.print_label("You just collected a " + wearable.get_name(0), 2 )
 
@@ -85,10 +86,10 @@ func set_add_item(item):
 
 func set_wear(type): #armour could be done this way
 	var msg = "You equiped "
-	if type == RING:
+	if type == G.WEAR.RING:
 		wearable.equip_ring(wearable.get_next_ring())
 		msg += wearable.get_ring_name()  + " AC: " + str(wearable.get_ring_bonus_ac()) + " Dmg: " + str(wearable.get_ring_bonus_dmg())
-	if type == AMULET:
+	if type == G.WEAR.AMULET:
 		wearable.equip_amulet(wearable.get_next_amulet())
 		msg += wearable.get_amulet_name()  + " AC: " + str(wearable.get_amulet_bonus_ac()) + " Dmg: " + str(wearable.get_amulet_bonus_dmg())
 	Game.Dialog.print_label(msg,2)
@@ -184,7 +185,7 @@ func _inventory(toggle):
 #				entry.text = equipped[WEAPON].base_name
 			entry.text = equip_item
 		
-		for equip_armour in [armour.get_equip_name(CHEST),armour.get_equip_name(HEAD)]:
+		for equip_armour in [armour.get_equip_name(G.LOC.CHEST),armour.get_equip_name(G.LOC.HEAD)]:
 			if not equip_armour == null:
 				var entry = Label.new()#$Inventory/HBox/VBox_Equip/Label.new()
 				$Inventory/HBox/VBox_Armour.add_child(entry)

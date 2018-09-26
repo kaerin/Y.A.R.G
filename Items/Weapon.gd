@@ -8,9 +8,9 @@ func _init():
 	print("Weapon reference initialised, adding fist as first weapon")
 	var w = Weapons.new()
 	inventory.push_front(w)
-	inventory[0].set_name("Fist")
-	inventory[0].set_dmg_type("Blunt")
-	inventory[0].set_damage(1,2)
+	inventory[0].set_name(G.Weap.Fist)
+	inventory[0].set_dmg_type(G.WeapType.Blunt)
+	inventory[0].set_damage(91,92)
 	active = 0
 
 func print():

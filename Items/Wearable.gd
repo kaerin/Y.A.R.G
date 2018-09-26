@@ -10,12 +10,12 @@ func _init():
 	var w = Wearables.new()
 	inventory.append(w)
 	inventory[0].set_name("Clock Amulet of the 80s")
-	inventory[0].set_type("Amulet")
+	inventory[0].set_type(G.WearType.Amulet)
 	inventory[0].set_bonus_ac(-1)
 	w = Wearables.new()
 	inventory.append(w)
 	inventory[1].set_name("no ring")
-	inventory[1].set_type("Ring")
+	inventory[1].set_type(G.WearType.Ring)
 
 func print():
 	print("Executed debug print function from wearable class")
@@ -40,7 +40,7 @@ func get_next_ring(i = active_ring):
 	i += 1
 	if i == size:
 		i = 0
-	while not get_type(i) == 'Ring':
+	while not get_type(i) == G.WearType.Ring:
 		i += 1
 		if i == size:
 			i = 0
@@ -51,7 +51,7 @@ func get_next_amulet(i = active_amulet):
 	i += 1
 	if i == size:
 		i = 0
-	while not get_type(i) == 'Amulet':
+	while not get_type(i) == G.WearType.Amulet:
 		i += 1
 		if i == size:
 			i = 0
