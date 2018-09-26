@@ -5,10 +5,10 @@ var active = 0
 var inventory = []
 
 func _init(i):
-	print("Weapon reference initialised, adding fist as first weapon ")
 	if i == G.CHAR.ENEMY:
-		pass
+		print("New enemy weapon class")
 	elif i == G.CHAR.PLAYER:
+		print("Weapon reference initialised, adding fist as first weapon ")
 		var w = Weapons.new()
 		inventory.push_front(w)
 		inventory[0].set_name(G.Weap.Fist)
@@ -23,14 +23,15 @@ func print():
 #Weapons class contain weapons in inventory
 #Repeat class for armor
 
-func add_weapon(item):
+func add_weapon(item, i = false):
 	var w = Weapons.new()
 	inventory.push_front(w)
 	inventory[0].set_name(item.base_name)
 	inventory[0].set_dmg_type(item.damage_type)
 	inventory[0].set_damage(item.min_damage,item.max_damage)
 	active += 1 #hack, dont do it this way
-	alter_stats(0,10)
+	if i:
+		alter_stats(0,10)
 
 func get_name(i = active):
 	return inventory[i].get_name()

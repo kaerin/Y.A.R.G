@@ -72,13 +72,13 @@ func set_add_item(item):
 #		Game.Dialog.print_label("You have collected a " + item.base_type + " " + item.base_name) #Set the label, Show label will timeout and hide after 1 second
 		
 		if item.base_type == G.BaseType.Weap:
-			weapon.add_weapon(item) #adding weapon to weapon class inventory
+			weapon.add_weapon(item, true) #adding weapon to weapon class inventory
 			Game.Dialog.print_label("You just collected a weapon name: " + weapon.get_name(0) + " type: " + weapon.get_type(0), 2 )
 		if item.base_type == G.BaseType.Armour:
-			armour.add_armour(item)
+			armour.add_armour(item, true)
 			Game.Dialog.print_label("You just collected some: " + armour.get_name(0) + " for your " + str(armour.get_loc_name(0)), 2 )
 		if item.base_type == G.BaseType.Wear:
-			wearable.add_wearable(item)
+			wearable.add_wearable(item, true)
 			Game.Dialog.print_label("You just collected a " + wearable.get_name(0), 2 )
 
 # This section needs to be changed eventually to drag and drop system from inventory to equipped --------------------

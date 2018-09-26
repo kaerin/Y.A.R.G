@@ -5,10 +5,10 @@ var active = [0,1,0,0]
 var inventory = []
 
 func _init(i):
-	print("Armour reference initialised, adding t-shirt")
 	if i == G.CHAR.ENEMY:
-		pass
+		print("New enemy armour class")
 	elif i == G.CHAR.PLAYER:
+		print("Armour reference initialised, adding t-shirt")
 		var a = Armours.new()
 		inventory.append(a)
 		a = Armours.new()
@@ -25,7 +25,7 @@ func _init(i):
 func print():
 	print("Executed debug print function from armour class")
 
-func add_armour(item):
+func add_armour(item, i = false):
 	var a = Armours.new()
 	inventory.push_front(a)
 	inventory[0].set_name(item.base_name)
@@ -34,7 +34,8 @@ func add_armour(item):
 	inventory[0].set_ac(item.armor_class)
 	active[G.LOC.CHEST] += 1 #hack, dumb way of doing it, dont repeat, use an index
 	active[G.LOC.HEAD] += 1 #hack, dumb way of doing it, dont repeat, use an index
-	alter_stats(0,10)
+	if i:
+		alter_stats(0,10)
 
 func get_name(i):
 	return inventory[i].get_name()

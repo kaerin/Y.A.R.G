@@ -6,10 +6,10 @@ var active_ring = 1
 var inventory = []
 
 func _init(i):
-	print("Wearable reference initialised, adding large plastic clock amulet")
 	if i == G.CHAR.ENEMY:
 		pass
 	elif i == G.CHAR.PLAYER:
+		print("Wearable reference initialised, adding large plastic clock amulet")
 		var w = Wearables.new()
 		inventory.append(w)
 		inventory[0].set_name("Clock Amulet of the 80s")
@@ -27,7 +27,7 @@ func print():
 #Weapons class contain weapons in inventory
 #Repeat class for armor
 
-func add_wearable(item):
+func add_wearable(item, i = false):
 	var w = Wearables.new()
 	inventory.push_front(w)
 	inventory[0].set_name(item.base_name)
@@ -36,7 +36,8 @@ func add_wearable(item):
 	inventory[0].set_bonus_dmg(item.bonus_dmg)
 	active_ring += 1 #hack, dont do it this way
 	active_amulet += 1 #hack, dont do it this way
-	alter_stats(0,10)
+	if i:
+		alter_stats(0,10)
 
 func get_next_ring(i = active_ring):
 	var size = inventory.size()
