@@ -3,7 +3,7 @@ extends Label
 var map = []
 var height = 70
 var width = 140
-var factor = 2.5 #higher means less blocks removed
+var factor = 3 #higher means less blocks removed
 var start = Vector2()
 var end = Vector2()
 var delay = .01
@@ -25,7 +25,7 @@ func _ready():
 	
 	start.x = randi() % height
 	start.y = randi() % width
-	end.x = randi() % height
+	end = start
 	while abs(end.x - start.x) < height * 0.4:
 		end.x = randi() % height
 	end.y = randi() % width
@@ -41,7 +41,7 @@ func _ready():
 		var clear = Vector2()
 		clear.x = randi() % height
 		clear.y = randi() % width
-		while clear == start or clear == end:
+		while clear == start or clear == end or map[clear.x][clear.y] == " ":
 			clear.x = randi() % height
 			clear.y = randi() % width
 		map[clear.x][clear.y] = " "
@@ -65,18 +65,18 @@ func findNeigh(path):
 			var check = i + d
 			if check.x < 0:
 				check.x = 0
+			elif check.x == height:
+				check.x -= 1
 			if check.y < 0:
 				check.y = 0
-			if check.x == height:
-				check.x -= 1
-			if check.y == width:
+			elif check.y == width:
 				check.y -= 1
-			if map[check.x][check.y] == "E":
-				goodMap = "Good"
-				return []
 			if map[check.x][check.y] == "+":
 				map[check.x][check.y] = "X"
 				newPath.append(check)
+			elif map[check.x][check.y] == "E":
+				goodMap = "Good"
+				return []
 	return newPath
 
 func show(text = ""):
