@@ -5,6 +5,7 @@ enum	WEAP	{FIST, SWORD, DAGGER, CLUB, SPEAR} #Wepaons
 enum	MAT		{CLOTH, LEATHER, CHAIN, PLATE} #Material
 enum	LOC		{CHEST, HEAD, ARMS, LEGS} #Location
 enum	WEAR	{AMULET, NECKLACE, RING, EARING} #Wear location/type
+enum	CHAR	{PLAYER, ENEMY, NPC}
 
 #CamelCaseForText
 var BaseType = {Weap = "Weapon", Armour = "Armour", Wear = "Wearable"}

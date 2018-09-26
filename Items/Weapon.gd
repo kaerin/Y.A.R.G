@@ -4,14 +4,17 @@ var Weapons = load("res://Items/Weapons.gd")
 var active = 0
 var inventory = []
 
-func _init():
-	print("Weapon reference initialised, adding fist as first weapon")
-	var w = Weapons.new()
-	inventory.push_front(w)
-	inventory[0].set_name(G.Weap.Fist)
-	inventory[0].set_dmg_type(G.WeapType.Blunt)
-	inventory[0].set_damage(91,92)
-	active = 0
+func _init(i):
+	print("Weapon reference initialised, adding fist as first weapon ")
+	if i == G.CHAR.ENEMY:
+		pass
+	elif i == G.CHAR.PLAYER:
+		var w = Weapons.new()
+		inventory.push_front(w)
+		inventory[0].set_name(G.Weap.Fist)
+		inventory[0].set_dmg_type(G.WeapType.Blunt)
+		inventory[0].set_damage(91,92)
+		active = 0
 
 func print():
 	print("Executed debug print function from weapon class")

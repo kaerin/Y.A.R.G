@@ -4,21 +4,23 @@ var Armours = load("res://Items/Armours.gd")
 var active = [0,1,0,0]
 var inventory = []
 
-func _init():
+func _init(i):
 	print("Armour reference initialised, adding t-shirt")
-	print(G.LOC.CHEST)
-	var a = Armours.new()
-	inventory.append(a)
-	a = Armours.new()
-	inventory.append(a)
-	inventory[0].set_name("T-Shirt")
-	inventory[0].set_location(G.LOC.CHEST)
-	inventory[0].set_loc_name(G.Loc.Chest)
-	inventory[0].set_ac(1)
-	inventory[1].set_name("Hat")
-	inventory[1].set_location(G.LOC.HEAD)
-	inventory[1].set_loc_name(G.Loc.Head)
-	inventory[1].set_ac(1)
+	if i == G.CHAR.ENEMY:
+		pass
+	elif i == G.CHAR.PLAYER:
+		var a = Armours.new()
+		inventory.append(a)
+		a = Armours.new()
+		inventory.append(a)
+		inventory[0].set_name("T-Shirt")
+		inventory[0].set_location(G.LOC.CHEST)
+		inventory[0].set_loc_name(G.Loc.Chest)
+		inventory[0].set_ac(1)
+		inventory[1].set_name("Hat")
+		inventory[1].set_location(G.LOC.HEAD)
+		inventory[1].set_loc_name(G.Loc.Head)
+		inventory[1].set_ac(1)
 
 func print():
 	print("Executed debug print function from armour class")

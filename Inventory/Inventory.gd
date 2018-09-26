@@ -21,9 +21,9 @@ func _ready():
 	
 #	equipped.resize(EQUIPPED.size())
 #	equipped[WEAPON] = dic_items.weapons[dic_items.WEAPONS.FIST]
-	weapon = Weapon.new() #enemies can be given the same weapon class and weapon inventory
-	armour = Armour.new()
-	wearable = Wearable.new()
+	weapon = Weapon.new(G.CHAR.PLAYER) #enemies can be given the same weapon class and weapon inventory
+	armour = Armour.new(G.CHAR.PLAYER)
+	wearable = Wearable.new(G.CHAR.PLAYER)
 	#could also have npc and companions to also have the same weapon class and inventory	
 	#have helper functions like auto-equip highest dmg weapon to use for player or others
 

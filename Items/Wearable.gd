@@ -5,17 +5,20 @@ var active_amulet = 0
 var active_ring = 1
 var inventory = []
 
-func _init():
+func _init(i):
 	print("Wearable reference initialised, adding large plastic clock amulet")
-	var w = Wearables.new()
-	inventory.append(w)
-	inventory[0].set_name("Clock Amulet of the 80s")
-	inventory[0].set_type(G.WearType.Amulet)
-	inventory[0].set_bonus_ac(-1)
-	w = Wearables.new()
-	inventory.append(w)
-	inventory[1].set_name("no ring")
-	inventory[1].set_type(G.WearType.Ring)
+	if i == G.CHAR.ENEMY:
+		pass
+	elif i == G.CHAR.PLAYER:
+		var w = Wearables.new()
+		inventory.append(w)
+		inventory[0].set_name("Clock Amulet of the 80s")
+		inventory[0].set_type(G.WearType.Amulet)
+		inventory[0].set_bonus_ac(-1)
+		w = Wearables.new()
+		inventory.append(w)
+		inventory[1].set_name("no ring")
+		inventory[1].set_type(G.WearType.Ring)
 
 func print():
 	print("Executed debug print function from wearable class")
