@@ -1,7 +1,7 @@
 extends Reference
 
 var Weapons = load("res://Items/Weapons.gd")
-var equipped = []
+var active = 0
 var inventory = []
 
 func _init(i):
@@ -14,6 +14,7 @@ func _init(i):
 		inventory[0].set_name(G.Weap.Fist)
 		inventory[0].set_dmg_type(G.WeapType.Blunt)
 		inventory[0].set_damage(91,92)
+		active = 0
 
 func print():
 	print("Executed debug print function from weapon class")
@@ -23,31 +24,30 @@ func print():
 #Repeat class for armor
 func collect_weapon(item):
 	inventory.push_front(item) #directly copy dropped item into inventory
-	#active += 1 #hack, dont do it this way
+	active += 1 #hack, dont do it this way
 func add_weapon(item, i = false):
 	var w = Weapons.new()
 	inventory.push_front(w)
 	inventory[0].set_name(item.base_name)
 	inventory[0].set_dmg_type(item.damage_type)
 	inventory[0].set_damage(item.min_damage,item.max_damage)
-	#active += 1 #hack, dont do it this way
+	active += 1 #hack, dont do it this way
 	if i:
 		alter_stats(0,10)
 
-func get_name():
-	return equipped.get_name()
+func get_name(i = active):
+	return inventory[i].get_name()
 
-func get_type():
-	return equipped.get_dmg_type()
+func get_type(i = active):
+	return inventory[i].get_dmg_type()
 
-func equip_weapon(equipped):
-	equipped
+func equip_weapon(i):
+	active = i
 	
 func get_damage():
-	return equipped.get_damage()
-	
+	return inventory[active].get_damage()
 func get_bonus_damage():
-	return equipped[0].get_bonus_damage()
+	return inventory[active].get_bonus_damage()
 
 func alter_stats(i,rng):
 	var pre = ["Rusted", "Sharp", "Spikey", "Red", "Golden", "Crappy", "Normal", "Basic", "Serrated"]

@@ -72,8 +72,8 @@ func _process(delta):
 				#TEMP basic attack for testing
 				var damage = inventory.get_damage() #can call the method in inventory
 				damage = inventory.weapon.get_damage() #can call the method from the weapon class in inventory
-				print (inventory.weapon.active) #can get active weapon index from inventory
-				damage = inventory.weapon.inventory[inventory.weapon.active].get_damage() #can directly call get damage from a specific weapon in the weapon inventory
+				print (inventory.weapon.equipped) #can get active weapon index from inventory
+				damage = inventory.weapon.equipped.get_damage() #can directly call get damage from a specific weapon in the weapon inventory
 				#alter damage with environmental effects
 				#damage = damage + environment.get_damage()
 				obsticle.set_contact(inventory.get_damage()) #Use inventory get_damage for now

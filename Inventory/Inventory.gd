@@ -207,12 +207,12 @@ func _inventory(toggle):
 			if not a.get_name() == "Title":
 				a.queue_free()
 		
-		var equip_item = weapon.get_name()
-		if not equip_item == null:
-			var entry = Label.new()#$Inventory/HBox/VBox_Equip/Label.new()
-			$Inventory/HBox/VBox_Equip.add_child(entry)
+		#var equip_item = weapon.get_name()
+		#if not equip_item == null:
+			#var entry = Label.new()#$Inventory/HBox/VBox_Equip/Label.new()
+			#$Inventory/HBox/VBox_Equip.add_child(entry)
 #				entry.text = equipped[WEAPON].base_name
-			entry.text = equip_item
+			#entry.text = equip_item
 		
 		for equip_armour in [armour.get_equip_name(G.LOC.CHEST),armour.get_equip_name(G.LOC.HEAD)]:
 			if not equip_armour == null:
