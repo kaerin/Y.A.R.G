@@ -1,13 +1,13 @@
 extends Node
 
-var size = Vector2(16,16)
+var size = Vector2(50,50)
 #var height = 8
 #var width = 16
-var factor = 2 #higher means less blocks removed
+var factor = 2.3 #higher means less blocks removed
 var start = Vector2()
 var end = Vector2()
 var delay = .01
-var cross_size = 3
+var cross_size = 5
 var goodMap
 
 var dirs = [Vector2(1,0),Vector2(0,1),Vector2(-1,0),Vector2(0,-1)]
@@ -31,7 +31,7 @@ func map():
 		map = map_gen()
 		map = map_gen_start_end(map)
 		map = map_clear(map)
-		map = map_add_cross(map,cross_size,3)
+		map = map_add_cross(map,cross_size,5)
 		for i in size.x:
 			map2.append([])
 			for j in size.y:
