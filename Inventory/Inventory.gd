@@ -173,39 +173,39 @@ func _inventory(toggle):
 	else:
 
 		if not inv_displayed:
-			var inv_dialog = inv.instance()
-			add_child(inv_dialog)
+			#var inv_dialog = inv.instance()
+			#add_child(inv_dialog)
 			inv_displayed = true #To keep things clean only need to set something when its not
 			
 			var new_inv = new_inventory.instance()
 			add_child(new_inv)
-			new_inv.show_inventory(weapon, armour, wearable)
+			new_inv.update_inventory(weapon, armour, wearable)
 				
-		var inv_list = $Inventory/HBox/VBox_Inv.get_children()
-		for n in inv_list:
-			if not n.get_name() == "Title":
-				n.queue_free()
+		#var inv_list = $Inventory/HBox/VBox_Inv.get_children()
+		#for n in inv_list:
+	#		if not n.get_name() == "Title":
+	#			n.queue_free()
 				
-		var i = 1
+	#	var i = 1
 		
-		for inv_item in inventory:
-			var entry = $Inventory/Template/Item.duplicate()
-			$Inventory/HBox/VBox_Inv.add_child(entry)
-			entry.get_child(1).text = inv_item.base_name
-			entry.get_child(1).show()
+	#	for inv_item in inventory:
+	#		var entry = $Inventory/Template/Item.duplicate()
+	#		$Inventory/HBox/VBox_Inv.add_child(entry)
+	#		entry.get_child(1).text = inv_item.base_name
+	#		entry.get_child(1).show()
 	#		if i == cur_num:
 	#				entry.get_child(0).show()
 	#		i = i +1
 	
 	
-		var equip_list = $Inventory/HBox/VBox_Equip.get_children()
-		for n in equip_list:
-			if not n.get_name() == "Title":
-				n.queue_free()
-		var armour_list = $Inventory/HBox/VBox_Armour.get_children()
-		for a in armour_list:
-			if not a.get_name() == "Title":
-				a.queue_free()
+	#	var equip_list = $Inventory/HBox/VBox_Equip.get_children()
+	#	for n in equip_list:
+	#		if not n.get_name() == "Title":
+	#			n.queue_free()
+	#	var armour_list = $Inventory/HBox/VBox_Armour.get_children()
+	#	for a in armour_list:
+	#		if not a.get_name() == "Title":
+	#			a.queue_free()
 		
 		#var equip_item = weapon.get_name()
 		#if not equip_item == null:
@@ -214,9 +214,9 @@ func _inventory(toggle):
 #				entry.text = equipped[WEAPON].base_name
 			#entry.text = equip_item
 		
-		for equip_armour in [armour.get_equip_name(G.LOC.CHEST),armour.get_equip_name(G.LOC.HEAD)]:
-			if not equip_armour == null:
-				var entry = Label.new()#$Inventory/HBox/VBox_Equip/Label.new()
-				$Inventory/HBox/VBox_Armour.add_child(entry)
-	#				entry.text = equipped[WEAPON].base_name
-				entry.text = equip_armour
+	#	for equip_armour in [armour.get_equip_name(G.LOC.CHEST),armour.get_equip_name(G.LOC.HEAD)]:
+	#		if not equip_armour == null:
+	#			var entry = Label.new()#$Inventory/HBox/VBox_Equip/Label.new()
+	#			$Inventory/HBox/VBox_Armour.add_child(entry)
+	##				entry.text = equipped[WEAPON].base_name
+		#		entry.text = equip_armour

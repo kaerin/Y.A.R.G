@@ -16,7 +16,7 @@ func _ready():
 	pass
 	
 
-func show_inventory(weapon, armour, wearable):
+func update_inventory(weapon, armour, wearable):
 	for j in weapon.inventory:
 		var entry = item_label.duplicate()
 		entry.item = j

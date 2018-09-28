@@ -10,7 +10,7 @@ var mouse_here
 var pos_backup
 
 onready var equip_panel = get_parent().get_parent().get_node("Equip") #how to better define this
-onready var inventory = get_parent().get_parent().get_parent().get_parent() #Get the Game node for diallog
+onready var inventory = get_parent().get_parent().get_parent().get_parent().get_parent() #Get the Game node for diallog
 onready var item_label = get_node("Template/Item")
 
 
@@ -25,10 +25,10 @@ func _process(delta):
 			drag_item()
 		elif Input.is_action_just_released("ui_mouse_left"):
 			if get_drop_pos_valid(get_global_mouse_position()):
-				print('equipped weaon ',inventory.weapon.equipped)
+				item.set_equipped()
+				print('equipped weaon ',inventory.weapon.get_equipped())
 				if equip_panel.add_to_equipped(item):
 					print("dropped in equip panel")
-					print('equipped weapon ',inventory.weapon.equipped.Name)
 					queue_free()  #item gets copied into equipped, but deletion of object from inventory not yet completed
 			elif pos_backup:
 					rect_position = pos_backup

@@ -1,7 +1,6 @@
 extends Reference
 
 var Weapons = load("res://Items/Weapons.gd")
-var equipped = []
 var inventory = []
 
 func _init(i):
@@ -21,9 +20,11 @@ func print():
 #Each item type has its own class: wepaon, armour, misc
 #Weapons class contain weapons in inventory
 #Repeat class for armor
+
 func collect_weapon(item):
 	inventory.push_front(item) #directly copy dropped item into inventory
 	#active += 1 #hack, dont do it this way
+
 func add_weapon(item, i = false):
 	var w = Weapons.new()
 	inventory.push_front(w)
@@ -35,19 +36,34 @@ func add_weapon(item, i = false):
 		alter_stats(0,10)
 
 func get_name():
-	return equipped.get_name()
+	return name()
 
 func get_type():
-	return equipped.get_dmg_type()
-
+	#return equipped.get_dmg_type()
+	for n in inventory:
+		if n._is_equipped:
+			return n.get_dmg_type()
+			
 func equip_weapon(equipped):
 	equipped
+
+func get_equipped():
+	for n in inventory:
+		if n.is_equipped:
+			return n
 	
 func get_damage():
-	return equipped.get_damage()
+	#return equipped.get_damage()
+	for n in inventory:
+		if n._is_equipped:
+			return n.get_damage()
 	
 func get_bonus_damage():
-	return equipped[0].get_bonus_damage()
+	#return equipped[0].get_bonus_damage()
+	for n in inventory:
+		if n._is_equipped:
+			return n.get_bonus_damage()
+
 
 func alter_stats(i,rng):
 	var pre = ["Rusted", "Sharp", "Spikey", "Red", "Golden", "Crappy", "Normal", "Basic", "Serrated"]
@@ -55,25 +71,6 @@ func alter_stats(i,rng):
 	inventory[0].set_name(pre[randi() % pre.size()] + " " + get_name() + " " + post[randi() % post.size()])
 	inventory[0].set_bonus_dmg(randi() % rng)
 
-#DELME below only for example	
-
-func create_rnd_item(item):
-	var rnd = randi() % item.size()
-	return item[rnd]
-
-func preamble(item):
-	var temp = item.duplicate()	# duplicate seperates original data from duplicated data, otherwise is passed by reference
-	temp.base_name = str('crappy ', temp.base_name)
-	return temp
-
-func postamble(item):
-	var temp = item.duplicate()
-	temp.base_name = str(temp.base_name, ' of utter crapness')
-	return temp
-
-#DELME to here	
-	
-	
 #every item class, instead of just weapons
 #perhaps a single item class could work for every item type
 #meaning everything has a min max damage, armor class, etc etc.

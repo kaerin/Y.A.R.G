@@ -4,7 +4,7 @@ extends Reference
 
 var BaseType = G.BaseType.Weap
 var Name
-var _is_equipped
+var is_equipped
 var DmgType
 var MinDamage = 1
 var MaxDamage = 1
@@ -12,6 +12,12 @@ var BonusDamage = 0
 
 
 #set data
+func set_equipped():
+	is_equipped = true
+
+func set_not_equipped():
+	is_equipped = false
+
 func set_name(i):
 	Name = i
 
