@@ -89,6 +89,8 @@ func _process(delta):
 		if grid_map.is_cell_empty(get_position(), target_direction):
 			target_pos = grid_map.update_child_pos(self)
 			is_moving = true
+		elif grid_map.is_cell_enemy(get_position(), target_direction):
+			print("fight")
 	elif is_moving:
 		speed = MAX_SPEED
 		velocity = speed * target_direction.normalized() * delta
