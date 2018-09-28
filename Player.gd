@@ -4,12 +4,7 @@ extends KinematicBody2D
 #const DOWN 	= Vector2(0 , 1)
 #const LEFT 	= Vector2(-1, 0)
 #const RIGHT	= Vector2(1 , 0)
-var direction = Vector2()
-var speed = 0
-const MAX_SPEED = 200
-var velocity = Vector2()
-var type
-var grid
+
 
 onready var grid_map = get_parent()
 onready var dic_weapon = get_node("/root/BaseNode/Dictionaries/Items").weapons
@@ -18,9 +13,17 @@ onready var Game = get_node("/root/BaseNode")
 #onready var weapons = load("res://Items/Weapon.gd") #load class
 #onready var Map = get_node("../../Map")
 
+var direction = Vector2()
+var speed = 0
+const MAX_SPEED = 200
+var velocity = Vector2()
+var type
+var grid
 var is_moving = false
 var target_pos = Vector2()
 var target_direction = Vector2()
+
+signal enemy_move
 
 var Dialog
 #var weap #weapon class
@@ -96,9 +99,11 @@ func _process(delta):
 		if abs(velocity.x) > distance_to_target.x:
 			velocity.x = distance_to_target.x * target_direction.x
 			is_moving = false
+			emit_signal("enemy_move")
 		if abs(velocity.y) > distance_to_target.y:
 			velocity.y = distance_to_target.y * target_direction.y
 			is_moving = false
+			emit_signal("enemy_move")
 #	if direction:
 #
 #		velocity = speed * direction.normalized() * delta
