@@ -12,6 +12,7 @@ extends CanvasLayer
 onready var item_label = get_node("Template/Item")
 onready var inv_panel = get_node("Container/Panels/Inv")
 onready var equip_panel = get_node("Container/Panels/Equip")
+onready var stats_panel = get_node("Container/Panels/Stats")
 onready var inventory = get_parent()
 
 var weapon
@@ -59,6 +60,8 @@ func purge_inventory_screen():
 	for n in equip_list:
 		if n.is_in_group("Item"):
 			n.queue_free()
+	stats_panel.get_node("Text").text = ""
+			
 		
 func get_inventory():
 	weapon = inventory.weapon

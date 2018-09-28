@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Dev/Adrian/Inv_Screen.gd" type="Script" id=1]
-[ext_resource path="res://Dev/Adrian/Equip.gd" type="Script" id=2]
+[ext_resource path="res://Dev/Adrian/Stats.gd" type="Script" id=2]
 [ext_resource path="res://Dev/Adrian/Item.gd" type="Script" id=3]
 [ext_resource path="res://icon.png" type="Texture" id=4]
 
@@ -21,14 +21,20 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 14.0
-margin_bottom = 14.0
+margin_left = 90.0
+margin_top = 50.0
+margin_right = 930.0
+margin_bottom = 550.0
 rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
+rect_clip_content = true
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
+_sections_unfolded = [ "Rect", "Size Flags" ]
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Panels" type="HBoxContainer" parent="Container" index="0"]
 
@@ -38,8 +44,8 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 225.0
-margin_bottom = 29.0
+margin_right = 833.0
+margin_bottom = 493.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -55,8 +61,8 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 61.0
-margin_bottom = 22.0
+margin_right = 267.0
+margin_bottom = 486.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -66,13 +72,13 @@ size_flags_vertical = 1
 alignment = 0
 _sections_unfolded = [ "Size Flags" ]
 
-[node name="Text" type="Label" parent="Container/Panels/Inv" index="0"]
+[node name="Title" type="Label" parent="Container/Panels/Inv" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 61.0
+margin_right = 267.0
 margin_bottom = 14.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -93,14 +99,15 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 18.0
-margin_right = 61.0
+margin_right = 267.0
 margin_bottom = 22.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
 mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
+size_flags_horizontal = 3
 size_flags_vertical = 1
+_sections_unfolded = [ "Size Flags" ]
 
 [node name="VSep1" type="VSeparator" parent="Container/Panels" index="1"]
 
@@ -108,9 +115,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 65.0
-margin_right = 69.0
-margin_bottom = 22.0
+margin_left = 271.0
+margin_right = 275.0
+margin_bottom = 486.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -124,9 +131,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 73.0
-margin_right = 132.0
-margin_bottom = 22.0
+margin_left = 279.0
+margin_right = 546.0
+margin_bottom = 486.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -134,16 +141,15 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 1
 alignment = 0
-script = ExtResource( 2 )
 _sections_unfolded = [ "Rect", "Size Flags" ]
 
-[node name="Text" type="Label" parent="Container/Panels/Equip" index="0"]
+[node name="Title" type="Label" parent="Container/Panels/Equip" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 59.0
+margin_right = 267.0
 margin_bottom = 14.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -163,7 +169,7 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 18.0
-margin_right = 59.0
+margin_right = 267.0
 margin_bottom = 22.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -179,9 +185,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 136.0
-margin_right = 140.0
-margin_bottom = 22.0
+margin_left = 550.0
+margin_right = 554.0
+margin_bottom = 486.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -190,15 +196,15 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 _sections_unfolded = [ "Margin" ]
 
-[node name="Desc" type="VBoxContainer" parent="Container/Panels" index="4"]
+[node name="Stats" type="VBoxContainer" parent="Container/Panels" index="4"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 144.0
-margin_right = 218.0
-margin_bottom = 22.0
+margin_left = 558.0
+margin_right = 826.0
+margin_bottom = 486.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -208,13 +214,13 @@ size_flags_vertical = 1
 alignment = 0
 _sections_unfolded = [ "Size Flags" ]
 
-[node name="Text" type="Label" parent="Container/Panels/Desc" index="0"]
+[node name="Title" type="Label" parent="Container/Panels/Stats" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 74.0
+margin_right = 268.0
 margin_bottom = 14.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -222,19 +228,19 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-text = "Description"
+text = "Stats"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="HSep" type="HSeparator" parent="Container/Panels/Desc" index="1"]
+[node name="HSep" type="HSeparator" parent="Container/Panels/Stats" index="1"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 18.0
-margin_right = 74.0
+margin_right = 268.0
 margin_bottom = 22.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -242,6 +248,28 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
+
+[node name="Text" type="Label" parent="Container/Panels/Stats" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 26.0
+margin_right = 268.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+clip_text = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+script = ExtResource( 2 )
+_sections_unfolded = [ "Size Flags" ]
 
 [node name="Template" type="Node" parent="." index="1"]
 
@@ -294,20 +322,21 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 68.0
 margin_top = 25.0
-margin_right = 122.0
+margin_right = 69.0
 margin_bottom = 39.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
+size_flags_horizontal = 3
 size_flags_vertical = 4
 text = "test test"
 valign = 1
+clip_text = true
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-_sections_unfolded = [ "Hint", "Rect" ]
+_sections_unfolded = [ "Hint", "Rect", "Size Flags" ]
 
 [connection signal="mouse_entered" from="Template/Item" to="Template/Item" method="_on_Item_mouse_entered"]
 

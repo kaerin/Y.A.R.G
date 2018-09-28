@@ -32,11 +32,14 @@ func set_bonus_dmg(i):
 	BonusDamage = i
 
 #get data
+func get_equipped():
+	return is_equipped
+
 func get_name():
 	return Name
 
 func get_dmg_type():
-	return DmgType
+	return DmgType	
 	
 func get_damage(): #weapon total damage
 	return get_weapon_damage() + BonusDamage
@@ -44,5 +47,11 @@ func get_damage(): #weapon total damage
 func get_weapon_damage(): #weapon damage
 	return randi() % (MaxDamage - MinDamage) + MinDamage
 	
-func get_bonus_damage(): #weapon total damage
+func get_bonus_dmg(): #weapon total damage
 	return BonusDamage
+	
+func get_min_dmg():
+	return MinDamage
+	
+func get_max_dmg():
+	return MaxDamage		

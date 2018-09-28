@@ -29,6 +29,9 @@ func set_bonus_dmg(i):
 	BonusDmg = i
 
 #get data
+func get_equipped():
+	return is_equipped
+	
 func get_name():
 	return Name
 

@@ -33,6 +33,9 @@ func set_bonus_ac(i):
 	BonusAC = i
 
 #get data
+func get_equipped():
+	return is_equipped
+
 func get_name():
 	return Name
 

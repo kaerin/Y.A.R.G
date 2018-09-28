@@ -10,11 +10,12 @@ var item
 var mouse_here
 var pos_backup
 
-onready var equip_panel 	= get_parent().get_parent().get_node("Equip") #how to better define this
-onready var inv_panel 	= get_parent().get_parent().get_node("Inv") #how to better define this
-onready var inventory 		= get_parent().get_parent().get_parent().get_parent().get_parent() #Get the Game node for diallog
-onready var inventory_visu 	= get_parent().get_parent().get_parent().get_parent() #Get the Game node for diallog
-onready var item_label 		= get_node("Template/Item")
+onready var equip_panel 		= get_parent().get_parent().get_node("Equip") #how to better define this
+onready var inv_panel 			= get_parent().get_parent().get_node("Inv") #how to better define this
+onready var inventory 			= get_parent().get_parent().get_parent().get_parent().get_parent() #Get the Game node for diallog
+onready var inventory_visu 		= get_parent().get_parent().get_parent().get_parent() #Get the Game node for diallog
+onready var item_label 			= get_node("Template/Item")
+onready var stats 				= get_parent().get_parent().get_node("Stats/Text")
 
 
 func _ready():
@@ -61,8 +62,10 @@ func get_drop_pos_area(mpos):
 	return DROP_POS.DROP
 	
 func _on_Item_mouse_entered():
+	stats.show_stats(item)
 	mouse_here = true
 
 
 func _on_Item_mouse_exited():
+	stats.delete_stats()
 	mouse_here = false
