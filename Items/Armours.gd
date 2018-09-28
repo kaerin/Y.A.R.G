@@ -4,12 +4,19 @@ extends Reference
 
 var BaseType = G.BaseType.Armour
 var Name
+var is_equipped
 var Location
 var LocName
 var ArmourClass = 0
 var BonusAC = 0
 
 #set data
+func set_equipped():
+	is_equipped = true
+
+func set_not_equipped():
+	is_equipped = false
+	
 func set_name(i):
 	Name = i
 

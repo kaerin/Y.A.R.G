@@ -245,7 +245,9 @@ size_flags_vertical = 1
 
 [node name="Template" type="Node" parent="." index="1"]
 
-[node name="Item" type="HBoxContainer" parent="Template" index="0"]
+[node name="Item" type="HBoxContainer" parent="Template" index="0" groups=[
+"Item",
+]]
 
 visible = false
 anchor_left = 0.0
