@@ -5,7 +5,7 @@ var half_tile_size = tile_size / 2
 
 var grid_size = Vector2(8,8)
 var grid = []
-
+onready var Map = get_node("Map")
 
 const INVALID = -999
 
