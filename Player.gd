@@ -20,6 +20,7 @@ var velocity = Vector2()
 var type
 var grid
 var is_moving = false
+var is_fighting = false
 var target_pos = Vector2()
 var target_direction = Vector2()
 
@@ -39,7 +40,7 @@ func _process(delta):
 		var item2 = grid_map.get_item2(self)
 		inventory.add_item(item2)
 		
-		var item = grid_map.get_item(self) #needed for the moment as it cleans up items fro grid
+#		var item = grid_map.get_item(self) #needed for the moment as it cleans up items fro grid
 #		inventory.set_add_item(item)
 		
 		
@@ -89,8 +90,13 @@ func _process(delta):
 		if grid_map.is_cell_empty(get_position(), target_direction):
 			target_pos = grid_map.update_child_pos(self)
 			is_moving = true
-		elif grid_map.is_cell_enemy(get_position(), target_direction):
+		elif grid_map.is_cell_enemy(get_position(), target_direction) and not is_fighting:
 			print("fight")
+			is_fighting = true
+			var enemy = grid_map.get_cell_node(get_position(), target_direction)
+			if enemy:
+				enemy.set_contact(5)
+			$Timer.start()
 	elif is_moving:
 		speed = MAX_SPEED
 		velocity = speed * target_direction.normalized() * delta
@@ -129,3 +135,6 @@ func _process(delta):
 				#Only trigger turn if movement was valid	
 				grid_map.set_enemy_move()
 	
+
+func _on_Timer_timeout():
+	is_fighting = false

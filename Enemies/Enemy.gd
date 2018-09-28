@@ -83,8 +83,8 @@ func set_move():
 			direction.y = 1
 		elif temp == 3:
 			direction.y = -1
-	if not grid_map.is_cell_empty(get_position(), direction):
-		print("cant go")
+#	if not grid_map.is_cell_empty(get_position(), direction):
+#		print("cant go")
 #		elif temp == 5:
 #			direction = UP + RIGHT
 #		elif temp == 6:

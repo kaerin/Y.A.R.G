@@ -40,7 +40,7 @@ func _ready():
 				end = Vector2(x,y)
 			set_cell(x,y,int(j))
 		
-	add_enemies(1)
+	add_enemies(10)
 	var Player = get_node("Player")
 #	var start_pos = update_child_pos(
 	Player.set_position(map_to_world(map.start) + half_tile_size)
@@ -57,7 +57,10 @@ func is_cell_empty(pos, direction = Vector2()):
 	var grid_pos = world_to_map(pos) + direction
 	if grid_pos.x < grid_size.x and grid_pos.x >= 0:
 		if grid_pos.y < grid_size.y and grid_pos.y >= 0:
-			return true if grid[grid_pos.x][grid_pos.y] == EMPTY else false
+			if grid[grid_pos.x][grid_pos.y] == EMPTY or grid[grid_pos.x][grid_pos.y] == ITEM:
+				return true
+			else:
+				return false
 	return false
 
 func is_cell_enemy(pos, direction = Vector2()):
@@ -66,7 +69,14 @@ func is_cell_enemy(pos, direction = Vector2()):
 		if grid_pos.y < grid_size.y and grid_pos.y >= 0:
 			return true if grid[grid_pos.x][grid_pos.y] == ENEMY else false
 	return false
-	
+
+func get_cell_node(pos, direction  = Vector2()):
+	var grid_pos = world_to_map(pos) + direction
+	for i in get_children():
+		if i.is_in_group("Enemy"):
+			if grid_pos == world_to_map(i.get_position()):
+				return i
+
 func update_child_pos(child_node):
 	var grid_pos = world_to_map(child_node.get_position())
 	grid[grid_pos.x][grid_pos.y] = EMPTY
@@ -80,9 +90,8 @@ func add_enemies(num = 1):
 	randomize()
 	for n in num:
 		var grid_pos = Vector2(randi() % int(grid_size.x), randi() % int(grid_size.y))
-		while not is_cell_empty(grid_pos):
-			print(grid_pos)
-			grid_pos = Vector2(randi() % int(grid_size.x), randi() % int(grid_size.y))
+#		while not is_cell_empty(grid_pos):
+#			grid_pos = Vector2(randi() % int(grid_size.x), randi() % int(grid_size.y))
 		positions.append(grid_pos)
 	
 	for pos in positions:
@@ -140,30 +149,40 @@ func add_enemies(num = 1):
 #				object.queue_free()
 #				return item
 #
-#func get_item2(child): #Returns dropped item
+func get_item2(child): #Returns dropped item
+	var grid_pos = world_to_map(child.get_position())
+	for i in get_children():
+		if i.is_in_group("Item"):
+			if grid_pos == world_to_map(i.get_position()):
+				grid[grid_pos.x][grid_pos.y] = EMPTY
+				var obj = i.item
+				i.queue_free()
+				return obj
+
 #	var cur_pos = world_to_map(child.get_position())
 #	if not grid[cur_pos.x][cur_pos.y].empty():
 #		#print (grid[cur_pos.x][cur_pos.y].size())
 #		for object in grid[cur_pos.x][cur_pos.y]:
 #			return object.item
 #
-#func set_kill_me(child):
-#	var cur_pos = world_to_map(child.get_position())
-#
-#	if not child.inventory.empty():
-#		for object in child.inventory:
-#			var new_object = item.instance()
-#			new_object.set_position(map_to_world(cur_pos) + half_tile_size)
-#			grid[cur_pos.x][cur_pos.y].append(new_object)
-#			new_object.object = object
-#			if child.weapon.inventory.size(): #if statements because the enemies are currentlly created with only item
-#				new_object.item = child.weapon.inventory[0] #Fully equipped enemeies carry many items, these needs to change
-#			elif child.armour.inventory.size():
-#				new_object.item = child.armour.inventory[0]
-#			elif child.wearable.inventory.size():
-#				new_object.item = child.wearable.inventory[0] #Drop a single item			
-#			add_child(new_object)
-#
+func set_kill_me(child):
+	var cur_pos = world_to_map(child.get_position())
+
+	if not child.inventory.empty():
+		for object in child.inventory:
+			var new_object = item.instance()
+			new_object.set_position(map_to_world(cur_pos) + half_tile_size)
+			grid[cur_pos.x][cur_pos.y] = ITEM
+			new_object.object = object
+			if child.weapon.inventory.size(): #if statements because the enemies are currentlly created with only item
+				new_object.item = child.weapon.inventory[0] #Fully equipped enemeies carry many items, these needs to change
+			elif child.armour.inventory.size():
+				new_object.item = child.armour.inventory[0]
+			elif child.wearable.inventory.size():
+				new_object.item = child.wearable.inventory[0] #Drop a single item			
+			add_child(new_object)
+	child.queue_free()
+	
 #	var child_idx = grid[cur_pos.x][cur_pos.y].find(child)
 #	grid[cur_pos.x][cur_pos.y][child_idx].queue_free()
 #	grid[cur_pos.x][cur_pos.y].remove(child_idx)
