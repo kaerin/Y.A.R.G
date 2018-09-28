@@ -168,7 +168,7 @@ func _inventory(toggle):
 
 	if inv_displayed and toggle: #You assign toggle to a variable previously then pass that variable then reference the same variable
 		$Inventory.queue_free()		#mainly becuase "i" wasnt then only thing accesing inventory, change weapon etc would all close inventory
-		$New_Inventory.queue_free()
+		#$Inventory.queue_free()
 		inv_displayed = false
 	else:
 

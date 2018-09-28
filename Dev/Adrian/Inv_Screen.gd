@@ -1,4 +1,4 @@
-extends PanelContainer
+extends CanvasLayer
 
 # class member variables go here, for example:
 # var a = 2
@@ -10,7 +10,7 @@ onready var Armour = load("res://Items/Armour.gd")
 onready var Wearable = load("res://Items/Wearable.gd")
 
 onready var item_label = get_node("Template/Item")
-onready var inv_panel = get_node("Panels/Inv")
+onready var inv_panel = get_node("Container/Panels/Inv")
 
 func _ready():
 	pass

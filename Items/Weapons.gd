@@ -4,6 +4,7 @@ extends Reference
 
 var BaseType = G.BaseType.Weap
 var Name
+var _is_equipped
 var DmgType
 var MinDamage = 1
 var MaxDamage = 1
