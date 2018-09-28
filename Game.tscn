@@ -27,6 +27,7 @@ script = ExtResource( 3 )
 
 [node name="Map" type="TileMap" parent="." index="1"]
 
+visible = false
 scale = Vector2( 2, 2 )
 mode = 0
 tile_set = ExtResource( 4 )
@@ -51,8 +52,8 @@ _sections_unfolded = [ "Cell", "Transform" ]
 [node name="Grid" type="TileMap" parent="." index="2"]
 
 mode = 0
-tile_set = null
-cell_size = Vector2( 64, 64 )
+tile_set = ExtResource( 4 )
+cell_size = Vector2( 32, 32 )
 cell_quadrant_size = 16
 cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 cell_half_offset = 2
@@ -68,22 +69,23 @@ occluder_light_mask = 1
 format = 1
 tile_data = PoolIntArray(  )
 script = ExtResource( 6 )
-_sections_unfolded = [ "Cell" ]
+_sections_unfolded = [ "Cell", "Transform" ]
 
 [node name="Player" type="KinematicBody2D" parent="Grid" index="0" groups=[
 "Player",
 ]]
 
-position = Vector2( 32, 32 )
+position = Vector2( 16, 16 )
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
 collision/safe_margin = 0.08
 script = ExtResource( 7 )
-_sections_unfolded = [ "Transform" ]
+_sections_unfolded = [ "Collision", "Pickable", "Transform", "Visibility", "collision" ]
 
 [node name="Sprite" type="Sprite" parent="Grid/Player" index="0"]
 
+scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 8 )
 _sections_unfolded = [ "Offset", "Transform" ]
 

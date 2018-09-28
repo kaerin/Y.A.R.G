@@ -11,6 +11,7 @@ var inventory = []
 var weapon
 var armour
 var wearable
+var type
 
 onready var grid_map = get_parent()
 onready var dic_enemies = get_parent().get_parent().get_node("Dictionaries/Enemies").enemies
@@ -23,6 +24,7 @@ onready var Armour = load("res://Items/Armour.gd")
 onready var Wearable = load("res://Items/Wearable.gd")
 
 func _ready():
+	type = grid_map.ENEMY
 	weapon = Weapon.new(G.CHAR.ENEMY) #enemies can be given the same weapon class and weapon inventory
 	armour = Armour.new(G.CHAR.ENEMY)
 	wearable = Wearable.new(G.CHAR.ENEMY)

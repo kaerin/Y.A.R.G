@@ -3,37 +3,84 @@ extends TileMap
 var tile_size = get_cell_size()
 var half_tile_size = tile_size / 2
 
-var grid_size = Vector2(8,8)
+var grid_size = Vector2(16,16)
 var grid = []
-onready var Map = get_node("Map")
+enum GRID_ITEMS {PLAYER, WALL, ITEM, ENEMY}
 
 const INVALID = -999
 
 onready var enemy = preload("res://Enemies/Enemy.tscn")
 onready var item  = preload("res://Items/Item.tscn")
+onready var Map = preload("res://Dev/Chris/Label.gd")
+var start = Vector2()
+var end = Vector2()
 
 func _ready():
-	for x in range (grid_size.x):
-		grid.append([])
-		for y in range (grid_size.y):
-			grid[x].append([])
+	create_grid()
+	var map = Map.new()
+	var mapgrid = map.map()
+	print(mapgrid.size())
+	for x in mapgrid.size():
+		for y in mapgrid[x].size():
+			var i = mapgrid[x][y]
+			if i == "+":
+				i = 0
+			elif i == " ":
+				i = 1
+				grid[x][y] = "WALL"
+			elif i == "S":
+				i = 2
+				start = Vector2(x,y)
+			elif i == "E":
+				i = 3
+				end = Vector2(x,y)
+			set_cell(x,y,int(i))
+		
 	add_enemies(3)
+	var Player = get_node("Player")
+#	var start_pos = update_child_pos(
+	Player.set_position(map_to_world(map.start) + half_tile_size)
 
 	#TEMP add random enemies for testing
 
+func create_grid():
+	for x in grid_size.x:
+		grid.append([])
+		for y in grid_size.y:
+			grid[x].append(null)
+
+func is_cell_empty(pos, direction = Vector2()):
+	var grid_pos = world_to_map(pos) + direction
+	if grid_pos.x < grid_size.x and grid_pos.x >= 0:
+		if grid_pos.y < grid_size.y and grid_pos.y >= 0:
+			return true if grid[grid_pos.x][grid_pos.y] == null else false
+	return false
+
+func update_child_pos(child_node):
+	var grid_pos = world_to_map(child_node.get_position())
+	grid[grid_pos.x][grid_pos.y] = null
+	var new_grid_pos = grid_pos + child_node.direction
+	grid[new_grid_pos.x][new_grid_pos.y] = child_node.type
+	var target_pos = map_to_world(new_grid_pos) + half_tile_size
+	return target_pos
+
 func add_enemies(num = 1):
 	var positions = []
-	randomize()
-	for n in range (num):
+	for n in num:
 		var grid_pos = Vector2(randi() % int(grid_size.x), randi() % int(grid_size.y))
-		if not grid_pos in positions:
-			positions.append(grid_pos)
+		print(grid_pos)
+#		while not is_cell_empty(grid_pos):
+#			print(grid_pos)
+#			grid_pos = Vector2(randi() % int(grid_size.x), randi() % int(grid_size.y))
+		print(grid_pos)
+		positions.append(grid_pos)
 	
 	for pos in positions:
 		var new_object = enemy.instance()
 		new_object.set_position(map_to_world(pos) + half_tile_size)
-		grid[pos.x][pos.y].append(new_object)
 		add_child(new_object)
+		grid[pos.x][pos.y] = new_object.type
+		
 
 func is_target_grid_valid(child, direction):
 	var new_pos = world_to_map(child.get_position()) + direction
@@ -48,19 +95,28 @@ func has_target_grid_obsticle(child, direction):
 				if obsticle.is_in_group("Player") or obsticle.is_in_group("Enemy"):
 			 		return obsticle
 
+func set_grid_pos(e, pos):
+	print("setting position ", pos)
+	var cur_pos = world_to_map(e.get_position())
+	var child_idx = grid[cur_pos.x][cur_pos.y].find(e)
+	grid[cur_pos.x][cur_pos.y].remove(child_idx)
+	grid[pos.x][pos.y].append(e)
+	pos = map_to_world(pos) + half_tile_size
+	pass
 
 func set_new_grid_pos(child, direction):
-		#delete old positon
-		var cur_pos = world_to_map(child.get_position())
-		var child_idx = grid[cur_pos.x][cur_pos.y].find(child)
-		grid[cur_pos.x][cur_pos.y].remove(child_idx)
-		
-		#grid[cur_pos.x][cur_pos.y] = null
-		#set new positon
-		var new_pos = cur_pos + direction
-		grid[new_pos.x][new_pos.y].append(child)
-		new_pos = map_to_world(new_pos) + half_tile_size
-		return new_pos
+	print("change position ",child.name)
+	#delete old positon
+	var cur_pos = world_to_map(child.get_position())
+#	var child_idx = grid[cur_pos.x][cur_pos.y].find(child)
+#	grid[cur_pos.x][cur_pos.y].remove(child_idx)
+	
+	#grid[cur_pos.x][cur_pos.y] = null
+	#set new positon
+	var new_pos = cur_pos + direction
+	grid[new_pos.x][new_pos.y].append(child)
+	new_pos = map_to_world(new_pos) + half_tile_size
+	return new_pos
 
 
 func get_item(child):

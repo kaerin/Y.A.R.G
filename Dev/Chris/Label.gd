@@ -1,7 +1,7 @@
 extends Node
 
-var height = 8
-var width = 8
+var height = 16
+var width = 16
 var factor = 2.4 #higher means less blocks removed
 var start = Vector2()
 var end = Vector2()
@@ -34,7 +34,7 @@ func map():
 		for i in height:
 			map2.append([])
 			for j in width:
-				map2[i].append([])
+				map2[i].append(null)
 				map2[i][j] = map[i][j]
 		var path = []
 		path.append(start)
