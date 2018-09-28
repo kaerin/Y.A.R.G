@@ -1,12 +1,13 @@
 extends Node
 
-var height = 16
-var width = 16
-var factor = 2.4 #higher means less blocks removed
+var size = Vector2(16,16)
+#var height = 8
+#var width = 16
+var factor = 2 #higher means less blocks removed
 var start = Vector2()
 var end = Vector2()
 var delay = .01
-var cross_size = 1
+var cross_size = 3
 var goodMap
 
 var dirs = [Vector2(1,0),Vector2(0,1),Vector2(-1,0),Vector2(0,-1)]
@@ -30,10 +31,10 @@ func map():
 		map = map_gen()
 		map = map_gen_start_end(map)
 		map = map_clear(map)
-		map = map_add_cross(map,cross_size,2)
-		for i in height:
+		map = map_add_cross(map,cross_size,3)
+		for i in size.x:
 			map2.append([])
-			for j in width:
+			for j in size.y:
 				map2[i].append(null)
 				map2[i][j] = map[i][j]
 		var path = []
@@ -43,7 +44,7 @@ func map():
 			for i in path:
 				for d in dirs:
 					var check = i + d
-					if check.x < 0 or check.x == height or check.y < 0 or check.y == width:
+					if check.x < 0 or check.x == size.x or check.y < 0 or check.y == size.y:
 						pass
 					elif map[check.x][check.y] == "+":
 						map[check.x][check.y] = "X"
@@ -53,8 +54,8 @@ func map():
 				if goodMap:
 					break		
 			path = newPath			
-#				show(map)
-#				yield(get_node("Label"), "drawn")
+#			show(map)
+#			yield(get_node("Label"), "drawn")
 #			if goodMap == false:
 #				show(map, "Map is " + str(goodMap))
 #				yield(get_tree().create_timer(1), "timeout")
@@ -68,17 +69,17 @@ func map():
 #	yield(get_node("Label"), "drawn")
 	return map2
 		
-func map_add_cross(map, size, num = 0):
+func map_add_cross(map, csize, num = 0):
 	var crosses = [start,end]
 	for i in num:
-		var c = Vector2(randi() % height, randi() % width)
+		var c = Vector2(randi() % int(size.x), randi() % int(size.y))
 		crosses.append(c)
 	var cross = []
 	for pos in crosses:
 		for d in dirs:
-			for i in range(1, size):
+			for i in range(1, csize):
 				var point = pos + (d*i)
-				if point.x < 0 or point.x == height or point.y < 0 or point.y == width:
+				if point.x < 0 or point.x == size.x or point.y < 0 or point.y == size.y:
 					break
 				cross.append(point)
 	for i in cross:
@@ -86,48 +87,48 @@ func map_add_cross(map, size, num = 0):
 	return map
 
 func map_clear(map):
-	for i in int(height * width / factor):
+	for i in int(size.x * size.y / factor):
 		var clear = Vector2()
-		clear.x = randi() % height
-		clear.y = randi() % width
+		clear.x = randi() % int(size.x)
+		clear.y = randi() % int(size.y)
 		while clear == start or clear == end or map[clear.x][clear.y] == " ":
-			clear.x = randi() % height
-			clear.y = randi() % width
+			clear.x = randi() % int(size.x)
+			clear.y = randi() % int(size.y)
 		map[clear.x][clear.y] = " "
 	return map
 		
 func map_gen_start_end(map):
-	start.x = randi() % height
-	start.y = randi() % width
+	start.x = randi() % int(size.x)
+	start.y = randi() % int(size.y)
 	end = start
 		
-	while abs(end.x - start.x) < height * 0.45:
-		end.x = randi() % height
-	while abs(end.y - start.y) < width * 0.45:
-		end.y = randi() % width
+	while abs(end.x - start.x) < size.x * 0.45:
+		end.x = randi() % int(size.x)
+	while abs(end.y - start.y) < size.y * 0.45:
+		end.y = randi() % int(size.y)
 #
 	map[start.x][start.y] = "S"
 	map[end.x][end.y] = "E"
 	return map
 	
 func map_gen():
-	if height < 8:
-		height = 8
-	if width < 8:
-		width = 8
+	if size.x < 8:
+		size.x = 8
+	if size.y < 8:
+		size.y = 8
 	var map = []
-	for i in height:
+	for i in size.x:
 		map.append([])
-		for j in width:
+		for j in size.y:
 			map[i].append([])
 			map[i][j] = "+"
 	return map
 
 func show(map, text = ""):
 	var maptext = text
-	for i in height:
+	for i in size.x:
 		maptext += "\n"
-		for j in width:
+		for j in size.y:
 			maptext += map[i][j]
 	$Label.text = maptext 
 	

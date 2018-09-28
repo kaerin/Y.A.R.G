@@ -72,9 +72,23 @@ func set_contact(damage):
 #after player moves all enemies are triggered to move from Grid_Map		
 	
 func set_move():
-	direction = Vector2()
-	if not is_queued_for_deletion(): #necessary, otherwise grid is updated with new position before being deleted
-		var temp = randi() % 4
+	
+#	if not is_queued_for_deletion(): #necessary, otherwise grid is updated with new position before being deleted
+#	var temp = randi() % 4
+#	if temp == 0:
+#		direction.x = 1
+#	elif temp == 1:
+#		direction.x = -1
+#	elif temp == 2:
+#		direction.y = 1
+#	elif temp == 3:
+#		direction.y = -1
+	var i = 0
+	while not grid_map.is_cell_empty(get_position(), direction):
+		i += 1
+		direction = Vector2()
+		var temp = randi() % 5
+		temp = randi() % 4
 		if temp == 0:
 			direction.x = 1
 		elif temp == 1:
@@ -83,8 +97,9 @@ func set_move():
 			direction.y = 1
 		elif temp == 3:
 			direction.y = -1
-#	if not grid_map.is_cell_empty(get_position(), direction):
-#		print("cant go")
+		if i > 10 or temp == 4:
+			break
+#	print("cant go")
 #		elif temp == 5:
 #			direction = UP + RIGHT
 #		elif temp == 6:

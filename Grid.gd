@@ -14,16 +14,17 @@ onready var item  = preload("res://Items/Item.tscn")
 onready var Map = preload("res://Dev/Chris/Label.gd")
 var start = Vector2()
 var end = Vector2()
+var mapgrid
 
 func _ready():
 	create_grid()
 	var map = Map.new()
-	var mapgrid = map.map()
+	mapgrid = map.map()
 	print(mapgrid.size())
 	for x in mapgrid.size():
 		for y in mapgrid[x].size():
 			var i = mapgrid[x][y]
-			var j
+			var j = 0
 			if i == "+":
 				j = 0
 				grid[x][y] = EMPTY
@@ -40,11 +41,12 @@ func _ready():
 				end = Vector2(x,y)
 			set_cell(x,y,int(j))
 		
-	add_enemies(10)
+	
 	var Player = get_node("Player")
 #	var start_pos = update_child_pos(
 	Player.set_position(map_to_world(map.start) + half_tile_size)
-
+	add_enemies(10)
+	
 	#TEMP add random enemies for testing
 
 func create_grid():
@@ -90,8 +92,8 @@ func add_enemies(num = 1):
 	randomize()
 	for n in num:
 		var grid_pos = Vector2(randi() % int(grid_size.x), randi() % int(grid_size.y))
-#		while not is_cell_empty(grid_pos):
-#			grid_pos = Vector2(randi() % int(grid_size.x), randi() % int(grid_size.y))
+		while not is_cell_empty(map_to_world(grid_pos)):
+			grid_pos = Vector2(randi() % int(grid_size.x), randi() % int(grid_size.y))
 		positions.append(grid_pos)
 	
 	for pos in positions:
