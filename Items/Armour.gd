@@ -21,7 +21,8 @@ func _init(i):
 		inventory[1].set_location(G.LOC.HEAD)
 		inventory[1].set_loc_name(G.Loc.Head)
 		inventory[1].set_ac(1)
-
+		#inventory[1].add_to_group("Armour")
+		
 func print():
 	print("Executed debug print function from armour class")
 
@@ -36,6 +37,7 @@ func add_armour(item, i = false):
 	inventory[0].set_location(item.location)
 	inventory[0].set_loc_name(item.loc_name)
 	inventory[0].set_ac(item.armor_class)
+	#inventory[0].add_to_group("Armour")
 	active[G.LOC.CHEST] += 1 #hack, dumb way of doing it, dont repeat, use an index
 	active[G.LOC.HEAD] += 1 #hack, dumb way of doing it, dont repeat, use an index
 	if i:

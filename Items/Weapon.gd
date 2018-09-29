@@ -5,7 +5,8 @@ var inventory = []
 
 func _init(i):
 	if i == G.CHAR.ENEMY:
-		print("New enemy weapon class")
+		#print("New enemy weapon class")
+		pass
 	elif i == G.CHAR.PLAYER:
 		print("Weapon reference initialised, adding fist as first weapon ")
 		var w = Weapons.new()
@@ -13,6 +14,7 @@ func _init(i):
 		inventory[0].set_name(G.Weap.Fist)
 		inventory[0].set_dmg_type(G.WeapType.Blunt)
 		inventory[0].set_damage(91,92)
+		#inventory[0].add_to_group("Weapon")
 
 func print():
 	print("Executed debug print function from weapon class")
@@ -31,6 +33,7 @@ func add_weapon(item, i = false):
 	inventory[0].set_name(item.base_name)
 	inventory[0].set_dmg_type(item.damage_type)
 	inventory[0].set_damage(item.min_damage,item.max_damage)
+	#inventory[0].add_to_group("Weapon")
 	#active += 1 #hack, dont do it this way
 	if i:
 		alter_stats(0,10)

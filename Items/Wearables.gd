@@ -28,6 +28,9 @@ func set_bonus_ac(i):
 func set_bonus_dmg(i):
 	BonusDmg = i
 
+func set_unequip():
+	is_equipped = false		
+
 #get data
 func get_equipped():
 	return is_equipped

@@ -30,6 +30,9 @@ func set_damage(i,j):
 
 func set_bonus_dmg(i):
 	BonusDamage = i
+	
+func set_unequip():
+	is_equipped = false	
 
 #get data
 func get_equipped():

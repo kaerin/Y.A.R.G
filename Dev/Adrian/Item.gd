@@ -29,6 +29,7 @@ func _process(delta):
 			drag_item()
 		elif Input.is_action_just_released("ui_mouse_left"):
 			if get_drop_pos_area(get_global_mouse_position()) == DROP_POS.EQUIP:
+				unequip_equippped_item(item)
 				item.set_equipped()
 				print("equipped ",item.get_name())
 				inventory_visu.update_inventory()
@@ -38,6 +39,26 @@ func _process(delta):
 				inventory_visu.update_inventory()
 			elif get_drop_pos_area(get_global_mouse_position()) == DROP_POS.DROP:
 					rect_position = pos_backup #Later change to drop onto grid pos
+
+func unequip_equippped_item(item):
+	if item.BaseType == "Weapon":
+		for n in inventory.weapon.inventory:
+			if n.is_equipped:
+				n.set_unequip()
+				print(n.get_name(), " unequipped")
+	if item.BaseType == "Wearable":
+		for n in inventory.wearable.inventory:
+			if n.Type == item.Type:
+				if n.is_equipped:
+					n.set_unequip()
+					print(n.get_name(), " unequipped")
+	if item.BaseType == "Armour":
+		for n in inventory.armour.inventory:
+			if n.Location == item.Location:
+				if n.is_equipped:
+					n.set_unequip()
+					print(n.get_name(), " unequipped")
+	
 			
 func drag_item():
 	if not pos_backup:
@@ -64,7 +85,6 @@ func get_drop_pos_area(mpos):
 func _on_Item_mouse_entered():
 	stats.show_stats(item)
 	mouse_here = true
-
 
 func _on_Item_mouse_exited():
 	stats.delete_stats()

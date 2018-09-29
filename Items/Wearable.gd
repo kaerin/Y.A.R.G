@@ -15,11 +15,12 @@ func _init(i):
 		inventory[0].set_name("Clock Amulet of the 80s")
 		inventory[0].set_type(G.WearType.Amulet)
 		inventory[0].set_bonus_ac(-1)
+		#inventory[0].add_to_group("Wearable")
 		w = Wearables.new()
 		inventory.append(w)
-		inventory[1].set_name("no ring")
+		inventory[1].set_name("Toy ring")
 		inventory[1].set_type(G.WearType.Ring)
-
+		#inventory[1].add_to_group("Wearable")	
 func print():
 	print("Executed debug print function from wearable class")
 
@@ -29,8 +30,7 @@ func print():
 
 func collect_wearable(item):
 	inventory.push_front(item)
-	active_ring += 1 #hack, dont do it this way
-	active_amulet += 1 #hack, dont do it this way
+	
 func add_wearable(item, i = false):
 	var w = Wearables.new()
 	inventory.push_front(w)
@@ -38,32 +38,9 @@ func add_wearable(item, i = false):
 	inventory[0].set_type(item.type)
 	inventory[0].set_bonus_ac(item.bonus_ac)
 	inventory[0].set_bonus_dmg(item.bonus_dmg)
-	active_ring += 1 #hack, dont do it this way
-	active_amulet += 1 #hack, dont do it this way
+	#inventory[0].add_to_group("Wearable")
 	if i:
 		alter_stats(0,10)
-
-func get_next_ring(i = active_ring):
-	var size = inventory.size()
-	i += 1
-	if i == size:
-		i = 0
-	while not get_type(i) == G.WearType.Ring:
-		i += 1
-		if i == size:
-			i = 0
-	return i
-
-func get_next_amulet(i = active_amulet):
-	var size = inventory.size()
-	i += 1
-	if i == size:
-		i = 0
-	while not get_type(i) == G.WearType.Amulet:
-		i += 1
-		if i == size:
-			i = 0
-	return i
 
 func get_ring_name(i = active_ring):
 	return inventory[i].get_name()

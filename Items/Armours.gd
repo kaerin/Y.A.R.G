@@ -31,6 +31,9 @@ func set_ac(i):
 
 func set_bonus_ac(i):
 	BonusAC = i
+	
+func set_unequip():
+	is_equipped = false		
 
 #get data
 func get_equipped():
