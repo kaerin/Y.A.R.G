@@ -9,7 +9,7 @@
 [ext_resource path="res://icon.png" type="Texture" id=7]
 [ext_resource path="res://Inventory/Inventory.gd" type="Script" id=8]
 
-[node name="BaseNode" type="Node"]
+[node name="BaseNode" type="Node" index="0"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Pause" ]

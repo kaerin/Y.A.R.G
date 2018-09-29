@@ -35,8 +35,8 @@ func add_weapon(item, i = false):
 	if i:
 		alter_stats(0,10)
 
-func get_name():
-	return name()
+func get_name(i):
+	return inventory[i].get_name()
 
 func get_type():
 	#return equipped.get_dmg_type()
@@ -68,7 +68,7 @@ func get_bonus_damage():
 func alter_stats(i,rng):
 	var pre = ["Rusted", "Sharp", "Spikey", "Red", "Golden", "Crappy", "Normal", "Basic", "Serrated"]
 	var post = ["of spikes", "of bluntness", "that is on fire", "made of plastic"]
-	inventory[0].set_name(pre[randi() % pre.size()] + " " + get_name() + " " + post[randi() % post.size()])
+	inventory[0].set_name(pre[randi() % pre.size()] + " " + get_name(0) + " " + post[randi() % post.size()])
 	inventory[0].set_bonus_dmg(randi() % rng)
 
 #every item class, instead of just weapons
