@@ -101,57 +101,8 @@ func add_enemies(num = 1):
 		new_object.set_position(map_to_world(pos) + half_tile_size)
 		add_child(new_object)
 		grid[pos.x][pos.y] = new_object.type
-		
 
-#func is_target_grid_valid(child, direction):
-#	var new_pos = world_to_map(child.get_position()) + direction
-#	if new_pos.x < grid_size.x and new_pos.x >= 0:
-#		if new_pos.y < grid_size.y and new_pos.y >= 0:
-#			return true
-#
-#func has_target_grid_obsticle(child, direction):
-#		var new_pos = world_to_map(child.position) + direction
-#		if not grid[new_pos.x][new_pos.y].empty():
-#			for obsticle in grid[new_pos.x][new_pos.y]:
-#				if obsticle.is_in_group("Player") or obsticle.is_in_group("Enemy"):
-#			 		return obsticle
-#
-#func set_grid_pos(e, pos):
-#	print("setting position ", pos)
-#	var cur_pos = world_to_map(e.get_position())
-#	var child_idx = grid[cur_pos.x][cur_pos.y].find(e)
-#	grid[cur_pos.x][cur_pos.y].remove(child_idx)
-#	grid[pos.x][pos.y].append(e)
-#	pos = map_to_world(pos) + half_tile_size
-#	pass
-#
-#func set_new_grid_pos(child, direction):
-#	print("change position ",child.name)
-#	#delete old positon
-#	var cur_pos = world_to_map(child.get_position())
-##	var child_idx = grid[cur_pos.x][cur_pos.y].find(child)
-##	grid[cur_pos.x][cur_pos.y].remove(child_idx)
-#
-#	#grid[cur_pos.x][cur_pos.y] = null
-#	#set new positon
-#	var new_pos = cur_pos + direction
-#	grid[new_pos.x][new_pos.y].append(child)
-#	new_pos = map_to_world(new_pos) + half_tile_size
-#	return new_pos
-#
-#
-#func get_item(child):
-#	var cur_pos = world_to_map(child.get_position())
-#	if not grid[cur_pos.x][cur_pos.y].empty():
-#		#print (grid[cur_pos.x][cur_pos.y].size())
-#		for object in grid[cur_pos.x][cur_pos.y]:
-#			if object.is_in_group("Item"):
-#				var item = object.object
-#				grid[cur_pos.x][cur_pos.y].remove(grid[cur_pos.x][cur_pos.y].find(object))
-#				object.queue_free()
-#				return item
-#
-func get_item2(child): #Returns dropped item
+func get_item(child): #Returns dropped item
 	var grid_pos = world_to_map(child.get_position())
 	for i in get_children():
 		if i.is_in_group("Item"):
@@ -161,12 +112,6 @@ func get_item2(child): #Returns dropped item
 				i.queue_free()
 				return obj
 
-#	var cur_pos = world_to_map(child.get_position())
-#	if not grid[cur_pos.x][cur_pos.y].empty():
-#		#print (grid[cur_pos.x][cur_pos.y].size())
-#		for object in grid[cur_pos.x][cur_pos.y]:
-#			return object.item
-#
 func set_kill_me(child):
 	var cur_pos = world_to_map(child.get_position())
 
@@ -184,17 +129,3 @@ func set_kill_me(child):
 				new_object.item = child.wearable.inventory[0] #Drop a single item			
 			add_child(new_object)
 	child.queue_free()
-	
-#	var child_idx = grid[cur_pos.x][cur_pos.y].find(child)
-#	grid[cur_pos.x][cur_pos.y][child_idx].queue_free()
-#	grid[cur_pos.x][cur_pos.y].remove(child_idx)
-#
-#
-#
-##After player action, trigger all enemies to move
-#func set_enemy_move():
-#	var children = get_children()	
-#	for child in children:
-#		if child.is_in_group("Enemy"):
-#			child.set_move()
-	

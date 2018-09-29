@@ -56,3 +56,6 @@ func get_armour_ac(): #weapon damage
 
 func get_bonus_ac():
 	return BonusAC
+
+func get_all_stats():	
+	return str("Name: ", get_name(), "\nEquipped: ", get_equipped(), "\nLocation Name: ", get_loc_name(), "\nAC: ", get_ac())

@@ -57,4 +57,7 @@ func get_min_dmg():
 	return MinDamage
 	
 func get_max_dmg():
-	return MaxDamage		
+	return MaxDamage
+	
+func get_all_stats():
+	return str("Name: ", get_name(), "\nEquipped: ", get_equipped(), "\nDmg Type: ", get_dmg_type(), "\nMin Dmg: ", get_min_dmg(), "\nMax Dmg: ", get_max_dmg(), "\nBonus Dmg: ", get_bonus_dmg())

@@ -37,24 +37,8 @@ func _ready():
 func _process(delta):
 	
 	if Input.is_action_just_pressed("ui_p"):
-		var item2 = grid_map.get_item2(self)
-		inventory.add_item(item2)
-		
-#		var item = grid_map.get_item(self) #needed for the moment as it cleans up items fro grid
-#		inventory.set_add_item(item)
-		
-		
-#		weap.print() #use class
-		
-		# DELME example only below
-#		var rnd_item = weap.create_rnd_item(dic_weapon) # so something like this then ? Preamble postamble would likely be internal calls in new class, instead of here
-#		print(rnd_item)
-#		print(rnd_item.base_name)
-#		var pre_item = weap.preamble(rnd_item)
-#		print(pre_item.base_name)
-#		var new_name = weap.postamble(pre_item)
-#		print(new_name.base_name)
-		#DELME to here
+		var item = grid_map.get_item(self)
+		inventory.add_item(item)
 		
 	if Input.is_action_just_pressed("add_enemy"):
 		Game.Dialog.print_label("You have added an enemy")

@@ -18,11 +18,7 @@ onready var inventory = get_parent()
 var weapon
 var armour
 var wearable
-
-func _ready():
-	pass
 	
-
 func update_inventory():
 	purge_inventory_screen()
 	get_inventory()
