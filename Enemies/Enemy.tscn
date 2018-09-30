@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Enemies/Enemy.gd" type="Script" id=1]
-[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://Data/ProjectUtumno_full.png" type="Texture" id=2]
 
 [node name="Enemy" type="KinematicBody2D" groups=[
 "Enemy",
@@ -16,9 +16,10 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
-scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 2 )
-_sections_unfolded = [ "Transform" ]
+region_enabled = true
+region_rect = Rect2( 640, 2368, 32, 32 )
+_sections_unfolded = [ "Region", "Transform" ]
 
 [node name="Label" type="Label" parent="Sprite" index="0"]
 

@@ -38,7 +38,8 @@ func _process(delta):
 	
 	if Input.is_action_just_pressed("ui_p"):
 		var item = grid_map.get_item(self)
-		inventory.add_item(item)
+		if item:
+			inventory.add_item(item)
 		
 	if Input.is_action_just_pressed("add_enemy"):
 		Game.Dialog.print_label("You have added an enemy")

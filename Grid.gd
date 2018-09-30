@@ -26,10 +26,10 @@ func _ready():
 			var i = mapgrid[x][y]
 			var j = 0
 			if i == "+":
-				j = 0
+				j = "0"
 				grid[x][y] = EMPTY
 			elif i == " ":
-				j = 1
+				j = "1"
 				grid[x][y] = WALL
 			elif i == "S":
 				j = 2
