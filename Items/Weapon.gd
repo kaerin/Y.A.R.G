@@ -14,6 +14,7 @@ func _init(i):
 		inventory[0].set_name(G.Weap.Fist)
 		inventory[0].set_dmg_type(G.WeapType.Blunt)
 		inventory[0].set_damage(91,92)
+		inventory[0].set_equipped()
 		#inventory[0].add_to_group("Weapon")
 
 func print():
@@ -37,6 +38,11 @@ func add_weapon(item, i = false):
 	#active += 1 #hack, dont do it this way
 	if i:
 		alter_stats(0,10)
+		
+func get_active_name():
+	for n in inventory:
+		if n.is_equipped:
+			return n.get_name()
 
 func get_name(i):
 	return inventory[i].get_name()
@@ -44,7 +50,7 @@ func get_name(i):
 func get_type():
 	#return equipped.get_dmg_type()
 	for n in inventory:
-		if n._is_equipped:
+		if n.is_equipped:
 			return n.get_dmg_type()
 			
 func equip_weapon(equipped):
@@ -58,13 +64,13 @@ func get_equipped():
 func get_damage():
 	#return equipped.get_damage()
 	for n in inventory:
-		if n._is_equipped:
+		if n.is_equipped:
 			return n.get_damage()
 	
 func get_bonus_damage():
 	#return equipped[0].get_bonus_damage()
 	for n in inventory:
-		if n._is_equipped:
+		if n.is_equipped:
 			return n.get_bonus_damage()
 
 

@@ -87,7 +87,7 @@ func _process(delta):
 			is_fighting = true
 			var enemy = grid_map.get_cell_node(get_position(), target_direction)
 			if enemy:
-				enemy.set_contact(inventory.weapon.get_damage())
+				enemy.set_contact(inventory.get_damage()) #weapon needs to get equippped
 			$Timer.start()
 	elif is_moving:
 		speed = MAX_SPEED

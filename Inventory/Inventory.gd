@@ -37,8 +37,8 @@ func get_damage():
 		print("Weapon damage: ", weapon.get_damage() ) #get the currently equppied weapons damage from the class
 		#can do this add all damage and bonuses together
 		#damage = weapon.get_damage() + ring.get_dmg_bonus() + amulet.get_dmg_bonus() 
-		damage = weapon.get_damage() + wearable.get_bonus_dmg() #get damage from equipped weapon class, the same as inventory.weapon.get_damage() called from the player class
-		Game.Dialog.print_label("Your weapon: " + weapon.get_name() + " did " + str(damage) + " damage.", 2)
+		damage = weapon.get_damage() #get damage from equipped weapon class, the same as inventory.weapon.get_damage() called from the player class
+		Game.Dialog.print_label("Your weapon: " + weapon.get_active_name() + " did " + str(damage) + " damage.", 2)
 		return(damage) 
 
 func add_item(item):
