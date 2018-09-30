@@ -11,6 +11,7 @@ var weapon
 var armour
 var wearable
 var type
+var facing = true
 
 var direction = Vector2()
 var speed = 0
@@ -90,9 +91,15 @@ func set_move():
 		var temp = randi() % 5
 		temp = randi() % 4
 		if temp == 0:
-			direction.x = 1
-		elif temp == 1:
 			direction.x = -1
+			if facing:
+				facing = false
+				$Sprite.set_flip_h(facing)
+		elif temp == 1:
+			direction.x = 1
+			if not facing:
+				facing = true
+				$Sprite.set_flip_h(facing)
 		elif temp == 2:
 			direction.y = 1
 		elif temp == 3:

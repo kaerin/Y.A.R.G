@@ -23,6 +23,7 @@ var is_moving = false
 var is_fighting = false
 var target_pos = Vector2()
 var target_direction = Vector2()
+var facing = false
 
 signal enemy_move
 
@@ -52,8 +53,14 @@ func _process(delta):
 		direction.y = 1
 	if Input.is_action_pressed("ui_left"):
 		direction.x = -1
+		if facing:
+			facing = false
+			$Sprite.set_flip_h(facing)
 	elif Input.is_action_pressed("ui_right"):
 		direction.x = 1
+		if not facing:
+			facing = true
+			$Sprite.set_flip_h(facing)
 #	elif Input.is_action_pressed("ui_up_right"):
 #		direction = RIGHT + UP
 #	elif Input.is_action_pressed("ui_up_left"):
