@@ -6,5 +6,5 @@ var Dialog
 
 func _ready():
 	Dialog = dialog.instance()
-	add_child(Dialog) #Create then show hide label as needed
+	$Grid/Player/Camera2D.add_child(Dialog) #Create then show hide label as needed
 
