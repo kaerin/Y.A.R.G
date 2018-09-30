@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Data/ProjectUtumno_full.png" type="Texture" id=1]
 
-[node name="Node" type="Node"]
+[node name="Node" type="Node" index="0"]
 
 [node name="Floor1" type="Sprite" parent="." index="0"]
 
@@ -12,15 +12,59 @@ region_enabled = true
 region_rect = Rect2( 1312, 256, 32, 32 )
 _sections_unfolded = [ "Region", "Transform" ]
 
-[node name="Walll1" type="Sprite" parent="." index="1"]
+[node name="Floor2" type="Sprite" parent="." index="1"]
 
 visible = false
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 1376, 256, 32, 32 )
+_sections_unfolded = [ "Region", "Transform" ]
+
+[node name="Floor3" type="Sprite" parent="." index="2"]
+
+visible = false
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 1440, 256, 32, 32 )
+_sections_unfolded = [ "Region", "Transform" ]
+
+[node name="Floor4" type="Sprite" parent="." index="3"]
+
+visible = false
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 1504, 256, 32, 32 )
+_sections_unfolded = [ "Region", "Transform" ]
+
+[node name="Wall1" type="Sprite" parent="." index="4"]
+
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 1728, 544, 32, 32 )
+_sections_unfolded = [ "Region", "Transform" ]
+
+[node name="Wall2" type="Sprite" parent="." index="5"]
+
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 1696, 544, 32, 32 )
 _sections_unfolded = [ "Region", "Transform" ]
 
-[node name="StairUp1" type="Sprite" parent="." index="2"]
+[node name="Wall3" type="Sprite" parent="." index="6"]
+
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 1312, 544, 32, 32 )
+_sections_unfolded = [ "Region", "Transform" ]
+
+[node name="Wall4" type="Sprite" parent="." index="7"]
+
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 1376, 544, 32, 32 )
+_sections_unfolded = [ "Region", "Transform" ]
+
+[node name="StairUp1" type="Sprite" parent="." index="8"]
 
 visible = false
 texture = ExtResource( 1 )
@@ -28,7 +72,7 @@ region_enabled = true
 region_rect = Rect2( 1216, 352, 32, 32 )
 _sections_unfolded = [ "Offset", "Region", "Transform" ]
 
-[node name="StairDown1" type="Sprite" parent="." index="3"]
+[node name="StairDown1" type="Sprite" parent="." index="9"]
 
 visible = false
 texture = ExtResource( 1 )
@@ -36,7 +80,7 @@ region_enabled = true
 region_rect = Rect2( 1184, 320, 32, 32 )
 _sections_unfolded = [ "Offset", "Region", "Transform" ]
 
-[node name="Blood1" type="Sprite" parent="." index="4"]
+[node name="Blood1" type="Sprite" parent="." index="10"]
 
 visible = false
 texture = ExtResource( 1 )
@@ -44,7 +88,7 @@ region_enabled = true
 region_rect = Rect2( 288, 1632, 32, 32 )
 _sections_unfolded = [ "Offset", "Region", "Transform" ]
 
-[node name="Blood2" type="Sprite" parent="." index="5"]
+[node name="Blood2" type="Sprite" parent="." index="11"]
 
 visible = false
 texture = ExtResource( 1 )
@@ -52,7 +96,7 @@ region_enabled = true
 region_rect = Rect2( 320, 1632, 32, 32 )
 _sections_unfolded = [ "Offset", "Region", "Transform" ]
 
-[node name="Blood3" type="Sprite" parent="." index="6"]
+[node name="Blood3" type="Sprite" parent="." index="12"]
 
 visible = false
 texture = ExtResource( 1 )
@@ -60,36 +104,41 @@ region_enabled = true
 region_rect = Rect2( 352, 1632, 32, 32 )
 _sections_unfolded = [ "Offset", "Region", "Transform" ]
 
-[node name="Blood4" type="Sprite" parent="." index="7"]
+[node name="Blood4" type="Sprite" parent="." index="13"]
 
+visible = false
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 384, 1632, 32, 32 )
 _sections_unfolded = [ "Offset", "Region", "Transform" ]
 
-[node name="Blood5" type="Sprite" parent="." index="8"]
+[node name="Blood5" type="Sprite" parent="." index="14"]
 
+visible = false
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 480, 1632, 32, 32 )
 _sections_unfolded = [ "Offset", "Region", "Transform" ]
 
-[node name="Blood6" type="Sprite" parent="." index="9"]
+[node name="Blood6" type="Sprite" parent="." index="15"]
 
+visible = false
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 512, 1632, 32, 32 )
 _sections_unfolded = [ "Offset", "Region", "Transform" ]
 
-[node name="Blood7" type="Sprite" parent="." index="10"]
+[node name="Blood7" type="Sprite" parent="." index="16"]
 
+visible = false
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 544, 1632, 32, 32 )
 _sections_unfolded = [ "Offset", "Region", "Transform" ]
 
-[node name="Blood8" type="Sprite" parent="." index="11"]
+[node name="Blood8" type="Sprite" parent="." index="17"]
 
+visible = false
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 576, 1632, 32, 32 )

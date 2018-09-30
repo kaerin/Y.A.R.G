@@ -6,6 +6,8 @@ var half_tile_size = tile_size / 2
 var grid_size = Vector2(50,50)
 var grid = []
 enum GRID_ITEMS {EMPTY, PLAYER, WALL, ITEM, ENEMY}
+var FLOOR = ["Floor1","Floor2","Floor3","Floor4"]
+var ROOF = ["Wall1","Wall2","Wall3","Wall4"]
 
 const INVALID = -999
 
@@ -26,10 +28,10 @@ func _ready():
 			var i = mapgrid[x][y]
 			var j = 0
 			if i == "+":
-				j = "0"
+				j = tile_set.find_tile_by_name(FLOOR[randi() % FLOOR.size()])
 				grid[x][y] = EMPTY
 			elif i == " ":
-				j = "1"
+				j = tile_set.find_tile_by_name(ROOF[randi() % ROOF.size()])
 				grid[x][y] = WALL
 			elif i == "S":
 				j = 2
