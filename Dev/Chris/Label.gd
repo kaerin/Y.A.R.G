@@ -1,9 +1,7 @@
 extends Node
 
 var gsize = Vector2(50,50) #Size of grid
-#var height = 8
-#var width = 16
-var factor = 2.3 #higher means less blocks removed
+var factor = 2.2 #higher means less blocks removed
 var start = Vector2()
 var end = Vector2()
 var delay = .01
@@ -20,12 +18,17 @@ func map():
 	var map
 	var maps = 0
 	var mapsGood = 0
-#	while true:
 	var map2 = []
 	goodMap = false
 	var try = 0
-#
+	var trying = OS.get_ticks_msec() + 1000
 	while goodMap == false:
+		if trying < OS.get_ticks_msec():
+			trying = OS.get_ticks_msec() + 1000
+			cross_num += 1
+			cross_size += 2
+			factor += 0.1
+			print("cant find solution, making map easier, try #:", try)
 		map2 = []
 		try += 1
 		randomize()
@@ -57,16 +60,16 @@ func map():
 			path = newPath			
 #			show(map)
 #			yield(get_node("Label"), "drawn")
-#			if goodMap == false:
-#				show(map, "Map is " + str(goodMap))
-#				yield(get_tree().create_timer(1), "timeout")
+#		if goodMap == false:
+#			show(map, "Map is " + str(goodMap))
+#			yield(get_tree().create_timer(1), "timeout")
 	var time = OS.get_ticks_msec()
 	maps += try
 	mapsGood += 1
 	var rate = int(float(mapsGood) / maps * 100)
 	var avg_time = time / maps
 #	show(map2, "Map is " + str(goodMap) + " maps: " + str(maps) + " Avg:" + str(avg_time) + "ms Rate:" + str(rate) + "%")
-#		yield(get_tree().create_timer(1), "timeout")
+#	yield(get_tree().create_timer(1), "timeout")
 #	yield(get_node("Label"), "drawn")
 	return map2
 		
@@ -100,12 +103,16 @@ func map_clear(map):
 		
 func map_gen_start_end(map):
 	start.x = randi() % int(gsize.x)
+	while start.x > gsize.x * 0.2 and start.x < gsize.x * 0.8:
+		start.x = randi() % int(gsize.x)
 	start.y = randi() % int(gsize.y)
+	while start.y > gsize.y * 0.2 and start.y < gsize.y * 0.8:
+		start.y = randi() % int(gsize.y)
 	end = start
 		
-	while abs(end.x - start.x) < gsize.x * 0.45:
+	while abs(end.x - start.x) < gsize.x * 0.66:
 		end.x = randi() % int(gsize.x)
-	while abs(end.y - start.y) < gsize.y * 0.45:
+	while abs(end.y - start.y) < gsize.y * 0.66:
 		end.y = randi() % int(gsize.y)
 #
 	map[start.x][start.y] = "S"

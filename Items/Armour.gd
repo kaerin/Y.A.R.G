@@ -6,7 +6,8 @@ var inventory = []
 
 func _init(i):
 	if i == G.CHAR.ENEMY:
-		print("New enemy armour class")
+		pass
+#		print("New enemy armour class")
 	elif i == G.CHAR.PLAYER:
 		print("Armour reference initialised, adding t-shirt")
 		var a = Armours.new()

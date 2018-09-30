@@ -2,7 +2,7 @@ extends TileMap
 
 var tile_size = get_cell_size()
 var half_tile_size = tile_size / 2
-
+var enemy_factor = 50 #Lower to get more enemies
 var grid_size = Vector2()
 var grid = []
 enum GRID_ITEMS {EMPTY, PLAYER, WALL, ITEM, ENEMY}
@@ -54,7 +54,7 @@ func _ready():
 	var Player = get_node("Player")
 #	var start_pos = update_child_pos(
 	Player.set_position(map_to_world(map.start) + half_tile_size)
-	add_enemies(50)
+	add_enemies(grid_size.x*grid_size.y/enemy_factor)
 	
 	#TEMP add random enemies for testing
 
