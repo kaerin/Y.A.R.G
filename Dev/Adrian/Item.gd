@@ -21,10 +21,9 @@ func _ready():
 	if item:					# does not work without an if. dunno why. data not populated or something.
 		$Text.text = item.Name
 		show()
-		#$Sprite.texture = item.get_sprite_texture()
-		#$Sprite.set_region_rect(item.get_sprite_rect())
+		$Sprite.texture = item.get_sprite_texture()
+		$Sprite.set_region_rect(item.get_sprite_rect())
 		
-
 func _process(delta):
 	if mouse_here:
 		if Input.is_action_pressed("ui_mouse_left"):
