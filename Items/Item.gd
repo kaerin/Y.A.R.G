@@ -13,13 +13,19 @@ func _ready():
 	$Label.text = item.get_name()
 	match item.BaseType:
 		G.BaseType.Weap:
+			self.texture = item.get_sprite_texture()
+			set_region_rect(item.get_sprite_rect())
 			print("Weapon drop")
-			set_region_rect(Rect2(992,1536,32,32))
+			#set_region_rect(Rect2(992,1536,32,32))
 		G.BaseType.Armour:
-			set_region_rect(Rect2(1472,1184,32,32))
+			self.texture = item.get_sprite_texture()
+			set_region_rect(item.get_sprite_rect())
+			#set_region_rect(Rect2(1472,1184,32,32))
 			print("Armour drop")
 		G.BaseType.Wear:
+			self.texture = item.get_sprite_texture()
+			set_region_rect(item.get_sprite_rect())
 			print("Wearable drop")
-			set_region_rect(Rect2(32,1120,32,32))
+			#set_region_rect(Rect2(32,1120,32,32))
 		_:
 			print("Dropped something else")

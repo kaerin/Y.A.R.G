@@ -2,6 +2,9 @@ extends Reference
 
 #Class to store all wepaon information
 
+var texture = load("res://Data/ProjectUtumno_full.png")
+var sprite_rect = Rect2(1472,1184,32,32)
+
 var BaseType = G.BaseType.Armour
 var Name
 var is_equipped
@@ -41,6 +44,12 @@ func get_equipped():
 
 func get_name():
 	return Name
+	
+func get_sprite_texture():
+	return texture
+
+func get_sprite_rect():
+	return sprite_rect
 
 func get_location():
 	return Location
