@@ -44,7 +44,7 @@ func _process(delta):
 		
 	if Input.is_action_just_pressed("add_enemy"):
 		Game.Dialog.print_label("You have added an enemy")
-		grid_map.add_enemies()
+		grid_map.add_enemies(50)
 	
 	direction = Vector2()
 	if Input.is_action_pressed("ui_up"):
@@ -87,7 +87,7 @@ func _process(delta):
 			is_fighting = true
 			var enemy = grid_map.get_cell_node(get_position(), target_direction)
 			if enemy:
-				enemy.set_contact(5)
+				enemy.set_contact(inventory.weapon.get_damage())
 			$Timer.start()
 	elif is_moving:
 		speed = MAX_SPEED
