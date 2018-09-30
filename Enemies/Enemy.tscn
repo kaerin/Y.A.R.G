@@ -3,7 +3,7 @@
 [ext_resource path="res://Enemies/Enemy.gd" type="Script" id=1]
 [ext_resource path="res://Data/ProjectUtumno_full.png" type="Texture" id=2]
 
-[node name="Enemy" type="KinematicBody2D" groups=[
+[node name="Enemy" type="KinematicBody2D" index="0" groups=[
 "Enemy",
 ]]
 
@@ -19,7 +19,7 @@ _sections_unfolded = [ "Transform" ]
 z_index = 3
 texture = ExtResource( 2 )
 region_enabled = true
-region_rect = Rect2( 640, 2368, 32, 32 )
+region_rect = Rect2( 1248, 1024, 32, 32 )
 _sections_unfolded = [ "Offset", "Region", "Transform", "Z Index" ]
 
 [node name="Label" type="Label" parent="Sprite" index="0"]
