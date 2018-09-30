@@ -3,7 +3,7 @@ extends TileMap
 var tile_size = get_cell_size()
 var half_tile_size = tile_size / 2
 
-var grid_size = Vector2(50,50)
+var grid_size = Vector2()
 var grid = []
 enum GRID_ITEMS {EMPTY, PLAYER, WALL, ITEM, ENEMY}
 var FLOOR = ["Floor1","Floor2","Floor3","Floor4"]
@@ -19,9 +19,10 @@ var end = Vector2()
 var mapgrid
 
 func _ready():
-	create_grid()
 	var map = Map.new()
 	mapgrid = map.map()
+	grid_size = map.gsize
+	create_grid()
 	print(mapgrid.size())
 	for x in mapgrid.size():
 		for y in mapgrid[x].size():
@@ -42,7 +43,13 @@ func _ready():
 				grid[x][y] = EMPTY
 				end = Vector2(x,y)
 			set_cell(x,y,int(j))
-		
+	for x in [-1,mapgrid.size()]:
+		for y in range(-1,mapgrid[0].size()+1):
+			set_cell(x,y,tile_set.find_tile_by_name(ROOF[randi() % ROOF.size()]))
+	for y in [-1,mapgrid[0].size()]:
+		for x in range(0,mapgrid.size()):
+			set_cell(x,y,tile_set.find_tile_by_name(ROOF[randi() % ROOF.size()]))
+	 
 	
 	var Player = get_node("Player")
 #	var start_pos = update_child_pos(
