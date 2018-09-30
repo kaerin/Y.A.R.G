@@ -117,6 +117,7 @@ func set_kill_me(child):
 
 	if not child.inventory.empty():
 		for object in child.inventory:
+			get_node("../Blood").set_blood(cur_pos)
 			var new_object = item.instance()
 			new_object.set_position(map_to_world(cur_pos) + half_tile_size)
 			grid[cur_pos.x][cur_pos.y] = ITEM

@@ -36,11 +36,11 @@ region_enabled = true
 region_rect = Rect2( 1184, 320, 32, 32 )
 _sections_unfolded = [ "Offset", "Region", "Transform" ]
 
-[node name="Player" type="Sprite" parent="." index="4"]
+[node name="Blood1" type="Sprite" parent="." index="4"]
 
 texture = ExtResource( 1 )
 region_enabled = true
-region_rect = Rect2( 992, 2432, 32, 32 )
+region_rect = Rect2( 288, 1632, 32, 32 )
 _sections_unfolded = [ "Offset", "Region", "Transform" ]
 
 
