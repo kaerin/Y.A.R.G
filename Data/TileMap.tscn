@@ -38,6 +38,7 @@ _sections_unfolded = [ "Region", "Transform" ]
 
 [node name="Wall1" type="Sprite" parent="." index="4"]
 
+visible = false
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 1728, 544, 32, 32 )
@@ -45,6 +46,7 @@ _sections_unfolded = [ "Region", "Transform" ]
 
 [node name="Wall2" type="Sprite" parent="." index="5"]
 
+visible = false
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 1696, 544, 32, 32 )
@@ -52,6 +54,7 @@ _sections_unfolded = [ "Region", "Transform" ]
 
 [node name="Wall3" type="Sprite" parent="." index="6"]
 
+visible = false
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 1312, 544, 32, 32 )
@@ -59,6 +62,7 @@ _sections_unfolded = [ "Region", "Transform" ]
 
 [node name="Wall4" type="Sprite" parent="." index="7"]
 
+visible = false
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 1376, 544, 32, 32 )
@@ -142,6 +146,13 @@ visible = false
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 576, 1632, 32, 32 )
+_sections_unfolded = [ "Offset", "Region", "Transform" ]
+
+[node name="Hidden1" type="Sprite" parent="." index="18"]
+
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 992, 32, 32, 32 )
 _sections_unfolded = [ "Offset", "Region", "Transform" ]
 
 

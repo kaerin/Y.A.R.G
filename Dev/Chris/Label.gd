@@ -1,13 +1,15 @@
 extends Node
 
 var gsize = Vector2(50,50) #Size of grid
-var factor = 2.2 #higher means less blocks removed
+var factor = 2.3 #higher means less blocks removed
 var start = Vector2()
 var end = Vector2()
 var delay = .01
 var cross_size = 5 #size of placed cross shaped paths
 var cross_num = 3 #number of crosses
-var goodMap
+var goodMap = false
+var hidden = false
+var special = [Vector2()]
 
 var dirs = [Vector2(1,0),Vector2(0,1),Vector2(-1,0),Vector2(0,-1)]
 
@@ -19,10 +21,11 @@ func map():
 	var maps = 0
 	var mapsGood = 0
 	var map2 = []
-	goodMap = false
 	var try = 0
 	var trying = OS.get_ticks_msec() + 1000
-	while goodMap == false:
+	while goodMap == false or hidden == false:
+		hidden = false
+		goodMap = false
 		if trying < OS.get_ticks_msec():
 			trying = OS.get_ticks_msec() + 1000
 			cross_num += 1
@@ -33,8 +36,8 @@ func map():
 		try += 1
 		randomize()
 		map = map_gen()
-		map = map_gen_start_end(map)
 		map = map_clear(map)
+		map = map_gen_start_end(map)
 		map = map_add_cross(map,cross_size,cross_num)
 		for i in gsize.x:
 			map2.append([])
@@ -55,7 +58,9 @@ func map():
 						newPath.append(check)
 					elif map[check.x][check.y] == "E":
 						goodMap = true
-				if goodMap:
+					elif map[check.x][check.y] == "H":
+						hidden = true
+				if goodMap and hidden:
 					break		
 			path = newPath			
 #			show(map)
@@ -68,7 +73,7 @@ func map():
 	mapsGood += 1
 	var rate = int(float(mapsGood) / maps * 100)
 	var avg_time = time / maps
-#	show(map2, "Map is " + str(goodMap) + " maps: " + str(maps) + " Avg:" + str(avg_time) + "ms Rate:" + str(rate) + "%")
+#	show(map, "Map is " + str(goodMap) + str(hidden) + " maps: " + str(maps) + " Avg:" + str(avg_time) + "ms Rate:" + str(rate) + "%")
 #	yield(get_tree().create_timer(1), "timeout")
 #	yield(get_node("Label"), "drawn")
 	return map2
@@ -87,7 +92,8 @@ func map_add_cross(map, csize, num = 0):
 					break
 				cross.append(point)
 	for i in cross:
-		map[i.x][i.y] = "+"
+		if map[i.x][i.y] == " ":
+			map[i.x][i.y] = "+"
 	return map
 
 func map_clear(map):
@@ -109,7 +115,7 @@ func map_gen_start_end(map):
 	while start.y > gsize.y * 0.2 and start.y < gsize.y * 0.8:
 		start.y = randi() % int(gsize.y)
 	end = start
-		
+	special[0] = Vector2(randi() % int(gsize.x),randi() % int(gsize.y))
 	while abs(end.x - start.x) < gsize.x * 0.66:
 		end.x = randi() % int(gsize.x)
 	while abs(end.y - start.y) < gsize.y * 0.66:
@@ -117,6 +123,8 @@ func map_gen_start_end(map):
 #
 	map[start.x][start.y] = "S"
 	map[end.x][end.y] = "E"
+	for i in special:
+		map[i.x][i.y] = "H"
 	return map
 	
 func map_gen():

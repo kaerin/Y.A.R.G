@@ -14,6 +14,7 @@ const INVALID = -999
 onready var enemy = preload("res://Enemies/Enemy.tscn")
 onready var item  = preload("res://Items/Item.tscn")
 onready var Map = preload("res://Dev/Chris/Label.gd")
+onready var GridFloor = get_node("../GridFloor")
 var start = Vector2()
 var end = Vector2()
 var mapgrid
@@ -27,7 +28,7 @@ func _ready():
 	for x in mapgrid.size():
 		for y in mapgrid[x].size():
 			var i = mapgrid[x][y]
-			var j = 0
+			var j = -1
 			if i == "+":
 				j = tile_set.find_tile_by_name(FLOOR[randi() % FLOOR.size()])
 				grid[x][y] = EMPTY
@@ -42,6 +43,10 @@ func _ready():
 				j = 3
 				grid[x][y] = EMPTY
 				end = Vector2(x,y)
+			elif i == "H":
+				j = tile_set.find_tile_by_name(FLOOR[randi() % FLOOR.size()])
+				GridFloor.set_hidden(Vector2(x,y))
+				grid[x][y] = ITEM
 			set_cell(x,y,int(j))
 	for x in [-1,mapgrid.size()]:
 		for y in range(-1,mapgrid[0].size()+1):
@@ -96,7 +101,9 @@ func update_child_pos(child_node):
 	var target_pos = map_to_world(new_grid_pos) + half_tile_size
 	return target_pos
 
-func add_enemies(num = 1):
+func add_enemies(num):
+	if not num:
+		num = grid_size.x*grid_size.y/enemy_factor
 	var positions = []
 	randomize()
 	for n in num:
@@ -126,7 +133,7 @@ func set_kill_me(child):
 
 	if not child.inventory.empty():
 		for object in child.inventory:
-			get_node("../Blood").set_blood(cur_pos)
+			GridFloor.set_blood(cur_pos)
 			var new_object = item.instance()
 			new_object.set_position(map_to_world(cur_pos) + half_tile_size)
 			grid[cur_pos.x][cur_pos.y] = ITEM
