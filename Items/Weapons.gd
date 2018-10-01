@@ -1,13 +1,7 @@
-extends Reference
+extends "res://Items/Inv.gd"
 
 #Class to store all wepaon information
 
-var texture = load("res://Data/ProjectUtumno_full.png")
-var sprite_rect = G.TODO_img
-
-var BaseType = G.BaseType.Weap
-var Name
-var is_equipped
 var DmgType
 var MinDamage = 1
 var MaxDamage = 1
@@ -15,18 +9,6 @@ var BonusDamage = 0
 
 
 #set data
-func set_sprite_rect(i):
-	sprite_rect = i
-
-func set_equipped():
-	is_equipped = true
-
-func set_not_equipped():
-	is_equipped = false
-
-func set_name(i):
-	Name = i
-
 func set_dmg_type(i):
 	DmgType = i
 
@@ -36,23 +18,8 @@ func set_damage(i,j):
 
 func set_bonus_dmg(i):
 	BonusDamage = i
-	
-func set_unequip():
-	is_equipped = false	
 
 #get data
-func get_equipped():
-	return is_equipped
-
-func get_name():
-	return Name
-	
-func get_sprite_texture():
-	return texture
-
-func get_sprite_rect():
-	return sprite_rect
-
 func get_dmg_type():
 	return DmgType	
 	
