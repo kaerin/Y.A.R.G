@@ -38,6 +38,7 @@ func add_wearable(item, i = false):
 	inventory[0].set_type(item.type)
 	inventory[0].set_bonus_ac(item.bonus_ac)
 	inventory[0].set_bonus_dmg(item.bonus_dmg)
+	inventory[0].set_sprite_rect(item.img_rect)
 	#inventory[0].add_to_group("Wearable")
 	if i:
 		alter_stats(0,10)

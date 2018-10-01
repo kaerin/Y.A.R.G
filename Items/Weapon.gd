@@ -14,6 +14,7 @@ func _init(i):
 		inventory[0].set_name(G.Weap.Fist)
 		inventory[0].set_dmg_type(G.WeapType.Blunt)
 		inventory[0].set_damage(91,92)
+		inventory[0].set_sprite_rect(Rect2(864,928,32,32))
 		inventory[0].set_equipped()
 		#inventory[0].add_to_group("Weapon")
 
@@ -34,6 +35,7 @@ func add_weapon(item, i = false):
 	inventory[0].set_name(item.base_name)
 	inventory[0].set_dmg_type(item.damage_type)
 	inventory[0].set_damage(item.min_damage,item.max_damage)
+	inventory[0].set_sprite_rect(item.img_rect)
 	#inventory[0].add_to_group("Weapon")
 	#active += 1 #hack, dont do it this way
 	if i:

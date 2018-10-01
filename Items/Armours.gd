@@ -13,8 +13,12 @@ var Location
 var LocName
 var ArmourClass = 0
 var BonusAC = 0
+var ImgRect
 
 #set data
+func set_sprite_rect(i):
+	sprite_rect = i
+
 func set_mat(i):
 	Mat = i
 	
@@ -56,13 +60,14 @@ func get_sprite_texture():
 	return texture
 
 func get_sprite_rect():
-	match Location:
-		G.LOC.CHEST:
-			match Mat:
-				G.Mat.Chain:
-					sprite_rect = Rect2(1472,1184,32,32)
-				G.Mat.Cloth:
-					sprite_rect = Rect2(1824,1120,32,32)
+	return sprite_rect
+#	match Location:
+#		G.LOC.CHEST:
+#			match Mat:
+#				G.Mat.Chain:
+#					sprite_rect = Rect2(1472,1184,32,32)
+#				G.Mat.Cloth:
+#					sprite_rect = Rect2(1824,1120,32,32)
 	
 	return sprite_rect
 

@@ -42,6 +42,7 @@ func _ready():
 	var rnd_enemy = randi() % dic_enemies.size()
 	hp = randi() % (dic_enemies[rnd_enemy].max_hp - dic_enemies[rnd_enemy].min_hp) + dic_enemies[rnd_enemy].min_hp
 	$Sprite/Label.text = dic_enemies[rnd_enemy].base_name
+	$Sprite.set_region_rect(dic_enemies[rnd_enemy].img_rect)
 	
 	#TEMP ONLY random item in inventory to test dropping
 	var temp = randi() % 3 + 1 #testing

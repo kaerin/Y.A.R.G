@@ -3,7 +3,7 @@ extends Reference
 #Class to store all wepaon information
 
 var texture = load("res://Data/ProjectUtumno_full.png")
-var sprite_rect = Rect2(32,1120,32,32)
+var sprite_rect = G.TODO_img
 
 var BaseType = G.BaseType.Wear
 var Name
@@ -13,6 +13,9 @@ var BonusAC = 0
 var BonusDmg = 0
 
 #set data
+func set_sprite_rect(i):
+	sprite_rect = i
+
 func set_equipped():
 	is_equipped = true
 

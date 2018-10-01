@@ -19,7 +19,7 @@ _sections_unfolded = [ "Transform" ]
 z_index = 3
 texture = ExtResource( 2 )
 region_enabled = true
-region_rect = Rect2( 1248, 1024, 32, 32 )
+region_rect = Rect2( 1440, 1152, 32, 32 )
 _sections_unfolded = [ "Offset", "Region", "Transform", "Z Index" ]
 
 [node name="Label" type="Label" parent="Sprite" index="0"]

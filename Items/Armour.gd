@@ -18,11 +18,13 @@ func _init(i):
 		inventory[0].set_mat(G.Mat.Cloth)
 		inventory[0].set_location(G.LOC.CHEST)
 		inventory[0].set_loc_name(G.Loc.Chest)
+		inventory[0].set_sprite_rect(Rect2(1824,1120,32,32))
 		inventory[0].set_ac(1)
 		inventory[1].set_name("Hat")
 		inventory[1].set_mat(G.Mat.Cloth)
 		inventory[1].set_location(G.LOC.HEAD)
 		inventory[1].set_loc_name(G.Loc.Head)
+		inventory[1].set_sprite_rect(Rect2(1440,1152,32,32))
 		inventory[1].set_ac(1)
 		#inventory[1].add_to_group("Armour")
 		
@@ -41,6 +43,7 @@ func add_armour(item, i = false):
 	inventory[0].set_location(item.location)
 	inventory[0].set_loc_name(item.loc_name)
 	inventory[0].set_ac(item.armor_class)
+	inventory[0].set_sprite_rect(item.img_rect)
 	#inventory[0].add_to_group("Armour")
 	active[G.LOC.CHEST] += 1 #hack, dumb way of doing it, dont repeat, use an index
 	active[G.LOC.HEAD] += 1 #hack, dumb way of doing it, dont repeat, use an index
