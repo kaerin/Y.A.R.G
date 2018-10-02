@@ -1,6 +1,6 @@
 extends Node
 
-var gsize = Vector2(50,50) #Size of grid
+var gsize = Vector2(15,15) #Size of grid
 var factor = 2.3 #higher means less blocks removed
 var start = Vector2()
 var end = Vector2()
@@ -16,7 +16,8 @@ var dirs = [Vector2(1,0),Vector2(0,1),Vector2(-1,0),Vector2(0,-1)]
 func _ready():
 	pass
 
-func map():
+func map(i = gsize):
+	gsize = i
 	var map
 	var maps = 0
 	var mapsGood = 0

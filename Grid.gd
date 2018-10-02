@@ -8,6 +8,7 @@ var grid = []
 enum GRID_ITEMS {EMPTY, PLAYER, WALL, ITEM, ENEMY}
 var FLOOR = ["Floor1","Floor2","Floor3","Floor4"]
 var ROOF = ["Wall1","Wall2","Wall3","Wall4"]
+var level = 0
 
 const INVALID = -999
 
@@ -17,11 +18,13 @@ onready var Map = preload("res://Dev/Chris/Label.gd")
 onready var GridFloor = get_node("../GridFloor")
 var start = Vector2()
 var end = Vector2()
+var hidden = Vector2()
+var found_hidden = false
 var mapgrid
 
 func _ready():
 	var map = Map.new()
-	mapgrid = map.map()
+	mapgrid = map.map(Vector2(level+10,level+10))
 	grid_size = map.gsize
 	create_grid()
 	print(mapgrid.size())
@@ -36,16 +39,17 @@ func _ready():
 				j = tile_set.find_tile_by_name(ROOF[randi() % ROOF.size()])
 				grid[x][y] = WALL
 			elif i == "S":
-				j = 2
+				j = tile_set.find_tile_by_name("StairUp1")
 				grid[x][y] = EMPTY
 				start = Vector2(x,y)
 			elif i == "E":
-				j = 3
+				j = tile_set.find_tile_by_name(FLOOR[randi() % FLOOR.size()])
 				grid[x][y] = EMPTY
 				end = Vector2(x,y)
 			elif i == "H":
 				j = tile_set.find_tile_by_name(FLOOR[randi() % FLOOR.size()])
 				GridFloor.set_hidden(Vector2(x,y))
+				hidden = Vector2(x,y)
 				grid[x][y] = ITEM
 			set_cell(x,y,int(j))
 	for x in [-1,mapgrid.size()]:
@@ -59,7 +63,9 @@ func _ready():
 	var Player = get_node("Player")
 #	var start_pos = update_child_pos(
 	Player.set_position(map_to_world(map.start) + half_tile_size)
-	add_enemies(grid_size.x*grid_size.y/enemy_factor)
+	Player.is_moving = false
+	update_child_pos(Player)
+	add_enemies()
 	
 	#TEMP add random enemies for testing
 
@@ -71,19 +77,21 @@ func create_grid():
 
 func is_cell_empty(pos, direction = Vector2()):
 	var grid_pos = world_to_map(pos) + direction
-	if grid_pos.x < grid_size.x and grid_pos.x >= 0:
-		if grid_pos.y < grid_size.y and grid_pos.y >= 0:
-			if grid[grid_pos.x][grid_pos.y] == EMPTY or grid[grid_pos.x][grid_pos.y] == ITEM:
-				return true
-			else:
-				return false
+	if G.is_within(grid_pos,grid_size):
+#	if grid_pos.x < grid_size.x and grid_pos.x >= 0:
+#		if grid_pos.y < grid_size.y and grid_pos.y >= 0:
+		if grid[grid_pos.x][grid_pos.y] == EMPTY or grid[grid_pos.x][grid_pos.y] == ITEM:
+			return true
+		else:
+			return false
 	return false
 
 func is_cell_enemy(pos, direction = Vector2()):
 	var grid_pos = world_to_map(pos) + direction
-	if grid_pos.x < grid_size.x and grid_pos.x >= 0:
-		if grid_pos.y < grid_size.y and grid_pos.y >= 0:
-			return true if grid[grid_pos.x][grid_pos.y] == ENEMY else false
+	if G.is_within(grid_pos,grid_size):
+#	if grid_pos.x < grid_size.x and grid_pos.x >= 0:
+#		if grid_pos.y < grid_size.y and grid_pos.y >= 0:
+		return true if grid[grid_pos.x][grid_pos.y] == ENEMY else false
 	return false
 
 func get_cell_node(pos, direction  = Vector2()):
@@ -99,9 +107,27 @@ func update_child_pos(child_node):
 	var new_grid_pos = grid_pos + child_node.direction
 	grid[new_grid_pos.x][new_grid_pos.y] = child_node.type
 	var target_pos = map_to_world(new_grid_pos) + half_tile_size
+	if child_node.is_in_group("Player"):
+		if new_grid_pos == hidden:
+			set_cellv(end, tile_set.find_tile_by_name("StairDown1"))
+			found_hidden = true
+		if new_grid_pos == end and found_hidden:
+#			get_node("Player").is_moving = false
+#			get_node("Player").move_and_collide(Vector2())
+#			get_node("Player").take_dmg(9999)
+			
+			print("Go to next level")
+			found_hidden = false
+			level += 1
+			for i in get_children():
+				if i.is_in_group("Enemy"):
+					i.queue_free()
+			self.clear()
+			GridFloor.clear()
+			_ready()
 	return target_pos
 
-func add_enemies(num):
+func add_enemies(num = false):
 	if not num:
 		num = grid_size.x*grid_size.y/enemy_factor
 	var positions = []

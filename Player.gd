@@ -45,7 +45,7 @@ func _process(delta):
 		
 	if Input.is_action_just_pressed("add_enemy"):
 		Game.Dialog.print_label("You have added an enemy")
-		grid_map.add_enemies(50)
+		grid_map.add_enemies()
 	
 	direction = Vector2()
 	if Input.is_action_pressed("ui_up"):
@@ -80,6 +80,7 @@ func _process(delta):
 
 	if not is_moving and not direction == Vector2():
 		target_direction = direction
+		print(target_direction)
 		if grid_map.is_cell_empty(get_position(), target_direction):
 			target_pos = grid_map.update_child_pos(self)
 			is_moving = true
@@ -93,10 +94,12 @@ func _process(delta):
 	elif is_moving:
 		speed = MAX_SPEED
 		velocity = speed * target_direction.normalized() * delta
+#		print(velocity)
 		move_and_collide(velocity)
 		
 		var pos = get_position()
 		var distance_to_target = Vector2(abs(target_pos.x - pos.x), abs(target_pos.y - pos.y))
+#		print(distance_to_target)
 		if abs(velocity.x) > distance_to_target.x:
 			velocity.x = distance_to_target.x * target_direction.x
 			is_moving = false
@@ -128,7 +131,7 @@ func _process(delta):
 				#Only trigger turn if movement was valid	
 				grid_map.set_enemy_move()
 
-func take_dmg(dmg):
+func take_dmg(dmg = 0):
 	hp -= dmg
 	print("You took " + str(dmg) + " damage. HP:" + str(hp))
 
