@@ -6,7 +6,7 @@ onready var Weapon = load("res://Items/Weapon.gd")
 onready var Armour = load("res://Items/Armour.gd")
 onready var Wearable = load("res://Items/Wearable.gd")
 onready var Game = get_node("/root/BaseNode") #Get the Game node for diallog
-onready var new_inventory = load("res://Dev/Adrian/Inventory_window.tscn")
+onready var Inv_Visu = load("res://Inventory/Inventory_Visu.tscn")
 
 
 
@@ -62,6 +62,6 @@ func _inventory():
 	else:
 		if not inv_displayed:
 			inv_displayed = true #To keep things clean only need to set something when its not
-			var new_inv = new_inventory.instance()
-			add_child(new_inv)
-			new_inv.update_inventory()
+			var inv_visu= Inv_Visu.instance()
+			add_child(inv_visu)
+			inv_visu.update_inventory()
