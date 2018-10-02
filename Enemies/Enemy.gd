@@ -12,6 +12,7 @@ var armour
 var wearable
 var type
 var facing = true
+var Name
 
 var direction = Vector2()
 var speed = 0
@@ -43,6 +44,8 @@ func _ready():
 	hp = randi() % (dic_enemies[rnd_enemy].max_hp - dic_enemies[rnd_enemy].min_hp) + dic_enemies[rnd_enemy].min_hp
 	$Sprite/Label.text = dic_enemies[rnd_enemy].base_name
 	$Sprite.set_region_rect(dic_enemies[rnd_enemy].img_rect)
+	Name = dic_enemies[rnd_enemy].base_name
+	chg_name()
 	
 	#TEMP ONLY random item in inventory to test dropping
 #	var temp = randi() % 3 + 1 #testing
@@ -71,11 +74,15 @@ func get_inventory():
 		i.append(j)
 	return i
 
+func chg_name():
+	var pre = ["Rusty the", "Flaming", "Denim wearing", "Sparkling", "Normal", "Pathetic", "Crappy", "Super powered", "Moody"]
+	var post = ["of dull colors.", "with spikes", "taking a dump", "that glows", "name Jonny", "that probably tastes funny"]
+	Name = pre[randi() % pre.size()] + " " + Name + " " + post[randi() % post.size()]
 	
 #TEMP ONLY for basic player enemy interaction test.
 func set_contact(damage):
 	hp -= damage
-	print(name, ' hp: ', hp)
+	print(Name, ' hp: ', hp)
 	if hp <= 0:
 		grid_map.set_kill_me(self)
 		
