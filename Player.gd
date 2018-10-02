@@ -24,6 +24,7 @@ var is_fighting = false
 var target_pos = Vector2()
 var target_direction = Vector2()
 var facing = false
+var hp = 100
 
 signal enemy_move
 
@@ -126,7 +127,10 @@ func _process(delta):
 					obsticle.set_contact(inventory.get_damage()) #Use inventory get_damage for now
 				#Only trigger turn if movement was valid	
 				grid_map.set_enemy_move()
-	
+
+func take_dmg(dmg):
+	hp -= dmg
+	print("You took " + str(dmg) + " damage. HP:" + str(hp))
 
 func _on_Timer_timeout():
 	is_fighting = false

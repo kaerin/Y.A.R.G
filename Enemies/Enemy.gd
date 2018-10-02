@@ -85,6 +85,7 @@ func set_contact(damage):
 	print(Name, ' hp: ', hp)
 	if hp <= 0:
 		grid_map.set_kill_me(self)
+		player.take_dmg(randi()%10) #POC you take damage when the enemy shits itself from dieing
 		
 		
 #after player moves all enemies are triggered to move from Grid_Map		
