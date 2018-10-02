@@ -27,11 +27,10 @@ func _ready():
 	#could also have npc and companions to also have the same weapon class and inventory	
 	#have helper functions like auto-equip highest dmg weapon to use for player or others
 
-
 func _process(delta):
 	if Input.is_action_just_pressed("ui_inv"):
 		_inventory()
-	
+
 func get_damage():
 		var damage #= randi() % (equipped[WEAPON].max_damage + 1 - equipped[WEAPON].min_damage) + equipped[WEAPON].min_damage
 		print("Weapon damage: ", weapon.get_damage() ) #get the currently equppied weapons damage from the class

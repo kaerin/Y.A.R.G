@@ -6,7 +6,7 @@ const LEFT 	= Vector2(-1, 0)
 const RIGHT	= Vector2(1 , 0)
 
 var hp = 0
-var inventory = []
+var inventory
 var weapon
 var armour
 var wearable
@@ -45,22 +45,31 @@ func _ready():
 	$Sprite.set_region_rect(dic_enemies[rnd_enemy].img_rect)
 	
 	#TEMP ONLY random item in inventory to test dropping
-	var temp = randi() % 3 + 1 #testing
+#	var temp = randi() % 3 + 1 #testing
 #	temp = 3 #testing
-	if temp == 1:
-		var rnd_item = randi() % dic_weapon.size() 
-		inventory.append(dic_weapon[rnd_item])
-		weapon.add_weapon(dic_weapon[rnd_item]) #equip enemy with random base weapon
-	elif temp == 2:
-		var rnd_item = randi() % dic_armour[0].size() #change pick random location then random armour
-		var i = randi() % 2
-		inventory.append(dic_armour[i][rnd_item]) #0 should be random
-		armour.add_armour(dic_armour[i][rnd_item])
-	elif temp == 3:
-		var rnd_item = randi() % dic_wear.size() 
-		inventory.append(dic_wear[rnd_item])
-		wearable.add_wearable(dic_wear[rnd_item])
+#	if temp == 1:
+	var rnd_item = randi() % dic_weapon.size() 
+#		inventory.append(dic_weapon[rnd_item])
+	weapon.add_weapon(dic_weapon[rnd_item]) #equip enemy with random base weapon
+#	elif temp == 2:
+	rnd_item = randi() % dic_armour[0].size() #change pick random location then random armour
+	var i = randi() % 2
+#		inventory.append(dic_armour[i][rnd_item]) #0 should be random
+	armour.add_armour(dic_armour[i][rnd_item])
+#	elif temp == 3:
+	rnd_item = randi() % dic_wear.size() 
+#		inventory.append(dic_wear[rnd_item])
+	wearable.add_wearable(dic_wear[rnd_item])
 
+func get_inventory():
+	var i = []
+	for j in weapon.inventory:
+		i.append(j)
+	for j in armour.inventory:
+		i.append(j)
+	for j in wearable.inventory:
+		i.append(j)
+	return i
 
 	
 #TEMP ONLY for basic player enemy interaction test.

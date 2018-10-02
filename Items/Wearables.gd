@@ -1,6 +1,7 @@
 extends "res://Items/Inv.gd"
 
 #Class to store all wepaon information
+var BaseType = G.BaseType.Wear
 var Type
 var BonusAC = 0
 var BonusDmg = 0

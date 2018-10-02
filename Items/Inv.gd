@@ -5,7 +5,6 @@ extends Reference
 var texture = load("res://Data/ProjectUtumno_full.png")
 var sprite_rect = G.TODO_img
 
-var BaseType = G.BaseType.Weap
 var Name
 var is_equipped
 

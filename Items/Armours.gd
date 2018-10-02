@@ -1,6 +1,7 @@
 extends "res://Items/Inv.gd"
 
 #Class to store all wepaon information
+var BaseType = G.BaseType.Armour
 var Mat
 var Location
 var LocName
