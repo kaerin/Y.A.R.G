@@ -9,6 +9,7 @@ onready var Inventory = get_parent().get_parent().get_node("Inventory")
 onready var Item = get_node("Template/Item")
 onready var Attributes = get_node("Cont/HBox/Attributes")
 onready var Stats = get_node("Cont/HBox/Stats")
+onready var Spacer = get_node("Template/Spacer")
 
 var min_dmg
 var max_dmg
@@ -28,38 +29,40 @@ func update_attributes():
 	var attrib1 = Item.duplicate()
 	attrib1.get_node("Text").text = "Strength:"
 	attrib1.get_node("Value").text = str(Player.strength)
+	attrib1.show()
 	Attributes.add_child(attrib1)
 	var attrib2 = Item.duplicate()
 	attrib2.get_node("Text").text = "Dexterity:"
 	attrib2.get_node("Value").text = str(Player.dexterity)
+	attrib2.show()
 	Attributes.add_child(attrib2)
 	var attrib3 = Item.duplicate()
 	attrib3.get_node("Text").text = "Intelligence:"
 	attrib3.get_node("Value").text = str(Player.intelligence)
+	attrib3.show()
 	Attributes.add_child(attrib3)
 	
 func update_stats():
-	min_dmg = 0
-	max_dmg = 0
-	bonus_dmg = 0
-	for n in Inventory.weapon.inventory:
-		if n.is_equipped:
-			min_dmg += (n.get_min_dmg())
-			max_dmg += (n.get_max_dmg())
-			bonus_dmg += (n.get_bonus_dmg())
-
-	var dmg_string = str(min_dmg,"-",max_dmg)
-	if bonus_dmg > 0:
-		dmg_string += str("+",bonus_dmg) 
-	elif bonus_dmg < 0:
-		dmg_string += str("-",bonus_dmg) 
-
+	get_dmg()
+	
+	
+func get_dmg():
+	var dmg_string = Inventory.get_dmg_text()
 	var stat1 = Item.duplicate()
 	stat1.get_node("Text").text = "Damage:"
 	stat1.get_node("Value").text = dmg_string
+	stat1.show()
 	Stats.add_child(stat1)				
-	pass	
 
+	var dmg_items = Inventory.get_dmg_item_list()
+	for n in dmg_items:
+		var stat1items = Item.duplicate()
+		stat1items.get_node("Text").text = str("- ",n.get_name())
+		stat1items.get_node("Value").text = n.get_dmg_text()
+		stat1items.show()
+		Stats.add_child(stat1items)				
+		
+	
 
 
 

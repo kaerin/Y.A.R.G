@@ -38,5 +38,13 @@ func get_min_dmg():
 func get_max_dmg():
 	return MaxDamage
 	
+func get_dmg_text():
+	var dmg_string = str(MinDamage,"-",MaxDamage)
+	if BonusDamage > 0:
+		dmg_string += str("+",BonusDamage)
+	elif BonusDamage < 0:	
+		dmg_string += str(BonusDamage)
+	return(dmg_string)
+	
 func get_all_stats():
 	return str("Name: ", get_name(), "\nEquipped: ", get_equipped(), "\nDmg Type: ", get_dmg_type(), "\nMin Dmg: ", get_min_dmg(), "\nMax Dmg: ", get_max_dmg(), "\nBonus Dmg: ", get_bonus_dmg())

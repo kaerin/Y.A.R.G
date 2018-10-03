@@ -26,6 +26,12 @@ func get_bonus_ac(): #weapon total damage
 func get_bonus_dmg(): #weapon damage
 	return BonusDmg
 	
+func get_dmg_text():
+	if BonusDmg >= 0:
+		return(str("+",BonusDmg))
+	else:	
+		return(str(BonusDmg))
+	
 func get_all_stats():
 	return str("Name: ", get_name(), "\nEquipped: ", get_equipped(), "\nType: ", get_type(), "\nBonus AC: ", get_bonus_ac(), "\nBonus Dmg: ", get_bonus_dmg())
 	

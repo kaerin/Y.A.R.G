@@ -15,6 +15,8 @@ func _init(i):
 		inventory[0].set_name("Clock Amulet of the 80s")
 		inventory[0].set_type(G.WearType.Amulet)
 		inventory[0].set_bonus_ac(-1)
+		inventory[0].set_bonus_dmg(1)
+		inventory[0].is_equipped = true
 		#inventory[0].add_to_group("Wearable")
 		w = Wearables.new()
 		inventory.append(w)
