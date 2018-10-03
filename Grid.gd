@@ -22,6 +22,9 @@ var found_hidden = false
 var mapgrid
 
 func _ready():
+	start()
+	
+func start(startpos = "S"):
 	var map = Map.new()
 	print("gen map")
 	mapgrid = map.map(Vector2(G.level+5,G.level+5))
@@ -63,7 +66,11 @@ func _ready():
 	
 	var Player = get_node("Player")
 #	var start_pos = update_child_pos(
-	Player.set_position(map_to_world(map.start) + half_tile_size)
+	if startpos == "S":
+		Player.set_position(map_to_world(map.start) + half_tile_size)
+	if startpos == "E":
+		Player.set_position(map_to_world(map.end) + half_tile_size)
+		set_cellv(end, tile_set.find_tile_by_name("StairDown1"))
 	Player.is_moving = false
 #	update_child_pos(Player)
 	add_enemies()
@@ -124,18 +131,29 @@ func update_child_pos(child_node):
 	
 	return target_pos
 
-func next_level(pos, next = false):
+func chg_level(pos, next = false):
 	pos = world_to_map(pos)
+	var chg = false
+	var spos
 	if (pos == end and found_hidden) or next:
 #		print("Go to next level")
 		found_hidden = false
 		G.level += 1
+		chg = true
+		spos = "S"
+	if pos == start:
+#		print("Go to next level")
+		found_hidden = true
+		G.level -= 1
+		chg = true
+		spos = "E"
+	if chg:
 		for i in get_children():
 			if i.is_in_group("Enemy") or i.is_in_group("Item"):
 				i.queue_free()
 		self.clear()
 		GridFloor.clear()
-		_ready()
+		start(spos)
 
 
 func add_enemies(num = false):

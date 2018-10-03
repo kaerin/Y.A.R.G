@@ -34,7 +34,8 @@ var Dialog
 
 func _ready():
 	type = grid_map.PLAYER
-	modulate = G.PlayerColor
+	if G.PlayerColor:
+		modulate = G.PlayerColor
 #	grid_map.create_grid()
 #	grid_map.set_grid_pos(self, Map.start)
 
@@ -45,6 +46,8 @@ func _process(delta):
 		var item = grid_map.get_item(self)
 		if item:
 			inventory.add_item(item)
+	if Input.is_action_just_pressed("level"):
+		grid_map.chg_level(get_position()) #Make this better
 		
 	if Input.is_action_just_pressed("add_enemy"):
 		Game.Dialog.print_label("You have added an enemy")
@@ -89,7 +92,6 @@ func _process(delta):
 #	set_position(target_pos)
 
 	if not is_moving and not direction == Vector2():
-		grid_map.next_level(get_position()) #Make this better
 		target_direction = direction
 #		print(target_direction)
 		if grid_map.is_cell_empty(get_position(), target_direction):
