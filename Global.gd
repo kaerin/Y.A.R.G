@@ -19,6 +19,8 @@ var TODO_img = Rect2(1184,1600,32,32)
 
 var level = 0
 
+var PlayerColor
+
 func is_within(i,j):
 	if i.x < j.x and i.x >= 0 and i.y < j.y and i.y >= 0:
 		return true

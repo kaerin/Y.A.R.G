@@ -1,0 +1,102 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://CharGen.gd" type="Script" id=1]
+
+[node name="CharGen" type="Label"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 437.0
+margin_top = 195.0
+margin_right = 572.0
+margin_bottom = 209.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "Character Generation"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+script = ExtResource( 1 )
+
+[node name="Button" type="Button" parent="." index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 41.0
+margin_top = 218.0
+margin_right = 110.0
+margin_bottom = 238.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Continue"
+flat = false
+align = 1
+
+[node name="PlayerCol" type="ColorPickerButton" parent="." index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 32.0
+margin_top = 133.0
+margin_right = 119.0
+margin_bottom = 153.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Select color"
+flat = false
+align = 1
+color = Color( 1, 1, 1, 1 )
+edit_alpha = true
+
+[node name="Label" type="Label" parent="." index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 2.0
+margin_top = 118.0
+margin_right = 151.0
+margin_bottom = 132.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "Select a character color"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
+
+

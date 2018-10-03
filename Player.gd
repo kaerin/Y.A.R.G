@@ -34,6 +34,7 @@ var Dialog
 
 func _ready():
 	type = grid_map.PLAYER
+	modulate = G.PlayerColor
 #	grid_map.create_grid()
 #	grid_map.set_grid_pos(self, Map.start)
 
