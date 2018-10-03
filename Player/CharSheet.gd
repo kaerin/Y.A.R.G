@@ -13,7 +13,7 @@ func _ready():
 	pass
 
 func _process(delta):
-	if Input.is_action_just_pressed("char_sheet"):
+	if Input.is_action_just_pressed("char_sheet") || (charsheet_displayed && Input.is_action_just_pressed("ui_inv")):
 		_character_sheet()
 		
 func _character_sheet():

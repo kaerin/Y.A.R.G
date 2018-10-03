@@ -28,7 +28,7 @@ func _ready():
 	#have helper functions like auto-equip highest dmg weapon to use for player or others
 
 func _process(delta):
-	if Input.is_action_just_pressed("ui_inv"):
+	if Input.is_action_just_pressed("ui_inv") || (inv_displayed && Input.is_action_just_pressed("char_sheet")):
 		_inventory()
 
 func get_damage():
