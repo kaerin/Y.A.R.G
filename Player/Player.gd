@@ -26,6 +26,9 @@ var target_direction = Vector2()
 var facing = false
 var hp = 100
 var hp_max = 100
+var strength = 18
+var dexterity = 10
+var intelligence = 9
 
 signal enemy_move
 

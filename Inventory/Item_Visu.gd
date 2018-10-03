@@ -9,6 +9,7 @@ enum	DROP_POS {INVENTORY, EQUIP, DROP}
 var item
 var mouse_here
 var pos_backup
+var is_dragging
 
 onready var equip_panel 		= get_parent().get_parent().get_node("Equip") #how to better define this
 onready var inv_panel 			= get_parent().get_parent().get_node("Inv") #how to better define this
@@ -25,11 +26,14 @@ func _ready():
 		$Sprite.set_region_rect(item.get_sprite_rect())
 		
 func _process(delta):
-	if mouse_here:
+	if mouse_here || is_dragging:
+
 		if Input.is_action_pressed("ui_mouse_left"):
+			is_dragging = true
 			drag_item()
 			
 		elif Input.is_action_just_released("ui_mouse_left"):
+			is_dragging = false
 			if get_drop_pos_area(get_global_mouse_position()) == DROP_POS.EQUIP:
 				unequip_equippped_item(item)	#
 				item.set_equipped()
