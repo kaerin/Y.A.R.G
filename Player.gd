@@ -46,6 +46,8 @@ func _process(delta):
 	if Input.is_action_just_pressed("add_enemy"):
 		Game.Dialog.print_label("You have added an enemy")
 		grid_map.add_enemies()
+	if Input.is_action_just_pressed("next_level"):
+		grid_map.next_level(get_position(),true)
 	
 	direction = Vector2()
 	if Input.is_action_pressed("ui_up"):
@@ -79,8 +81,9 @@ func _process(delta):
 #	set_position(target_pos)
 
 	if not is_moving and not direction == Vector2():
+		grid_map.next_level(get_position()) #Make this better
 		target_direction = direction
-		print(target_direction)
+#		print(target_direction)
 		if grid_map.is_cell_empty(get_position(), target_direction):
 			target_pos = grid_map.update_child_pos(self)
 			is_moving = true
@@ -101,10 +104,12 @@ func _process(delta):
 		var distance_to_target = Vector2(abs(target_pos.x - pos.x), abs(target_pos.y - pos.y))
 #		print(distance_to_target)
 		if abs(velocity.x) > distance_to_target.x:
+			
 			velocity.x = distance_to_target.x * target_direction.x
 			is_moving = false
 			emit_signal("enemy_move")
 		if abs(velocity.y) > distance_to_target.y:
+			emit_signal("enemy_move")
 			velocity.y = distance_to_target.y * target_direction.y
 			is_moving = false
 			emit_signal("enemy_move")

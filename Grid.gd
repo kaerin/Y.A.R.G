@@ -2,7 +2,7 @@ extends TileMap
 
 var tile_size = get_cell_size()
 var half_tile_size = tile_size / 2
-var enemy_factor = 50 #Lower to get more enemies
+var enemy_factor = 25 #Lower to get more enemies
 var grid_size = Vector2()
 var grid = []
 enum GRID_ITEMS {EMPTY, PLAYER, WALL, ITEM, ENEMY}
@@ -24,7 +24,7 @@ var mapgrid
 
 func _ready():
 	var map = Map.new()
-	mapgrid = map.map(Vector2(level+10,level+10))
+	mapgrid = map.map(Vector2(level+5,level+5))
 	grid_size = map.gsize
 	create_grid()
 	print(mapgrid.size())
@@ -64,12 +64,13 @@ func _ready():
 #	var start_pos = update_child_pos(
 	Player.set_position(map_to_world(map.start) + half_tile_size)
 	Player.is_moving = false
-	update_child_pos(Player)
+#	update_child_pos(Player)
 	add_enemies()
 	
 	#TEMP add random enemies for testing
 
 func create_grid():
+	grid = []
 	for x in grid_size.x:
 		grid.append([])
 		for y in grid_size.y:
@@ -111,21 +112,22 @@ func update_child_pos(child_node):
 		if new_grid_pos == hidden:
 			set_cellv(end, tile_set.find_tile_by_name("StairDown1"))
 			found_hidden = true
-		if new_grid_pos == end and found_hidden:
-#			get_node("Player").is_moving = false
-#			get_node("Player").move_and_collide(Vector2())
-#			get_node("Player").take_dmg(9999)
-			
-			print("Go to next level")
-			found_hidden = false
-			level += 1
-			for i in get_children():
-				if i.is_in_group("Enemy"):
-					i.queue_free()
-			self.clear()
-			GridFloor.clear()
-			_ready()
+	
 	return target_pos
+
+func next_level(pos, next = false):
+	pos = world_to_map(pos)
+	if (pos == end and found_hidden) or next:
+#		print("Go to next level")
+		found_hidden = false
+		level += 1
+		for i in get_children():
+			if i.is_in_group("Enemy") or i.is_in_group("Item"):
+				i.queue_free()
+		self.clear()
+		GridFloor.clear()
+		_ready()
+
 
 func add_enemies(num = false):
 	if not num:

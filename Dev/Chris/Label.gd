@@ -5,8 +5,8 @@ var factor = 2.3 #higher means less blocks removed
 var start = Vector2()
 var end = Vector2()
 var delay = .01
-var cross_size = 5 #size of placed cross shaped paths
-var cross_num = 3 #number of crosses
+var cross_size = (gsize.x + gsize.y)/15 #size of placed cross shaped paths
+var cross_num = cross_size / 2 #number of crosses
 var goodMap = false
 var hidden = false
 var special = [Vector2()]
@@ -129,10 +129,10 @@ func map_gen_start_end(map):
 	return map
 	
 func map_gen():
-	if gsize.x < 8:
-		gsize.x = 8
-	if gsize.y < 8:
-		gsize.y = 8
+	if gsize.x < 6:
+		gsize.x = 6
+	if gsize.y < 6:
+		gsize.y = 6
 	var map = []
 	for i in gsize.x:
 		map.append([])
