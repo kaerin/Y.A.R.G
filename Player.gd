@@ -53,7 +53,7 @@ func _process(delta):
 		Game.Dialog.print_label("You have added an enemy")
 		grid_map.add_enemies()
 	if Input.is_action_just_pressed("next_level"):
-		grid_map.next_level(get_position(),true)
+		grid_map.chg_level(get_position(),true)
 	if Input.is_action_just_pressed("rest"):
 		hp +=1
 		if hp > hp_max:

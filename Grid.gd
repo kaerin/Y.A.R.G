@@ -20,16 +20,22 @@ var end = Vector2()
 var hidden = Vector2()
 var found_hidden = false
 var mapgrid
+var map_levels = []
 
 func _ready():
 	start()
 	
 func start(startpos = "S"):
 	var map = Map.new()
-	print("gen map")
-	mapgrid = map.map(Vector2(G.level+5,G.level+5))
-	print("map genned")
-	grid_size = map.gsize
+	if map_levels.size() <= G.level:
+		print("generating new map and saving to index:",G.level)
+		mapgrid = map.map(Vector2(G.level+6,G.level+6))
+		map_levels.append(mapgrid)
+	else:
+		print("Using exising map for level:",G.level)
+		mapgrid = map_levels[G.level]
+		found_hidden = true
+	grid_size = Vector2(G.level+6,G.level+6)
 	create_grid()
 	print(mapgrid.size())
 	for x in mapgrid.size():
@@ -67,14 +73,15 @@ func start(startpos = "S"):
 	var Player = get_node("Player")
 #	var start_pos = update_child_pos(
 	if startpos == "S":
-		Player.set_position(map_to_world(map.start) + half_tile_size)
+		Player.set_position(map_to_world(start) + half_tile_size)
 	if startpos == "E":
-		Player.set_position(map_to_world(map.end) + half_tile_size)
+		Player.set_position(map_to_world(end) + half_tile_size)
+	if found_hidden == true:
 		set_cellv(end, tile_set.find_tile_by_name("StairDown1"))
-	Player.is_moving = false
+#	Player.is_moving = false
 #	update_child_pos(Player)
 	add_enemies()
-	
+	print("grid size",grid_size)
 	#TEMP add random enemies for testing
 
 func create_grid():
@@ -135,14 +142,13 @@ func chg_level(pos, next = false):
 	pos = world_to_map(pos)
 	var chg = false
 	var spos
+	var genmap = true
 	if (pos == end and found_hidden) or next:
-#		print("Go to next level")
 		found_hidden = false
 		G.level += 1
 		chg = true
 		spos = "S"
-	if pos == start:
-#		print("Go to next level")
+	if pos == start and G.level > 0 and not next:
 		found_hidden = true
 		G.level -= 1
 		chg = true
