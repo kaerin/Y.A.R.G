@@ -23,7 +23,9 @@ var mapgrid
 
 func _ready():
 	var map = Map.new()
+	print("gen map")
 	mapgrid = map.map(Vector2(G.level+5,G.level+5))
+	print("map genned")
 	grid_size = map.gsize
 	create_grid()
 	print(mapgrid.size())
