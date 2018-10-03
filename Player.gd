@@ -38,7 +38,8 @@ func _ready():
 #	grid_map.set_grid_pos(self, Map.start)
 
 func _process(delta):
-	
+	if hp < 0:
+		get_tree().change_scene("res://End.tscn")
 	if Input.is_action_just_pressed("ui_p"):
 		var item = grid_map.get_item(self)
 		if item:
