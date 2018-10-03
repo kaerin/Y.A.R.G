@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Dev/Chris/Label.gd" type="Script" id=1]
+[ext_resource path="res://Data/MapGen.gd" type="Script" id=1]
 [ext_resource path="res://Fonts/DroidSansMono.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://Dev/Chris/MapGen2.gd" type="Script" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -45,7 +44,6 @@ XXXXXXXXXXXX"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-script = ExtResource( 3 )
 _sections_unfolded = [ "custom_fonts" ]
 
 

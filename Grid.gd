@@ -13,7 +13,7 @@ const INVALID = -999
 
 onready var enemy = preload("res://Enemies/Enemy.tscn")
 onready var item  = preload("res://Items/Item.tscn")
-onready var Map = preload("res://Dev/Chris/Label.gd")
+onready var Map = preload("res://Data/MapGen.gd")
 onready var GridFloor = get_node("../GridFloor")
 var start = Vector2()
 var end = Vector2()

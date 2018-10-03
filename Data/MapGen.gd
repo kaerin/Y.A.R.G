@@ -76,7 +76,6 @@ func map(i = gsize):
 	var avg_time = time / maps
 #	show(map, "Map is " + str(goodMap) + str(hidden) + " maps: " + str(maps) + " Avg:" + str(avg_time) + "ms Rate:" + str(rate) + "%")
 #	yield(get_tree().create_timer(1), "timeout")
-#	yield(get_node("Label"), "drawn")
 	return map2
 		
 func map_add_cross(map, csize, num = 0):
