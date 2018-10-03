@@ -16,12 +16,13 @@ func _init(i):
 		inventory[0].set_type(G.WearType.Amulet)
 		inventory[0].set_bonus_ac(-1)
 		inventory[0].set_bonus_dmg(1)
-		inventory[0].is_equipped = true
+		inventory[0].set_equipped()
 		#inventory[0].add_to_group("Wearable")
 		w = Wearables.new()
 		inventory.append(w)
 		inventory[1].set_name("Toy ring")
 		inventory[1].set_type(G.WearType.Ring)
+		inventory[1].set_equipped()
 		#inventory[1].add_to_group("Wearable")	
 func print():
 	print("Executed debug print function from wearable class")
@@ -64,19 +65,28 @@ func equip_amulet(i):
 	active_amulet = i
 	
 func get_bonus_ac():
-	return get_ring_bonus_ac() + get_amulet_bonus_ac()
+	var ac = 0
+	for n in inventory:
+		if n.is_equipped:
+			ac += n.get_bonus_ac()
+	return ac
+	
 func get_ring_bonus_ac():
-	return inventory[active_ring].get_bonus_ac()
+	return inventory[active_ring].get_bonus_ac() #fix mne
 func get_amulet_bonus_ac():
-	return inventory[active_amulet].get_bonus_ac()
+	return inventory[active_amulet].get_bonus_ac() #fix mne
 
 
 func get_bonus_dmg():
-	return get_amulet_bonus_dmg() + get_ring_bonus_dmg()
+	var dmg = 0
+	for n in inventory:
+		if n.is_equipped:
+			dmg += n.get_bonus_dmg()
+	return dmg
 func get_amulet_bonus_dmg():
-	return inventory[active_amulet].get_bonus_dmg()
+	return inventory[active_amulet].get_bonus_dmg() #fix mne
 func get_ring_bonus_dmg():
-	return inventory[active_ring].get_bonus_dmg()
+	return inventory[active_ring].get_bonus_dmg() #fix mne
 
 func alter_stats(i,rng):
 	var pre = ["Rusted", "Shiny", "Glowing", "Sparkly", "Red", "Golden", "Crappy", "Normal", "Mood"]

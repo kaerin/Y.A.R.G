@@ -19,6 +19,7 @@ func _init(i):
 		inventory[0].set_location(G.LOC.CHEST)
 		inventory[0].set_loc_name(G.Loc.Chest)
 		inventory[0].set_sprite_rect(Rect2(1824,1120,32,32))
+		inventory[0].set_equipped()
 		inventory[0].set_ac(1)
 		inventory[1].set_name("Hat")
 		inventory[1].set_mat(G.Mat.Cloth)
@@ -26,6 +27,7 @@ func _init(i):
 		inventory[1].set_loc_name(G.Loc.Head)
 		inventory[1].set_sprite_rect(Rect2(1440,1152,32,32))
 		inventory[1].set_ac(1)
+		inventory[1].set_equipped()
 		#inventory[1].add_to_group("Armour")
 		
 func print():
@@ -68,12 +70,24 @@ func get_equip_name(loc):
 func get_equip(loc):
 	return active[loc]
 
-func get_ac(loc):
-	return inventory[get_equip(loc)].get_ac() #needs fixing
+func get_ac():
+	var ac = 0
+	for n in inventory:
+		if n.is_equipped:
+			ac += n.get_ac()
+	return ac
 func get_armour_ac(loc):
-	return inventory[get_equip(loc)].get_armour_ac() #needs fixing
+	var ac = 0
+	for n in inventory:
+		if n.is_equipped:
+			ac += n.get_armour_ac()
+	return ac
 func get_bonus_ac(loc):
-	return inventory[get_equip(loc)].get_bonus_ac() #needs fixing
+	var ac = 0
+	for n in inventory:
+		if n.is_equipped:
+			ac += n.get_bonus_ac()
+	return ac
 
 
 func alter_stats(i,rng):

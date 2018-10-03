@@ -33,12 +33,20 @@ func _process(delta):
 
 func get_damage():
 		var damage #= randi() % (equipped[WEAPON].max_damage + 1 - equipped[WEAPON].min_damage) + equipped[WEAPON].min_damage
-		print("Weapon damage: ", weapon.get_damage() ) #get the currently equppied weapons damage from the class
+		print("AC:", armour.get_ac(), " Bonus:",wearable.get_bonus_ac())
+		print("Bonus dmg:", wearable.get_bonus_dmg())
 		#can do this add all damage and bonuses together
 		#damage = weapon.get_damage() + ring.get_dmg_bonus() + amulet.get_dmg_bonus() 
-		damage = weapon.get_damage() #get damage from equipped weapon class, the same as inventory.weapon.get_damage() called from the player class
+		damage = weapon.get_damage() + wearable.get_bonus_dmg() #get damage from equipped weapon class, the same as inventory.weapon.get_damage() called from the player class
+		print("Weapon damage: ", damage) #get the currently equppied weapons damage from the class
 		Game.Dialog.print_label("Your weapon: " + weapon.get_active_name() + " did " + str(damage) + " damage.", 2)
-		return(damage) 
+		return(damage)
+
+func get_ac():
+	var ac
+	ac = armour.get_ac() + wearable.get_bonus_ac()
+	return ac
+	
 		
 func get_dmg_text():
 	var min_dmg = 0
