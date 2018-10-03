@@ -26,6 +26,20 @@ func _ready():
 	start()
 	
 func start(startpos = "S"):
+	var Player = get_node("Player")
+	if G.level < 0:
+		print("You are on the surface")
+		Player.set_position(map_to_world(Vector2(50,50)) + half_tile_size)
+		grid_size = Vector2(100,100)
+		create_grid()
+		for x in grid_size.x:
+			for y in grid_size.y:
+				grid[x][y] = EMPTY
+				set_cell(x,y,tile_set.find_tile_by_name(FLOOR[randi() % FLOOR.size()]))
+		set_cellv(Vector2(50,50), tile_set.find_tile_by_name("StairDown1"))
+		found_hidden = true
+		end = Vector2(50,50)
+		return
 	var map = Map.new()
 	if map_levels.size() <= G.level:
 		print("generating new map and saving to index:",G.level)
@@ -70,7 +84,7 @@ func start(startpos = "S"):
 			set_cell(x,y,tile_set.find_tile_by_name(ROOF[randi() % ROOF.size()]))
 	 
 	
-	var Player = get_node("Player")
+	
 #	var start_pos = update_child_pos(
 	if startpos == "S":
 		Player.set_position(map_to_world(start) + half_tile_size)
@@ -148,7 +162,7 @@ func chg_level(pos, next = false):
 		G.level += 1
 		chg = true
 		spos = "S"
-	if pos == start and G.level > 0 and not next:
+	if pos == start and G.level > -1 and not next:
 		found_hidden = true
 		G.level -= 1
 		chg = true
