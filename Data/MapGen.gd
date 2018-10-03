@@ -115,7 +115,13 @@ func map_gen_start_end(map):
 	while start.y > gsize.y * 0.2 and start.y < gsize.y * 0.8:
 		start.y = randi() % int(gsize.y)
 	end = start
+	
 	special[0] = Vector2(randi() % int(gsize.x),randi() % int(gsize.y))
+	var k = 0
+	for i in special:
+		while i == start or i == end:
+			special[k] = Vector2(randi() % int(gsize.x),randi() % int(gsize.y))
+		k += 1
 	while abs(end.x - start.x) < gsize.x * 0.66:
 		end.x = randi() % int(gsize.x)
 	while abs(end.y - start.y) < gsize.y * 0.66:

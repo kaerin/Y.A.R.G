@@ -4,6 +4,7 @@ const UP 	= Vector2(0 ,-1)
 const DOWN 	= Vector2(0 , 1)
 const LEFT 	= Vector2(-1, 0)
 const RIGHT	= Vector2(1 , 0)
+const DIRS = [UP,DOWN,LEFT,RIGHT]
 
 var hp = 0
 var inventory
@@ -143,10 +144,15 @@ func set_move():
 func _process(delta):
 	if not is_moving and not direction == Vector2():
 		target_direction = direction
-		if grid_map.is_cell_empty(get_position(), target_direction):
+		var attacking = false
+		for i in DIRS:
+			if grid_map.is_cell_player(get_position(), i):
+				player.take_dmg(randi()%10)
+				attacking = true
+		if grid_map.is_cell_empty(get_position(), target_direction) and not attacking:
 			target_pos = grid_map.update_child_pos(self)
 			is_moving = true
-		elif grid_map.is_cell_player(get_position(), target_direction):
+		elif grid_map.is_cell_player(get_position(), target_direction) and not attacking:
 			player.take_dmg(randi()%10) #Fight player
 	elif is_moving:
 		speed = MAX_SPEED
