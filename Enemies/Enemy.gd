@@ -42,6 +42,7 @@ func _ready():
 	#TODO random instancing of enemies in dictionary
 	var rnd_enemy = randi() % dic_enemies.size()
 	hp = randi() % (dic_enemies[rnd_enemy].max_hp - dic_enemies[rnd_enemy].min_hp) + dic_enemies[rnd_enemy].min_hp
+	hp += G.level #increase hp by level
 	$Sprite/Label.text = dic_enemies[rnd_enemy].base_name
 	$Sprite.set_region_rect(dic_enemies[rnd_enemy].img_rect)
 	Name = dic_enemies[rnd_enemy].base_name
@@ -85,13 +86,16 @@ func set_contact(damage):
 	print(Name, ' hp: ', hp)
 	if hp <= 0:
 		grid_map.set_kill_me(self)
-		player.take_dmg(randi()%10) #POC you take damage when the enemy shits itself from dieing
+	else:
+		player.take_dmg(randi()%10) #Fight player
 		
 		
 #after player moves all enemies are triggered to move from Grid_Map		
 	
 func set_move():
-	
+	$Timer.stop()
+	$Timer.wait_time = randi() % 5
+	$Timer.start()
 #	if not is_queued_for_deletion(): #necessary, otherwise grid is updated with new position before being deleted
 #	var temp = randi() % 4
 #	if temp == 0:
@@ -142,6 +146,8 @@ func _process(delta):
 		if grid_map.is_cell_empty(get_position(), target_direction):
 			target_pos = grid_map.update_child_pos(self)
 			is_moving = true
+		elif grid_map.is_cell_player(get_position(), target_direction):
+			player.take_dmg(randi()%10) #Fight player
 	elif is_moving:
 		speed = MAX_SPEED
 		velocity = speed * target_direction.normalized() * delta

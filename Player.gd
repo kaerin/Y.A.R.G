@@ -25,6 +25,7 @@ var target_pos = Vector2()
 var target_direction = Vector2()
 var facing = false
 var hp = 100
+var hp_max = 100
 
 signal enemy_move
 
@@ -48,7 +49,12 @@ func _process(delta):
 		grid_map.add_enemies()
 	if Input.is_action_just_pressed("next_level"):
 		grid_map.next_level(get_position(),true)
-	
+	if Input.is_action_just_pressed("rest"):
+		hp +=1
+		if hp > hp_max:
+			hp = hp_max
+		print("Resting hp:",hp)
+		emit_signal("enemy_move")
 	direction = Vector2()
 	if Input.is_action_pressed("ui_up"):
 		direction.y = -1
@@ -104,12 +110,10 @@ func _process(delta):
 		var distance_to_target = Vector2(abs(target_pos.x - pos.x), abs(target_pos.y - pos.y))
 #		print(distance_to_target)
 		if abs(velocity.x) > distance_to_target.x:
-			
 			velocity.x = distance_to_target.x * target_direction.x
 			is_moving = false
 			emit_signal("enemy_move")
 		if abs(velocity.y) > distance_to_target.y:
-			emit_signal("enemy_move")
 			velocity.y = distance_to_target.y * target_direction.y
 			is_moving = false
 			emit_signal("enemy_move")

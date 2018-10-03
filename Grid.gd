@@ -8,7 +8,6 @@ var grid = []
 enum GRID_ITEMS {EMPTY, PLAYER, WALL, ITEM, ENEMY}
 var FLOOR = ["Floor1","Floor2","Floor3","Floor4"]
 var ROOF = ["Wall1","Wall2","Wall3","Wall4"]
-var level = 0
 
 const INVALID = -999
 
@@ -24,7 +23,7 @@ var mapgrid
 
 func _ready():
 	var map = Map.new()
-	mapgrid = map.map(Vector2(level+5,level+5))
+	mapgrid = map.map(Vector2(G.level+5,G.level+5))
 	grid_size = map.gsize
 	create_grid()
 	print(mapgrid.size())
@@ -95,6 +94,14 @@ func is_cell_enemy(pos, direction = Vector2()):
 		return true if grid[grid_pos.x][grid_pos.y] == ENEMY else false
 	return false
 
+func is_cell_player(pos, direction = Vector2()):
+	var grid_pos = world_to_map(pos) + direction
+	if G.is_within(grid_pos,grid_size):
+#	if grid_pos.x < grid_size.x and grid_pos.x >= 0:
+#		if grid_pos.y < grid_size.y and grid_pos.y >= 0:
+		return true if grid[grid_pos.x][grid_pos.y] == PLAYER else false
+	return false
+
 func get_cell_node(pos, direction  = Vector2()):
 	var grid_pos = world_to_map(pos) + direction
 	for i in get_children():
@@ -120,7 +127,7 @@ func next_level(pos, next = false):
 	if (pos == end and found_hidden) or next:
 #		print("Go to next level")
 		found_hidden = false
-		level += 1
+		G.level += 1
 		for i in get_children():
 			if i.is_in_group("Enemy") or i.is_in_group("Item"):
 				i.queue_free()

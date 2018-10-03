@@ -44,15 +44,15 @@ func add_item(item):
 	match item.BaseType:
 		G.BaseType.Weap:
 			weapon.collect_weapon(item) #collect new inventory weapon
-			weapon.alter_stats(0,10) #alter stats of normal weapon dropped by enemy
+			weapon.alter_stats(0,10 + G.level) #alter stats of normal weapon dropped by enemy
 			Game.Dialog.print_label("You just collected a weapon name: " + item.get_name() + " type: " + item.get_dmg_type())
 		G.BaseType.Armour:
 			armour.collect_armour(item) #collect new inventory weapon
-			armour.alter_stats(0,10) #alter stats of normal weapon dropped by enemy
+			armour.alter_stats(0,10 + G.level) #alter stats of normal weapon dropped by enemy
 			Game.Dialog.print_label("You just collected some: " + item.get_name() + " for your " + item.get_loc_name())
 		G.BaseType.Wear:
 			wearable.collect_wearable(item) #collect new inventory weapon
-			wearable.alter_stats(0,10) #alter stats of normal weapon dropped by enemy
+			wearable.alter_stats(0,10 + G.level) #alter stats of normal weapon dropped by enemy
 			Game.Dialog.print_label("You just collected a " + item.get_name())
 
 func _inventory():
