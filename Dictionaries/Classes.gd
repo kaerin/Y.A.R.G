@@ -1,0 +1,12 @@
+extends Node
+
+enum 	CLASS {FIGHTER, MAGE, THIEF, DEMI_GOD}
+
+var classes = {}
+
+func _ready():
+	classes[FIGHTER] 	= {strength = 14, agility = 12, fortitude = 14, intelligence = 7, cunning = 9, charm = 9}
+	classes[MAGE] 		= {strength = 7, agility = 9, fortitude = 9, intelligence = 14, cunning = 12, charm = 14}
+	classes[THIEF] 		= {strength = 9, agility = 14, fortitude = 12, intelligence = 9, cunning = 12, charm = 9}
+	classes[DEMI_GOD] 	= {strength = 99, agility = 99, fortitude = 99, intelligence = 99, cunning = 99, charm = 99}
+

@@ -1,4 +1,4 @@
-extends "res://Player/Attributes.gd"
+extends "res://Player/Player_Attrib.gd"
 
 #const UP 	= Vector2(0 ,-1)
 #const DOWN 	= Vector2(0 , 1)

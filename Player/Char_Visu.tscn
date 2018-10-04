@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Player/Char_Visu.gd" type="Script" id=1]
 
-[node name="CharSheet" type="CanvasLayer"]
+[node name="CharSheet" type="CanvasLayer" index="0"]
 
 layer = 1
 offset = Vector2( 0, 0 )

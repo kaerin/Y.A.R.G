@@ -33,15 +33,30 @@ func update_attributes():
 	Attributes.add_child(attrib1)
 	var attrib2 = Item.duplicate()
 	attrib2.get_node("Text").text = "Dexterity:"
-	attrib2.get_node("Value").text = str(Player.dexterity)
+	attrib2.get_node("Value").text = str(Player.agility)
 	attrib2.show()
 	Attributes.add_child(attrib2)
 	var attrib3 = Item.duplicate()
-	attrib3.get_node("Text").text = "Intelligence:"
-	attrib3.get_node("Value").text = str(Player.intelligence)
+	attrib3.get_node("Text").text = "Fortitude:"
+	attrib3.get_node("Value").text = str(Player.fortitude)
 	attrib3.show()
 	Attributes.add_child(attrib3)
-	
+	var attrib4 = Item.duplicate()
+	attrib4.get_node("Text").text = "Intelligence:"
+	attrib4.get_node("Value").text = str(Player.intelligence)
+	attrib4.show()
+	Attributes.add_child(attrib4)
+	var attrib5 = Item.duplicate()
+	attrib5.get_node("Text").text = "Cunning:"
+	attrib5.get_node("Value").text = str(Player.cunning)
+	attrib5.show()
+	Attributes.add_child(attrib5)
+	var attrib6 = Item.duplicate()
+	attrib6.get_node("Text").text = "Charm:"
+	attrib6.get_node("Value").text = str(Player.charm)
+	attrib6.show()
+	Attributes.add_child(attrib6)
+
 func update_stats():
 	get_dmg()
 	

@@ -1,17 +1,18 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://Dictionaries/Items.gd" type="Script" id=2]
 [ext_resource path="res://Dictionaries/Enemies.gd" type="Script" id=3]
-[ext_resource path="res://Data/map.tres" type="TileSet" id=4]
-[ext_resource path="res://Map/GridFloor.gd" type="Script" id=5]
-[ext_resource path="res://Map/Grid.gd" type="Script" id=6]
-[ext_resource path="res://Player/Player.gd" type="Script" id=7]
-[ext_resource path="res://Data/ProjectUtumno_full.png" type="Texture" id=8]
-[ext_resource path="res://Inventory/Inventory.gd" type="Script" id=9]
-[ext_resource path="res://Player/CharSheet.gd" type="Script" id=10]
+[ext_resource path="res://Dictionaries/Classes.gd" type="Script" id=4]
+[ext_resource path="res://Data/map.tres" type="TileSet" id=5]
+[ext_resource path="res://Map/GridFloor.gd" type="Script" id=6]
+[ext_resource path="res://Map/Grid.gd" type="Script" id=7]
+[ext_resource path="res://Player/Player.gd" type="Script" id=8]
+[ext_resource path="res://Data/ProjectUtumno_full.png" type="Texture" id=9]
+[ext_resource path="res://Inventory/Inventory.gd" type="Script" id=10]
+[ext_resource path="res://Player/CharSheet.gd" type="Script" id=11]
 
-[node name="BaseNode" type="Node" index="0"]
+[node name="BaseNode" type="Node"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Pause" ]
@@ -26,33 +27,15 @@ script = ExtResource( 2 )
 
 script = ExtResource( 3 )
 
+[node name="Classes" type="Node" parent="Dictionaries" index="2"]
+
+script = ExtResource( 4 )
+
 [node name="GridFloor" type="TileMap" parent="." index="1"]
 
 z_index = 1
 mode = 0
-tile_set = ExtResource( 4 )
-cell_size = Vector2( 32, 32 )
-cell_quadrant_size = 16
-cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-cell_half_offset = 2
-cell_tile_origin = 0
-cell_y_sort = false
-cell_clip_uv = false
-collision_use_kinematic = false
-collision_friction = 1.0
-collision_bounce = 0.0
-collision_layer = 1
-collision_mask = 1
-occluder_light_mask = 1
-format = 1
-tile_data = PoolIntArray(  )
-script = ExtResource( 5 )
-_sections_unfolded = [ "Cell", "Z Index" ]
-
-[node name="Grid" type="TileMap" parent="." index="2"]
-
-mode = 0
-tile_set = ExtResource( 4 )
+tile_set = ExtResource( 5 )
 cell_size = Vector2( 32, 32 )
 cell_quadrant_size = 16
 cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
@@ -69,6 +52,28 @@ occluder_light_mask = 1
 format = 1
 tile_data = PoolIntArray(  )
 script = ExtResource( 6 )
+_sections_unfolded = [ "Cell", "Z Index" ]
+
+[node name="Grid" type="TileMap" parent="." index="2"]
+
+mode = 0
+tile_set = ExtResource( 5 )
+cell_size = Vector2( 32, 32 )
+cell_quadrant_size = 16
+cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+cell_half_offset = 2
+cell_tile_origin = 0
+cell_y_sort = false
+cell_clip_uv = false
+collision_use_kinematic = false
+collision_friction = 1.0
+collision_bounce = 0.0
+collision_layer = 1
+collision_mask = 1
+occluder_light_mask = 1
+format = 1
+tile_data = PoolIntArray(  )
+script = ExtResource( 7 )
 _sections_unfolded = [ "Cell", "Transform" ]
 
 [node name="Player" type="KinematicBody2D" parent="Grid" index="0" groups=[
@@ -81,20 +86,20 @@ input_pickable = false
 collision_layer = 1
 collision_mask = 1
 collision/safe_margin = 0.08
-script = ExtResource( 7 )
+script = ExtResource( 8 )
 _sections_unfolded = [ "Collision", "Pickable", "Transform", "Visibility", "Z Index", "collision" ]
 
 [node name="Sprite" type="Sprite" parent="Grid/Player" index="0"]
 
 z_index = 1
-texture = ExtResource( 8 )
+texture = ExtResource( 9 )
 region_enabled = true
 region_rect = Rect2( 992, 2432, 32, 32 )
 _sections_unfolded = [ "Offset", "Region", "Transform", "Z Index" ]
 
 [node name="Inventory" type="Node" parent="Grid/Player" index="1"]
 
-script = ExtResource( 9 )
+script = ExtResource( 10 )
 
 [node name="Timer" type="Timer" parent="Grid/Player" index="2"]
 
@@ -131,7 +136,7 @@ _sections_unfolded = [ "Offset", "Smoothing", "Transform" ]
 
 [node name="CharSheet" type="Node" parent="Grid/Player" index="4"]
 
-script = ExtResource( 10 )
+script = ExtResource( 11 )
 
 [connection signal="timeout" from="Grid/Player/Timer" to="Grid/Player" method="_on_Timer_timeout"]
 
