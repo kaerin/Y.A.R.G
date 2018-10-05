@@ -1,4 +1,4 @@
-extends "res://Player/Player_Attrib.gd"
+extends KinematicBody2D
 
 #const UP 	= Vector2(0 ,-1)
 #const DOWN 	= Vector2(0 , 1)
@@ -8,8 +8,10 @@ extends "res://Player/Player_Attrib.gd"
 
 onready var grid_map = get_parent()
 onready var dic_weapon = get_node("/root/BaseNode/Dictionaries/Items").weapons
+onready var dic_classes = get_node("/root/BaseNode/Dictionaries/Classes")
 onready var inventory = get_node("Inventory")
 onready var Game = get_node("/root/BaseNode")
+onready var attrib = load("res://Player/Player_Attrib.gd")
 #onready var weapons = load("res://Items/Weapon.gd") #load class
 #onready var Map = get_node("../../Map")
 
@@ -26,6 +28,7 @@ var target_direction = Vector2()
 var facing = false
 var hp = 100
 var hp_max = 100
+var attributes
 
 signal enemy_move
 
@@ -36,6 +39,9 @@ func _ready():
 	type = grid_map.PLAYER
 	if G.PlayerColor:
 		modulate = G.PlayerColor
+	attributes = attrib.new()
+	attributes.set_attributes(dic_classes.classes[dic_classes.CLASS[G.PlayerClass]])
+
 #	grid_map.create_grid()
 #	grid_map.set_grid_pos(self, Map.start)
 
