@@ -8,7 +8,7 @@ extends KinematicBody2D
 
 onready var grid_map = get_parent()
 onready var dic_weapon = get_node("/root/BaseNode/Dictionaries/Items").weapons
-onready var dic_classes = get_node("/root/BaseNode/Dictionaries/Classes")
+onready var dic_classes = get_node("/root/BaseNode/Dictionaries/Classes").classes
 onready var inventory = get_node("Inventory")
 onready var Game = get_node("/root/BaseNode")
 onready var attrib = load("res://Player/Player_Attrib.gd")
@@ -40,7 +40,7 @@ func _ready():
 	if G.PlayerColor:
 		modulate = G.PlayerColor
 	attributes = attrib.new()
-	attributes.set_attributes(dic_classes.classes[G.PlayerClass])
+	attributes.set_attributes(dic_classes[G.PlayerClass])
 
 #	grid_map.create_grid()
 #	grid_map.set_grid_pos(self, Map.start)
