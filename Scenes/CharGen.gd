@@ -17,7 +17,7 @@ func _ready():
 		i = i + 1
 
 func ButtonPressed(n):
-	class_vbox.get_parent().get_node("cur_class").text = n
+	class_vbox.get_parent().get_node("cur_class").text = n.capitalize()
 	G.PlayerClass = classes.CLASS[n]
 
 func _on_Button_pressed():
