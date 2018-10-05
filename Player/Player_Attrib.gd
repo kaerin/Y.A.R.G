@@ -8,6 +8,7 @@ var fortitude = 0		#HP
 var intelligence = 0	#spell point stuff
 var cunning = 0			#sneaking, traps n stuff
 var charm = 0			#buy sell stuff
+var weapon
 
 var attrib = {}
 
@@ -29,3 +30,10 @@ func get_attrib(i):
 		4: return ["Cunning", cunning]
 		5: return ["Charm", charm]
 		_: return ["Unknown", -1]
+
+func test_print_method():
+	weapon.print() #3. execute as nmethod as normal
+	print("get dmage ",weapon.get_damage())
+
+func set_weapon(i): 
+	weapon = i #2. assign class sent by player to a variable

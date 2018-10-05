@@ -42,7 +42,7 @@ func _ready():
 		modulate = G.PlayerColor
 	attributes = attrib.new()
 	attributes.set_attributes(dic_classes[G.PlayerClass])
-
+	attributes.set_weapon(inventory.weapon) #1. get the weapon class from the inventory class and send it too the attrib class
 #	grid_map.create_grid()
 #	grid_map.set_grid_pos(self, Map.start)
 
@@ -155,6 +155,7 @@ func _process(delta):
 				grid_map.set_enemy_move()
 
 func take_dmg(dmg = 0):
+	attributes.test_print_method() #4. Used as a trigger to call methods in wepaon from attrib
 	hp -= dmg
 	print("You took " + str(dmg) + " damage. HP:" + str(hp))
 
