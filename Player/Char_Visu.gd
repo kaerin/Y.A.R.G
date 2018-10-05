@@ -4,7 +4,7 @@ extends CanvasLayer
 # var a = 2
 # var b = "textvar"
 
-onready var Player = get_parent().get_parent()
+onready var Char = get_parent().get_parent()
 onready var Inventory = get_parent().get_parent().get_node("Inventory")
 onready var Item = get_node("Template/Item")
 onready var Attributes = get_node("Cont/HBox/Attributes")
@@ -24,38 +24,48 @@ func update_char_sheet():
 	update_attributes()
 	update_stats()
 		
+func update_attrib(i,j):
+	var k = Item.duplicate()
+	k.get_node("Text").text = i + ":"
+	k.get_node("Value").text = str(j)
+	k.show()
+	Attributes.add_child(k)
 		
-func update_attributes():		
-	var attrib1 = Item.duplicate()
-	attrib1.get_node("Text").text = "Strength:"
-	attrib1.get_node("Value").text = str(Player.attributes.strength)
-	attrib1.show()
-	Attributes.add_child(attrib1)
-	var attrib2 = Item.duplicate()
-	attrib2.get_node("Text").text = "Dexterity:"
-	attrib2.get_node("Value").text = str(Player.attributes.agility)
-	attrib2.show()
-	Attributes.add_child(attrib2)
-	var attrib3 = Item.duplicate()
-	attrib3.get_node("Text").text = "Fortitude:"
-	attrib3.get_node("Value").text = str(Player.attributes.fortitude)
-	attrib3.show()
-	Attributes.add_child(attrib3)
-	var attrib4 = Item.duplicate()
-	attrib4.get_node("Text").text = "Intelligence:"
-	attrib4.get_node("Value").text = str(Player.attributes.intelligence)
-	attrib4.show()
-	Attributes.add_child(attrib4)
-	var attrib5 = Item.duplicate()
-	attrib5.get_node("Text").text = "Cunning:"
-	attrib5.get_node("Value").text = str(Player.attributes.cunning)
-	attrib5.show()
-	Attributes.add_child(attrib5)
-	var attrib6 = Item.duplicate()
-	attrib6.get_node("Text").text = "Charm:"
-	attrib6.get_node("Value").text = str(Player.attributes.charm)
-	attrib6.show()
-	Attributes.add_child(attrib6)
+func update_attributes():
+	for i in range(6):
+		var j = Char.attributes.get_attrib(i)
+		update_attrib(j[0], j[1])
+		
+#	var attrib1 = Item.duplicate()
+#	attrib1.get_node("Text").text = "Strength:"
+#	attrib1.get_node("Value").text = str(Player.attributes.strength)
+#	attrib1.show()
+#	Attributes.add_child(attrib1)
+#	var attrib2 = Item.duplicate()
+#	attrib2.get_node("Text").text = "Dexterity:"
+#	attrib2.get_node("Value").text = str(Player.attributes.agility)
+#	attrib2.show()
+#	Attributes.add_child(attrib2)
+#	var attrib3 = Item.duplicate()
+#	attrib3.get_node("Text").text = "Fortitude:"
+#	attrib3.get_node("Value").text = str(Player.attributes.fortitude)
+#	attrib3.show()
+#	Attributes.add_child(attrib3)
+#	var attrib4 = Item.duplicate()
+#	attrib4.get_node("Text").text = "Intelligence:"
+#	attrib4.get_node("Value").text = str(Player.attributes.intelligence)
+#	attrib4.show()
+#	Attributes.add_child(attrib4)
+#	var attrib5 = Item.duplicate()
+#	attrib5.get_node("Text").text = "Cunning:"
+#	attrib5.get_node("Value").text = str(Player.attributes.cunning)
+#	attrib5.show()
+#	Attributes.add_child(attrib5)
+#	var attrib6 = Item.duplicate()
+#	attrib6.get_node("Text").text = "Charm:"
+#	attrib6.get_node("Value").text = str(Player.attributes.charm)
+#	attrib6.show()
+#	Attributes.add_child(attrib6)
 
 func update_stats():
 	get_dmg()
