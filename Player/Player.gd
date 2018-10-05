@@ -49,6 +49,7 @@ func _ready():
 	stats.set_weapon(inventory.weapon) #1. get the weapon class from the inventory class and send it too the attrib class
 	stats.set_wearable(inventory.wearable) #1. get the weapon class from the inventory class and send it too the attrib class
 	stats.set_armour(inventory.armour) #1. get the weapon class from the inventory class and send it too the attrib class
+	stats.set_attributes(attributes)
 #	grid_map.create_grid()
 #	grid_map.set_grid_pos(self, Map.start)
 

@@ -5,6 +5,7 @@ extends Reference
 var weapon
 var wearable
 var armour
+var attributes
 
 func test_print_method():
 	weapon.print() #3. execute as nmethod as normal
@@ -18,6 +19,9 @@ func set_wearable(i):
 	
 func set_armour(i): 
 	armour = i #2. assign class sent by player to a variable	
+
+func set_attributes(i): 
+	attributes = i #2. assign class sent by player to a variable	
 	
 func get_dmg():		
 	#I figure everything in combat should pull damage from here. Stats just act as a combiner of all things.
@@ -66,7 +70,7 @@ func get_dmg_list(): #this would be extended to include spells effec etc
 	return(list)	
 	
 func get_ac_text():	#this would be extended to include spells effec etc
-	return(str(armour.get_ac() + wearable.get_bonus_ac())
+	return(str(armour.get_ac() + wearable.get_bonus_ac() + attributes.agility) #exampl of collected ac from multiple locations
 )
 	
 func get_ac_list(): #this would be extended to include spells effec etc

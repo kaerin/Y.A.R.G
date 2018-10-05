@@ -70,7 +70,14 @@ func get_ac():
 	stat1.get_node("Value").text = ac
 	stat1.show()
 	Stats.add_child(stat1)				
-
+	
+	var attrib_ac = Char.attributes.get_attrib(1)	#fixed value, crappy solution
+	var stat1attrib = Item.duplicate()
+	stat1attrib.get_node("Text").text = str("- ",attrib_ac[0])
+	stat1attrib.get_node("Value").text = str(attrib_ac[1])
+	stat1attrib.show()
+	Stats.add_child(stat1attrib)				
+	
 	var ac_items = Char.stats.get_ac_list()
 	for n in ac_items:
 		var stat1items = Item.duplicate()

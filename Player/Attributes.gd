@@ -9,7 +9,6 @@ var intelligence = 0	#spell point stuff
 var cunning = 0			#sneaking, traps n stuff
 var charm = 0			#buy sell stuff
 
-
 var attrib = {}
 
 func set_attributes(Class):
