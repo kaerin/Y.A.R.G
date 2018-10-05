@@ -71,37 +71,7 @@ func sell_items():
 	else:
 		Game.Dialog.print_label("You cant sell in the dungeon")
 
-func get_dmg_text():
-	var min_dmg = 0
-	var max_dmg = 0
-	var bonus_dmg = 0
-	for n in weapon.inventory:
-		if n.is_equipped:
-			min_dmg += (n.get_min_dmg())
-			max_dmg += (n.get_max_dmg())
-			bonus_dmg += (n.get_bonus_dmg())
-	for n in wearable.inventory:
-		if n.is_equipped:
-			bonus_dmg += (n.get_bonus_dmg())
 
-	var dmg_string = str(min_dmg,"-",max_dmg)
-	if bonus_dmg > 0:
-		dmg_string += str("+",bonus_dmg) 
-	elif bonus_dmg < 0:
-		dmg_string += str(bonus_dmg)
-	return(dmg_string)
-	
-func get_dmg_item_list():
-	var list = []
-	for n in weapon.inventory:
-		if n.is_equipped:
-			list.append(n)
-			
-	for n in wearable.inventory:
-		if n.is_equipped:
-			if n.get_bonus_dmg():
-				list.append(n)
-	return(list)
 		
 
 func add_item(item):

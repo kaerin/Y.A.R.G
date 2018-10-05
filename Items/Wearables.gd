@@ -23,6 +23,10 @@ func get_type():
 func get_bonus_ac(): #weapon total damage
 	return BonusAC
 
+func get_ac_text(): #weapon total damage
+	return str(BonusAC)
+
+
 func get_bonus_dmg(): #weapon damage
 	return BonusDmg
 	

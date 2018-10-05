@@ -11,7 +11,8 @@ onready var dic_weapon = get_node("/root/BaseNode/Dictionaries/Items").weapons
 onready var dic_classes = get_node("/root/BaseNode/Dictionaries/Classes").classes
 onready var inventory = get_node("Inventory")
 onready var Game = get_node("/root/BaseNode")
-onready var attrib = load("res://Player/Player_Attrib.gd")
+onready var Attrib = load("res://Player/Attributes.gd")
+onready var Stats = load("res://Player/Stats.gd")
 #onready var weapons = load("res://Items/Weapon.gd") #load class
 #onready var Map = get_node("../../Map")
 
@@ -28,8 +29,10 @@ var target_direction = Vector2()
 var facing = false
 var hp = 100
 var hp_max = 100
-var attributes
 var gold = 0
+
+var attributes
+var stats
 
 signal enemy_move
 
@@ -40,9 +43,12 @@ func _ready():
 	type = grid_map.PLAYER
 	if G.PlayerColor:
 		modulate = G.PlayerColor
-	attributes = attrib.new()
+	attributes = Attrib.new()
 	attributes.set_attributes(dic_classes[G.PlayerClass])
-	attributes.set_weapon(inventory.weapon) #1. get the weapon class from the inventory class and send it too the attrib class
+	stats = Stats.new()
+	stats.set_weapon(inventory.weapon) #1. get the weapon class from the inventory class and send it too the attrib class
+	stats.set_wearable(inventory.wearable) #1. get the weapon class from the inventory class and send it too the attrib class
+	stats.set_armour(inventory.armour) #1. get the weapon class from the inventory class and send it too the attrib class
 #	grid_map.create_grid()
 #	grid_map.set_grid_pos(self, Map.start)
 
@@ -155,7 +161,7 @@ func _process(delta):
 				grid_map.set_enemy_move()
 
 func take_dmg(dmg = 0):
-	attributes.test_print_method() #4. Used as a trigger to call methods in wepaon from attrib
+	stats.test_print_method() #4. Used as a trigger to call methods in wepaon from attrib
 	hp -= dmg
 	print("You took " + str(dmg) + " damage. HP:" + str(hp))
 
