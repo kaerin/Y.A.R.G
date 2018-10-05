@@ -5,10 +5,12 @@ onready var class_choice = get_node("Template/Button")
 onready var class_vbox	= get_node("VBox_Class")
 
 func _ready():
+	var j = classes.new()
+	add_child(j)
 	var i = 0
 	for n in classes.CLASS:
 		var choice = class_choice.duplicate()
-		choice.text = n
+		choice.text = j.Name[classes.CLASS[n]]
 		choice.show()
 		choice.connect("pressed", self, "ButtonPressed", [n])
 		class_vbox.add_child(choice)
