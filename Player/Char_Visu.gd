@@ -94,12 +94,16 @@ func get_dmg():
 	Stats.add_child(stat1)				
 
 	stat1 = Item.duplicate()
+	stat1.get_node("Text").text = "HP:"
+	stat1.get_node("Value").text = str(Char.hp)
+	stat1.show()
+	Stats.add_child(stat1)
+	
+	stat1 = Item.duplicate()
 	stat1.get_node("Text").text = "Gold:"
 	stat1.get_node("Value").text = str(Char.gold)
 	stat1.show()
 	Stats.add_child(stat1)
-	
-	
 
 
 

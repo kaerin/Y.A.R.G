@@ -49,7 +49,25 @@ func get_ac():
 
 func sell_items():
 	if G.level < 0:
-		Game.Dialog.print_label("Nobody to seel items too")
+		var gold = 0
+		var invErase = []
+		var a = []
+		for i in weapon.inventory + armour.inventory + wearable.inventory:
+			if not i.is_equipped:
+				print("You sold ", i.Name)
+				invErase.append(i)
+		for i in invErase:
+			gold += 1
+			match i.BaseType:
+				G.BaseType.Weap:
+					weapon.inventory.erase(i)
+				G.BaseType.Armour:
+					armour.inventory.erase(i)
+				G.BaseType.Wear:
+					wearable.inventory.erase(i)
+		Game.Dialog.print_label("You sold stuff for " + str(gold) + " gold.")	
+		return gold
+				
 	else:
 		Game.Dialog.print_label("You cant sell in the dungeon")
 

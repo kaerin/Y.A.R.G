@@ -48,7 +48,7 @@ func _ready():
 
 func _process(delta):
 	if hp < 0:
-		get_tree().change_scene("res://End.tscn")
+		get_tree().change_scene("res://Scenes/End.tscn")
 	if Input.is_action_just_pressed("ui_p"):
 		var item = grid_map.get_item(self)
 		if item:
@@ -56,7 +56,7 @@ func _process(delta):
 	if Input.is_action_just_pressed("level"):
 		grid_map.chg_level(get_position()) #Make this better
 	if Input.is_action_just_pressed("sell_items"):
-		inventory.sell_items() #simple function to sell all unequipped gear
+		gold += inventory.sell_items() #simple function to sell all unequipped gear
 	if Input.is_action_just_pressed("add_enemy"):
 		Game.Dialog.print_label("You have added an enemy")
 		grid_map.add_enemies()
