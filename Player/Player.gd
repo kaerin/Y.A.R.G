@@ -29,6 +29,7 @@ var facing = false
 var hp = 100
 var hp_max = 100
 var attributes
+var gold = 0
 
 signal enemy_move
 
@@ -54,12 +55,15 @@ func _process(delta):
 			inventory.add_item(item)
 	if Input.is_action_just_pressed("level"):
 		grid_map.chg_level(get_position()) #Make this better
-		
+	if Input.is_action_just_pressed("sell_items"):
+		inventory.sell_items() #simple function to sell all unequipped gear
 	if Input.is_action_just_pressed("add_enemy"):
 		Game.Dialog.print_label("You have added an enemy")
 		grid_map.add_enemies()
 	if Input.is_action_just_pressed("next_level"):
-		grid_map.chg_level(get_position(),true)
+		grid_map.chg_level(get_position(),1)
+	if Input.is_action_just_pressed("prev_level"):
+		grid_map.chg_level(get_position(),-1)
 	if Input.is_action_just_pressed("rest"):
 		hp +=1
 		if hp > hp_max:

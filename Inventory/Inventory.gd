@@ -46,8 +46,13 @@ func get_ac():
 	var ac
 	ac = armour.get_ac() + wearable.get_bonus_ac()
 	return ac
-	
-		
+
+func sell_items():
+	if G.level < 0:
+		Game.Dialog.print_label("Nobody to seel items too")
+	else:
+		Game.Dialog.print_label("You cant sell in the dungeon")
+
 func get_dmg_text():
 	var min_dmg = 0
 	var max_dmg = 0

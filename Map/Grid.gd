@@ -152,17 +152,17 @@ func update_child_pos(child_node):
 	
 	return target_pos
 
-func chg_level(pos, next = false):
+func chg_level(pos, next = 0):
 	pos = world_to_map(pos)
 	var chg = false
 	var spos
 	var genmap = true
-	if (pos == end and found_hidden) or next:
+	if (pos == end and found_hidden and not next < 0) or next > 0:
 		found_hidden = false
 		G.level += 1
 		chg = true
 		spos = "S"
-	if pos == start and G.level > -1 and not next:
+	elif (pos == start or next < 0 ) and G.level > -1:
 		found_hidden = true
 		G.level -= 1
 		chg = true
