@@ -39,8 +39,11 @@ func update_attributes():
 
 func update_stats():
 	get_dmg()
+	add_spacer()
 	get_ac()
+	add_spacer()
 	get_hp()
+	add_spacer()
 	get_gold()
 	
 	
@@ -95,6 +98,13 @@ func get_gold():
 	stat1.get_node("Value").text = str(Char.gold)
 	stat1.show()
 	Stats.add_child(stat1)
+	
+func add_spacer():
+	var stat1 = Item.duplicate()
+	stat1.set_custom_minimum_size(Vector2(0,20)) 
+	stat1.show()
+	Stats.add_child(stat1)				
+	
 
 
 
