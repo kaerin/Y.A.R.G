@@ -53,7 +53,7 @@ func _ready():
 #	var temp = randi() % 3 + 1 #testing
 #	temp = 3 #testing
 #	if temp == 1:
-	var rnd_item = randi() % dic_weapon.size() 
+	var rnd_item = randi() % (dic_weapon.size()-1) +1 #Dont drop fists...
 #		inventory.append(dic_weapon[rnd_item])
 	weapon.add_weapon(dic_weapon[rnd_item]) #equip enemy with random base weapon
 #	elif temp == 2:
