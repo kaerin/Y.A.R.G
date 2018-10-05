@@ -9,7 +9,7 @@ func _init(i):
 		pass
 #		print("New enemy armour class")
 	elif i == G.CHAR.PLAYER:
-		print("Armour reference initialised, adding t-shirt")
+#		print("Armour reference initialised, adding t-shirt")
 		var a = Armours.new()
 		inventory.append(a)
 		a = Armours.new()

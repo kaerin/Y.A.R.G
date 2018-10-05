@@ -65,6 +65,7 @@ func _ready():
 	rnd_item = randi() % dic_wear.size() 
 #		inventory.append(dic_wear[rnd_item])
 	wearable.add_wearable(dic_wear[rnd_item])
+	$Timer.wait_time = randi() % 5 + 1
 
 func get_inventory():
 	var i = []
@@ -100,9 +101,11 @@ func attack():
 		player.take_dmg(randi()%10+G.level)
 	
 func set_move():
-	$Timer.stop()
-	$Timer.wait_time = randi() % 5
-	$Timer.start()
+#	if not $Timer.is_stopped():
+#		$Timer.stop()
+	$Timer.wait_time = randi() % 5 + 1
+#	$Timer.start()
+	
 #	if not is_queued_for_deletion(): #necessary, otherwise grid is updated with new position before being deleted
 #	var temp = randi() % 4
 #	if temp == 0:

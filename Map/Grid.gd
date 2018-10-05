@@ -42,16 +42,16 @@ func start(startpos = "S"):
 		return
 	var map = Map.new()
 	if map_levels.size() <= G.level:
-		print("generating new map and saving to index:",G.level)
+#		print("generating new map and saving to index:",G.level)
 		mapgrid = map.map(Vector2(G.level+6,G.level+6))
 		map_levels.append(mapgrid)
 	else:
-		print("Using exising map for level:",G.level)
+#		print("Using exising map for level:",G.level)
 		mapgrid = map_levels[G.level]
 		found_hidden = true
 	grid_size = Vector2(G.level+6,G.level+6)
 	create_grid()
-	print(mapgrid.size())
+#	print(mapgrid.size())
 	for x in mapgrid.size():
 		for y in mapgrid[x].size():
 			var i = mapgrid[x][y]
@@ -95,7 +95,7 @@ func start(startpos = "S"):
 #	Player.is_moving = false
 #	update_child_pos(Player)
 	add_enemies()
-	print("grid size",grid_size)
+#	print("grid size",grid_size)
 	#TEMP add random enemies for testing
 
 func create_grid():

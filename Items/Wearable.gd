@@ -9,7 +9,7 @@ func _init(i):
 	if i == G.CHAR.ENEMY:
 		pass
 	elif i == G.CHAR.PLAYER:
-		print("Wearable reference initialised, adding large plastic clock amulet")
+#		print("Wearable reference initialised, adding large plastic clock amulet")
 		var w = Wearables.new()
 		inventory.append(w)
 		inventory[0].set_name("Clock Amulet of the 80s")

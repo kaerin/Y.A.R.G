@@ -8,7 +8,7 @@ func _init(i):
 		#print("New enemy weapon class")
 		pass
 	elif i == G.CHAR.PLAYER:
-		print("Weapon reference initialised, adding fist as first weapon ")
+#		print("Weapon reference initialised, adding fist as first weapon ")
 		var w = Weapons.new()
 		inventory.push_front(w)
 		inventory[0].set_name(G.Weap.Fist)

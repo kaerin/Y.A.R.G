@@ -3,7 +3,7 @@
 [ext_resource path="res://Enemies/Enemy.gd" type="Script" id=1]
 [ext_resource path="res://Data/ProjectUtumno_full.png" type="Texture" id=2]
 
-[node name="Enemy" type="KinematicBody2D" groups=[
+[node name="Enemy" type="KinematicBody2D" index="0" groups=[
 "Enemy",
 ]]
 
@@ -51,7 +51,7 @@ _sections_unfolded = [ "Grow Direction", "Rect" ]
 process_mode = 1
 wait_time = 1.0
 one_shot = false
-autostart = false
+autostart = true
 
 [connection signal="timeout" from="Timer" to="." method="set_move"]
 
