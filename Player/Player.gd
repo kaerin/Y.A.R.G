@@ -40,7 +40,7 @@ func _ready():
 	if G.PlayerColor:
 		modulate = G.PlayerColor
 	attributes = attrib.new()
-	attributes.set_attributes(dic_classes.classes[dic_classes.CLASS[G.PlayerClass]])
+	attributes.set_attributes(dic_classes.classes[G.PlayerClass])
 
 #	grid_map.create_grid()
 #	grid_map.set_grid_pos(self, Map.start)
