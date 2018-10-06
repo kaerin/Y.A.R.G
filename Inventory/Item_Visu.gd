@@ -20,7 +20,7 @@ onready var stats 				= get_parent().get_parent().get_node("Stats/Text")
 
 func _ready():
 	if item:					# does not work without an if. dunno why. data not populated or something.
-		$Text.text = item.Name
+		$Text.text = item.Name	#Casue you are initally executing the script with no item, it works later cause you set item them execute script
 		show()
 		$Sprite.texture = item.get_sprite_texture()
 		$Sprite.set_region_rect(item.get_sprite_rect())

@@ -1,8 +1,8 @@
 extends Reference
 
 var Wearables = load("res://Items/Wearables.gd")
-var active_amulet = 0
-var active_ring = 1
+#var active_amulet = 0
+#var active_ring = 1
 var inventory = []
 
 func _init(i):
@@ -46,11 +46,13 @@ func add_wearable(item, i = false):
 	if i:
 		alter_stats(0,10)
 
-func get_ring_name(i = active_ring):
-	return inventory[i].get_name()
-
-func get_amulet_name(i = active_amulet):
-	return inventory[i].get_name()
+#func get_ring_name():
+#	for i in inventory:
+#		if i.WearType == G.WearType.Ring and i.is_active:
+#			return i.get_name() +"zzz"
+#
+#func get_amulet_name(i = active_amulet):
+#	return inventory[i].get_name()
 
 func get_name(i):
 	return inventory[i].get_name()
@@ -58,11 +60,11 @@ func get_name(i):
 func get_type(i):
 	return inventory[i].get_type()
 
-func equip_ring(i):
-	active_ring = i
-
-func equip_amulet(i):
-	active_amulet = i
+#func equip_ring(i):
+#	active_ring = i
+#
+#func equip_amulet(i):
+#	active_amulet = i
 	
 func get_bonus_ac():
 	var ac = 0
@@ -71,10 +73,10 @@ func get_bonus_ac():
 			ac += n.get_bonus_ac()
 	return ac
 	
-func get_ring_bonus_ac():
-	return inventory[active_ring].get_bonus_ac() #fix mne
-func get_amulet_bonus_ac():
-	return inventory[active_amulet].get_bonus_ac() #fix mne
+#func get_ring_bonus_ac():
+#	return inventory[active_ring].get_bonus_ac() #fix mne
+#func get_amulet_bonus_ac():
+#	return inventory[active_amulet].get_bonus_ac() #fix mne
 
 
 func get_bonus_dmg():
@@ -83,10 +85,10 @@ func get_bonus_dmg():
 		if n.is_equipped:
 			dmg += n.get_bonus_dmg()
 	return dmg
-func get_amulet_bonus_dmg():
-	return inventory[active_amulet].get_bonus_dmg() #fix mne
-func get_ring_bonus_dmg():
-	return inventory[active_ring].get_bonus_dmg() #fix mne
+#func get_amulet_bonus_dmg():
+#	return inventory[active_amulet].get_bonus_dmg() #fix mne
+#func get_ring_bonus_dmg():
+#	return inventory[active_ring].get_bonus_dmg() #fix mne
 
 func alter_stats(i,rng):
 	var pre = ["Rusted", "Shiny", "Glowing", "Sparkly", "Red", "Golden", "Crappy", "Normal", "Mood"]

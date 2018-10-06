@@ -20,18 +20,18 @@ func set_bonus_dmg(i):
 func get_type():
 	return Type
 	
-func get_bonus_ac(): #weapon total damage
+func get_bonus_ac(): 
 	return BonusAC
 
-func get_ac_text(): #weapon total damage
+func get_ac_text(): #same as str(get_bonus_ac()) which makes more sense
 	return str(BonusAC)
 
 
 func get_bonus_dmg(): #weapon damage
 	return BonusDmg
 	
-func get_dmg_text():
-	if BonusDmg >= 0:
+func get_dmg_text(): #I'd put all the functions turning numbers into formatted string of text into visual, stats has all the numbers from everything
+	if BonusDmg >= 0: #I'd keep these classes simple just have the data here, leave formatted text up to something else
 		return(str("+",BonusDmg))
 	else:	
 		return(str(BonusDmg))

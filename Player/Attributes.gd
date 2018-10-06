@@ -30,4 +30,6 @@ func get_attrib(i):
 		5: return ["Charm", charm]
 		_: return ["Unknown", -1]
 
+func get_ac():
+	return agility
 

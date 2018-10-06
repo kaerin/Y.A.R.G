@@ -70,7 +70,7 @@ func get_dmg_list(): #this would be extended to include spells effec etc
 	return(list)	
 	
 func get_ac_text():	#this would be extended to include spells effec etc
-	return(str(armour.get_ac() + wearable.get_bonus_ac() + attributes.agility) #exampl of collected ac from multiple locations
+	return(str(armour.get_ac() + wearable.get_bonus_ac() + attributes.get_ac()) #
 )
 	
 func get_ac_list(): #this would be extended to include spells effec etc
