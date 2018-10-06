@@ -47,7 +47,9 @@ func get_active_name():
 		if n.is_equipped:
 			return n.get_name()
 
-func get_name(i):
+func get_name(i = -1):
+	if i < 0:
+		return get_active_name()
 	return inventory[i].get_name()
 
 func get_type():

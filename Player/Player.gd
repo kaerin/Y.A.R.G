@@ -9,7 +9,7 @@ extends KinematicBody2D
 onready var grid_map = get_parent()
 onready var dic_weapon = get_node("/root/BaseNode/Dictionaries/Items").weapons
 onready var dic_classes = get_node("/root/BaseNode/Dictionaries/Classes").classes
-onready var inventory = get_node("Inventory")
+onready var Inventory = get_node("Inventory")
 onready var Game = get_node("/root/BaseNode")
 onready var Attrib = load("res://Player/Attributes.gd")
 onready var Stats = load("res://Player/Stats.gd")
@@ -47,9 +47,9 @@ func _ready():
 	attributes = Attrib.new()
 	attributes.set_attributes(dic_classes[G.PlayerClass])
 	stats = Stats.new()
-	stats.set_weapon(inventory.weapon) #1. get the weapon class from the inventory class and send it too the attrib class
-	stats.set_wearable(inventory.wearable) #1. get the weapon class from the inventory class and send it too the attrib class
-	stats.set_armour(inventory.armour) #1. get the weapon class from the inventory class and send it too the attrib class
+	stats.set_weapon(Inventory.weapon) #1. get the weapon class from the inventory class and send it too the attrib class
+	stats.set_wearable(Inventory.wearable) #1. get the weapon class from the inventory class and send it too the attrib class
+	stats.set_armour(Inventory.armour) #1. get the weapon class from the inventory class and send it too the attrib class
 	stats.set_attributes(attributes)
 #	grid_map.create_grid()
 #	grid_map.set_grid_pos(self, Map.start)
@@ -60,11 +60,11 @@ func _process(delta):
 	if Input.is_action_just_pressed("ui_p"):
 		var item = grid_map.get_item(self)
 		if item:
-			inventory.add_item(item)
+			Inventory.add_item(item)
 	if Input.is_action_just_pressed("level"):
 		grid_map.chg_level(get_position()) #Make this better
 	if Input.is_action_just_pressed("sell_items"):
-		gold += inventory.sell_items() #simple function to sell all unequipped gear
+		gold += Inventory.sell_items() #simple function to sell all unequipped gear
 	if Input.is_action_just_pressed("add_enemy"):
 		Game.Dialog.print_label("You have added an enemy")
 		grid_map.add_enemies()
@@ -120,7 +120,7 @@ func _process(delta):
 			is_fighting = true
 			var enemy = grid_map.get_cell_node(get_position(), target_direction)
 			if enemy:
-				enemy.set_contact(inventory.get_damage()) #weapon needs to get equippped
+				enemy.set_contact(Inventory.get_damage()) #weapon needs to get equippped
 			$Timer.start()
 	elif is_moving:
 		speed = MAX_SPEED
@@ -152,13 +152,13 @@ func _process(delta):
 				#TODO else set contact/damage with object
 				else:
 					#TEMP basic attack for testing
-					var damage = inventory.get_damage() #can call the method in inventory
-					damage = inventory.weapon.get_damage() #can call the method from the weapon class in inventory
-					print (inventory.weapon.equipped) #can get active weapon index from inventory
-					damage = inventory.weapon.equipped.get_damage() #can directly call get damage from a specific weapon in the weapon inventory
+					var damage = Inventory.get_damage() #can call the method in inventory
+					damage = Inventory.weapon.get_damage() #can call the method from the weapon class in inventory
+					print (Inventory.weapon.equipped) #can get active weapon index from inventory
+					damage = Inventory.weapon.equipped.get_damage() #can directly call get damage from a specific weapon in the weapon inventory
 					#alter damage with environmental effects
 					#damage = damage + environment.get_damage()
-					obsticle.set_contact(inventory.get_damage()) #Use inventory get_damage for now
+					obsticle.set_contact(Inventory.get_damage()) #Use inventory get_damage for now
 				#Only trigger turn if movement was valid	
 				grid_map.set_enemy_move()
 

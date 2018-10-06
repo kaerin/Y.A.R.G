@@ -15,14 +15,14 @@ func set_sprite_rect(i):
 func set_equipped(i = true):
 	is_equipped = i
 
-func set_not_equipped():
-	is_equipped = false
+#func set_not_equipped(): #Use set_equipped(false)
+#	is_equipped = false
 
 func set_name(i):
 	Name = i
 
-func set_unequip():
-	is_equipped = false	
+#func set_unequip(): #Use set_equipped(false)
+#	is_equipped = false	
 
 #get data
 func get_equipped():

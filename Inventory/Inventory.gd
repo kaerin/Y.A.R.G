@@ -1,7 +1,7 @@
 extends Node
 
 onready var dic_items = get_parent().get_parent().get_parent().get_node("Dictionaries/Items")
-onready var inv = load("res://Inventory/Inventory.tscn")
+#onready var Inv = load("res://Inventory/Inventory.tscn")
 onready var Weapon = load("res://Items/Weapon.gd")
 onready var Armour = load("res://Items/Armour.gd")
 onready var Wearable = load("res://Items/Wearable.gd")
@@ -28,8 +28,9 @@ func _ready():
 	#have helper functions like auto-equip highest dmg weapon to use for player or others
 
 func _process(delta):
-	if Input.is_action_just_pressed("ui_inv") || (inv_displayed && Input.is_action_just_pressed("char_sheet")):
-		_inventory()
+	if parent.CHARTYPE == G.CHAR.PLAYER:
+		if Input.is_action_just_pressed("ui_inv") || (inv_displayed && Input.is_action_just_pressed("char_sheet")):
+			_inventory()
 
 func get_damage():
 		var damage #= randi() % (equipped[WEAPON].max_damage + 1 - equipped[WEAPON].min_damage) + equipped[WEAPON].min_damage

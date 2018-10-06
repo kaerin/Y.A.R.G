@@ -41,7 +41,7 @@ func _process(delta):
 				inventory_visu.update_inventory()
 				
 			elif get_drop_pos_area(get_global_mouse_position()) == DROP_POS.INVENTORY:
-				item.set_not_equipped()
+				item.set_equipped(false)
 				print("unequipped ",item.get_name())
 				inventory_visu.update_inventory()
 				
@@ -53,19 +53,19 @@ func unequip_equippped_item(item):
 	if item.BaseType == "Weapon":
 		for n in inventory.weapon.inventory:
 			if n.is_equipped:
-				n.set_unequip()
+				n.set_equipped(false)
 				print(n.get_name(), " unequipped")
 	if item.BaseType == "Wearable":
 		for n in inventory.wearable.inventory:
 			if n.Type == item.Type:
 				if n.is_equipped:
-					n.set_unequip()
+					n.set_equipped(false)
 					print(n.get_name(), " unequipped")
 	if item.BaseType == "Armour":
 		for n in inventory.armour.inventory:
 			if n.Location == item.Location:
 				if n.is_equipped:
-					n.set_unequip()
+					n.set_equipped(false)
 					print(n.get_name(), " unequipped")
 
 func get_drop_pos_area(mpos):

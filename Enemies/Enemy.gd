@@ -39,6 +39,7 @@ onready var Inventory = load("res://Inventory/Inventory.gd")
 
 
 func _ready():
+	print(G.MAT.CLOTH)
 	inv = Inventory.new()
 	add_child(inv)
 	player.connect("enemy_move", self, "set_move")
@@ -48,7 +49,7 @@ func _ready():
 #	wearable = Wearable.new(G.CHAR.ENEMY)
 	#TODO random instancing of enemies in dictionary
 	var enemy = dic_enemies[randi() % dic_enemies.size()] #simplify
-	enemy = dic_enemies[0] #rat testing
+#	enemy = dic_enemies[0] #rat testing
 	hp = randi() % (enemy.max_hp - enemy.min_hp) + enemy.min_hp
 	hp += G.level #increase hp by level
 	$Sprite/Label.text = enemy.base_name
@@ -60,9 +61,15 @@ func _ready():
 #	var temp = randi() % 3 + 1 #testing
 #	temp = 3 #testing
 #	if temp == 1:
-	if enemy.base_name == "Rat": #Rat short be a global constant not plain text
+	if enemy.base_name == G.En.Rat or enemy.base_name == G.En.Mole: #Rat short be a global constant not plain text
 		inv.weapon.add_weapon(dic_weapon[G.WEAP.TEETH]) #add teeth weapon
 		inv.weapon.inventory[0].set_equipped(true) #equip teeth
+	elif enemy.base_name == G.En.Turtle:
+		inv.weapon.add_weapon(dic_weapon[G.WEAP.CLAW]) #add teeth weapon
+		inv.weapon.inventory[0].set_equipped(true) #equip teeth
+	elif enemy.base_name == G.En.Bee:
+		inv.weapon.add_weapon(dic_weapon[G.WEAP.TAIL]) #add teeth weapon
+		inv.weapon.inventory[0].set_equipped(true)
 	else: #or add a random weapon to the inventory
 		var rnd_item = randi() % (dic_weapon.size()) 
 		while not dic_weapon[rnd_item].base_type == G.BaseType.Weap: #dont't assign body weapons to inventory
@@ -99,9 +106,9 @@ func set_contact(damage):
 		
 #after player moves all enemies are triggered to move from Grid_Map		
 func attack():
-	var ac = player.inventory.get_ac()
+	var ac = player.Inventory.get_ac()
 	var tohit = randi() % 20 + G.level
-	print("roll to hit:", tohit, " Player ac:", ac)
+	print("Attacks with ", inv.weapon.get_name(), " roll to hit:", tohit, " Player ac:", ac)
 	if tohit > ac:
 		player.take_dmg(inv.get_damage()+G.level)
 	
