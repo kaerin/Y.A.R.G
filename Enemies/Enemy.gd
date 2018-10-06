@@ -15,6 +15,7 @@ var type
 var facing = true
 var Name
 
+var CHARTYPE = G.CHAR.ENEMY
 var direction = Vector2()
 var speed = 0
 const MAX_SPEED = 200
@@ -22,6 +23,7 @@ var velocity = Vector2()
 var is_moving = false
 var target_pos = Vector2()
 var target_direction = Vector2()
+var inv
 
 onready var player = get_node("../Player")
 onready var grid_map = get_parent()
@@ -33,47 +35,58 @@ onready var dic_wear = get_parent().get_parent().get_node("Dictionaries/Items").
 onready var Weapon = load("res://Items/Weapon.gd")
 onready var Armour = load("res://Items/Armour.gd")
 onready var Wearable = load("res://Items/Wearable.gd")
+onready var Inventory = load("res://Inventory/Inventory.gd")
+
 
 func _ready():
+	inv = Inventory.new()
+	add_child(inv)
 	player.connect("enemy_move", self, "set_move")
 	type = grid_map.ENEMY
-	weapon = Weapon.new(G.CHAR.ENEMY) #enemies can be given the same weapon class and weapon inventory
-	armour = Armour.new(G.CHAR.ENEMY)
-	wearable = Wearable.new(G.CHAR.ENEMY)
+#	weapon = Weapon.new(G.CHAR.ENEMY) #enemies can be given the same weapon class and weapon inventory
+#	armour = Armour.new(G.CHAR.ENEMY)
+#	wearable = Wearable.new(G.CHAR.ENEMY)
 	#TODO random instancing of enemies in dictionary
-	var rnd_enemy = randi() % dic_enemies.size()
-	hp = randi() % (dic_enemies[rnd_enemy].max_hp - dic_enemies[rnd_enemy].min_hp) + dic_enemies[rnd_enemy].min_hp
+	var enemy = dic_enemies[randi() % dic_enemies.size()] #simplify
+	enemy = dic_enemies[0] #rat testing
+	hp = randi() % (enemy.max_hp - enemy.min_hp) + enemy.min_hp
 	hp += G.level #increase hp by level
-	$Sprite/Label.text = dic_enemies[rnd_enemy].base_name
-	$Sprite.set_region_rect(dic_enemies[rnd_enemy].img_rect)
-	Name = dic_enemies[rnd_enemy].base_name
+	$Sprite/Label.text = enemy.base_name
+	$Sprite.set_region_rect(enemy.img_rect)
+	Name = enemy.base_name
 	chg_name()
 	
 	#TEMP ONLY random item in inventory to test dropping
 #	var temp = randi() % 3 + 1 #testing
 #	temp = 3 #testing
 #	if temp == 1:
-	var rnd_item = randi() % (dic_weapon.size()-1) +1 #Dont drop fists...
-#		inventory.append(dic_weapon[rnd_item])
-	weapon.add_weapon(dic_weapon[rnd_item]) #equip enemy with random base weapon
-#	elif temp == 2:
-	rnd_item = randi() % dic_armour[0].size() #change pick random location then random armour
+	if enemy.base_name == "Rat": #Rat short be a global constant not plain text
+		inv.weapon.add_weapon(dic_weapon[G.WEAP.TEETH]) #add teeth weapon
+		inv.weapon.inventory[0].set_equipped(true) #equip teeth
+	else: #or add a random weapon to the inventory
+		var rnd_item = randi() % (dic_weapon.size()) 
+		while not dic_weapon[rnd_item].base_type == G.BaseType.Weap: #dont't assign body weapons to inventory
+			rnd_item = randi() % (dic_weapon.size())
+	#		inventory.append(dic_weapon[rnd_item])
+		inv.weapon.add_weapon(dic_weapon[rnd_item]) #equip enemy with random base weapon
+	#	elif temp == 2:
+	var rnd_item = randi() % dic_armour[0].size() #change pick random location then random armour
 	var i = randi() % 2
 #		inventory.append(dic_armour[i][rnd_item]) #0 should be random
-	armour.add_armour(dic_armour[i][rnd_item])
+	inv.armour.add_armour(dic_armour[i][rnd_item])
 #	elif temp == 3:
 	rnd_item = randi() % dic_wear.size() 
 #		inventory.append(dic_wear[rnd_item])
-	wearable.add_wearable(dic_wear[rnd_item])
+	inv.wearable.add_wearable(dic_wear[rnd_item])
 	$Timer.wait_time = randi() % 5 + 1
 
 func get_inventory():
 	var i = []
-	for j in weapon.inventory:
+	for j in inv.weapon.inventory:
 		i.append(j)
-	for j in armour.inventory:
+	for j in inv.armour.inventory:
 		i.append(j)
-	for j in wearable.inventory:
+	for j in inv.wearable.inventory:
 		i.append(j)
 	return i
 
@@ -98,7 +111,7 @@ func attack():
 	var tohit = randi() % 20 + G.level
 	print("roll to hit:", tohit, " Player ac:", ac)
 	if tohit > ac:
-		player.take_dmg(randi()%10+G.level)
+		player.take_dmg(inv.get_damage()+G.level)
 	
 func set_move():
 #	if not $Timer.is_stopped():

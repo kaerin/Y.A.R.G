@@ -7,7 +7,7 @@ onready var Armour = load("res://Items/Armour.gd")
 onready var Wearable = load("res://Items/Wearable.gd")
 onready var Game = get_node("/root/BaseNode") #Get the Game node for diallog
 onready var Inv_Visu = load("res://Inventory/Inventory_Visu.tscn")
-
+onready var parent = get_parent()
 
 
 #enum	LOC		{CHEST, HEAD, ARMS, LEGS}
@@ -21,9 +21,9 @@ var wearable
 
 func _ready():
 	
-	weapon = Weapon.new(G.CHAR.PLAYER) #enemies can be given the same weapon class and weapon inventory
-	armour = Armour.new(G.CHAR.PLAYER)
-	wearable = Wearable.new(G.CHAR.PLAYER)
+	weapon = Weapon.new(parent.CHARTYPE) #enemies can be given the same weapon class and weapon inventory
+	armour = Armour.new(parent.CHARTYPE)
+	wearable = Wearable.new(parent.CHARTYPE)
 	#could also have npc and companions to also have the same weapon class and inventory	
 	#have helper functions like auto-equip highest dmg weapon to use for player or others
 
@@ -37,10 +37,19 @@ func get_damage():
 		print("Bonus dmg:", wearable.get_bonus_dmg())
 		#can do this add all damage and bonuses together
 		#damage = weapon.get_damage() + ring.get_dmg_bonus() + amulet.get_dmg_bonus() 
-		damage = weapon.get_damage() + wearable.get_bonus_dmg() #get damage from equipped weapon class, the same as inventory.weapon.get_damage() called from the player class
+		
+		if parent.CHARTYPE == G.CHAR.PLAYER: #FIX THIS
+			damage = weapon.get_damage() + wearable.get_bonus_dmg() #get damage from equipped weapon class, the same as inventory.weapon.get_damage() called from the player class
+		else:
+			damage = weapon.get_damage() #FIX THIS
+		
 		print("Weapon damage: ", damage) #get the currently equppied weapons damage from the class
-		Game.Dialog.print_label("Your weapon: " + weapon.get_active_name() + " did " + str(damage) + " damage.", 2)
+		if parent.CHARTYPE == G.CHAR.PLAYER:
+			Game.Dialog.print_label("Your weapon: " + weapon.get_active_name() + " did " + str(damage) + " damage.", 2)
 		return(damage)
+
+func find_rnd_item():
+	print("Finding a random item")
 
 func get_ac():
 	var ac

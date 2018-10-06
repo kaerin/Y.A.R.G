@@ -8,7 +8,7 @@ var armour
 var attributes
 
 func test_print_method():
-	weapon.print() #3. execute as nmethod as normal
+	weapon.print_test() #3. execute as nmethod as normal
 	print("get dmage ",weapon.get_damage())
 
 func set_weapon(i): 

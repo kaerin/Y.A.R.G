@@ -16,6 +16,7 @@ onready var Stats = load("res://Player/Stats.gd")
 #onready var weapons = load("res://Items/Weapon.gd") #load class
 #onready var Map = get_node("../../Map")
 
+var CHARTYPE = G.CHAR.PLAYER
 var direction = Vector2()
 var speed = 0
 const MAX_SPEED = 200

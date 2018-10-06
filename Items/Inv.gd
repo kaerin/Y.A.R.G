@@ -12,8 +12,8 @@ var is_equipped
 func set_sprite_rect(i):
 	sprite_rect = i
 
-func set_equipped():
-	is_equipped = true
+func set_equipped(i = true):
+	is_equipped = i
 
 func set_not_equipped():
 	is_equipped = false

@@ -5,10 +5,10 @@ var inventory = []
 
 func _init(i):
 	if i == G.CHAR.ENEMY:
-		#print("New enemy weapon class")
+		print("New enemy weapon class")
 		pass
 	elif i == G.CHAR.PLAYER:
-#		print("Weapon reference initialised, adding fist as first weapon ")
+		print("Weapon reference initialised, adding fist as first weapon ")
 		var w = Weapons.new()
 		inventory.push_front(w)
 		inventory[0].set_name(G.Weap.Fist)
@@ -18,7 +18,7 @@ func _init(i):
 		inventory[0].set_equipped()
 		#inventory[0].add_to_group("Weapon")
 
-func print():
+func print_test():
 	print("Executed debug print function from weapon class")
 
 #Each item type has its own class: wepaon, armour, misc
@@ -36,6 +36,7 @@ func add_weapon(item, i = false):
 	inventory[0].set_dmg_type(item.damage_type)
 	inventory[0].set_damage(item.min_damage,item.max_damage)
 	inventory[0].set_sprite_rect(item.img_rect)
+	inventory[0].BaseType = item.base_type
 	#inventory[0].add_to_group("Weapon")
 	#active += 1 #hack, dont do it this way
 	if i:

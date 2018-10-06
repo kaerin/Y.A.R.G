@@ -17,7 +17,11 @@ func _ready():
 	weapons[G.WEAP.DAGGER] 	= {base_type = G.BaseType.Weap, base_name = G.Weap.Dagger, min_damage = 1, max_damage = 4, damage_type = G.WeapType.Stab, weight = 4, img_rect = Rect2(864,1472,32,32)}
 	weapons[G.WEAP.CLUB] 	= {base_type = G.BaseType.Weap, base_name = G.Weap.Club, min_damage = 2, max_damage = 6, damage_type = G.WeapType.Blunt, weight = 6, img_rect = Rect2(1760,1408,32,32)}
 	weapons[G.WEAP.SPEAR] 	= {base_type = G.BaseType.Weap, base_name = G.Weap.Spear, min_damage = 1, max_damage = 10, damage_type = G.WeapType.Stab, weight = 5, img_rect = Rect2(864,1504,32,32)}
-	weapons[G.WEAP.FIST] 	= {base_type = G.BaseType.Weap, base_name = G.Weap.Fist, min_damage = 90, max_damage = 99, damage_type = G.WeapType.Blunt, weight = 0, img_rect = Rect2(864,928,32,32)} #power punch for testing
+	weapons[G.WEAP.FIST] 	= {base_type = G.BaseType.BodyWeap, base_name = G.Weap.Fist, min_damage = 90, max_damage = 99, damage_type = G.WeapType.Blunt, weight = 0, img_rect = Rect2(864,928,32,32)}
+	weapons[G.WEAP.TEETH] 	= {base_type = G.BaseType.BodyWeap, base_name = G.Weap.Teeth, min_damage = 1, max_damage = 2, damage_type = G.WeapType.Blunt, weight = 0, img_rect = Rect2(864,928,32,32)}
+	weapons[G.WEAP.CLAW] 	= {base_type = G.BaseType.BodyWeap, base_name = G.Weap.Claw, min_damage = 90, max_damage = 99, damage_type = G.WeapType.Blunt, weight = 0, img_rect = Rect2(864,928,32,32)}
+	
+	 #power punch for testing
 
 #Change all text and enum to global variables
 

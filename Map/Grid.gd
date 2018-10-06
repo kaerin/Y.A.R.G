@@ -212,7 +212,11 @@ func set_kill_me(child):
 		var new_object = item.instance()
 		new_object.set_position(map_to_world(cur_pos) + half_tile_size)
 		grid[cur_pos.x][cur_pos.y] = ITEM #Mark grid with ITEM
-		new_object.item = i[randi() % i.size()] #add item
+		var j = i[randi() % i.size()] #get a randomitem
+		child.inv.find_rnd_item() #.inv. wont work for player only enemy
+		while j.BaseType == G.BaseType.BodyWeap:
+			j = i[randi() % i.size()] #find a non body weapon item
+		new_object.item = j
 		add_child(new_object)
 			
 	child.queue_free()
