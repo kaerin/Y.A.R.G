@@ -95,22 +95,21 @@ func chg_name():
 	Name = pre[randi() % pre.size()] + " " + Name + " " + post[randi() % post.size()]
 	
 #TEMP ONLY for basic player enemy interaction test.
-func set_contact(damage):
-	hp -= damage
-	print(Name, ' hp: ', hp)
-	if hp <= 0:
-		grid_map.set_kill_me(self)
-	else:
-		attack() #Fight player
+func take_dmg(roll, dmg):
+	if roll > inv.get_ac():
+		hp -= dmg
+		print("roll:",roll, " target:", inv.get_ac(), " ",Name, " took " + str(dmg) + " damage. HP:" + str(hp))
+		if hp <= 0:
+			grid_map.set_kill_me(self)
+		else:
+			attack() #Fight player
 		
 		
 #after player moves all enemies are triggered to move from Grid_Map		
 func attack():
-	var ac = player.Inventory.get_ac()
-	var tohit = randi() % 20 + G.level
-	print("Attacks with ", inv.weapon.get_name(), " roll to hit:", tohit, " Player ac:", ac)
-	if tohit > ac:
-		player.take_dmg(inv.get_damage()+G.level)
+	var roll = randi() % 20 + G.level
+	print("Attacks with ", inv.weapon.get_name(), " rolls:", roll)
+	player.take_dmg(roll, inv.get_damage()+G.level)
 	
 func set_move():
 #	if not $Timer.is_stopped():

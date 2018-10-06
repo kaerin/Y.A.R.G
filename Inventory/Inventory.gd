@@ -33,9 +33,9 @@ func _process(delta):
 			_inventory()
 
 func get_damage():
-		var damage #= randi() % (equipped[WEAPON].max_damage + 1 - equipped[WEAPON].min_damage) + equipped[WEAPON].min_damage
-		print("AC:", armour.get_ac(), " Bonus:",wearable.get_bonus_ac())
-		print("Bonus dmg:", wearable.get_bonus_dmg())
+		var damage = 0 #= randi() % (equipped[WEAPON].max_damage + 1 - equipped[WEAPON].min_damage) + equipped[WEAPON].min_damage
+#		print("AC:", armour.get_ac(), " Bonus:",wearable.get_bonus_ac())
+#		print("Bonus dmg:", wearable.get_bonus_dmg())
 		#can do this add all damage and bonuses together
 		#damage = weapon.get_damage() + ring.get_dmg_bonus() + amulet.get_dmg_bonus() 
 		
@@ -44,9 +44,11 @@ func get_damage():
 		else:
 			damage = weapon.get_damage() #FIX THIS
 		
-		print("Weapon damage: ", damage) #get the currently equppied weapons damage from the class
+#		print("Weapon damage: ", damage) #get the currently equppied weapons damage from the class
 		if parent.CHARTYPE == G.CHAR.PLAYER:
 			Game.Dialog.print_label("Your weapon: " + weapon.get_active_name() + " did " + str(damage) + " damage.", 2)
+		if not damage:
+			damage = 0
 		return(damage)
 
 func find_rnd_item():
@@ -58,8 +60,7 @@ func find_rnd_item():
 	return j
 
 func get_ac():
-	var ac
-	ac = armour.get_ac() + wearable.get_bonus_ac()
+	var ac = armour.get_ac() + wearable.get_bonus_ac()
 	return ac
 
 func sell_items():

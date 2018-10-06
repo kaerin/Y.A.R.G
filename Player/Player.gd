@@ -120,7 +120,8 @@ func _process(delta):
 			is_fighting = true
 			var enemy = grid_map.get_cell_node(get_position(), target_direction)
 			if enemy:
-				enemy.set_contact(Inventory.get_damage()) #weapon needs to get equippped
+				var roll = randi() % 20
+				enemy.take_dmg(roll, Inventory.get_damage()) #weapon needs to get equippped
 			$Timer.start()
 	elif is_moving:
 		speed = MAX_SPEED
@@ -162,10 +163,11 @@ func _process(delta):
 				#Only trigger turn if movement was valid	
 				grid_map.set_enemy_move()
 
-func take_dmg(dmg = 0):
+func take_dmg(roll, dmg = 0):
 	stats.test_print_method() #4. Used as a trigger to call methods in wepaon from attrib
-	hp -= dmg
-	print("You took " + str(dmg) + " damage. HP:" + str(hp))
+	if roll > Inventory.get_ac():
+		hp -= dmg
+		print("roll:",roll, " target:",Inventory.get_ac(), "You took " + str(dmg) + " damage. HP:" + str(hp))
 
 func _on_Timer_timeout():
 	is_fighting = false

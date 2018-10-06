@@ -12,6 +12,7 @@ var ROOF = ["Wall1","Wall2","Wall3","Wall4"]
 const INVALID = -999
 
 onready var enemy = preload("res://Enemies/Enemy.tscn")
+onready var Admin = preload("res://Admin/Admin.tscn")
 onready var item  = preload("res://Items/Item.tscn")
 onready var Map = preload("res://Data/MapGen.gd")
 onready var GridFloor = get_node("../GridFloor")
@@ -21,10 +22,21 @@ var hidden = Vector2()
 var found_hidden = false
 var mapgrid
 var map_levels = []
+var admin = false
 
 func _ready():
 	start()
 	
+func _process(delta):
+	if Input.is_action_just_pressed("admin"):
+		if not admin:
+			$Player.add_child(Admin.instance())
+			admin = true
+		else:
+			$Player/Admin.queue_free()
+			admin = false
+	
+
 func start(startpos = "S"):
 	var Player = get_node("Player")
 	if G.level < 0:
