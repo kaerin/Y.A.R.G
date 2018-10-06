@@ -80,15 +80,7 @@ func _ready():
 	inv.wearable.add_wearable(dic_wear[rnd_item])
 	$Timer.wait_time = randi() % 5 + 1
 
-func get_inventory():
-	var i = []
-	for j in inv.weapon.inventory:
-		i.append(j)
-	for j in inv.armour.inventory:
-		i.append(j)
-	for j in inv.wearable.inventory:
-		i.append(j)
-	return i
+
 
 func chg_name():
 	var pre = ["Rusty the", "Flaming", "Denim wearing", "Sparkling", "Normal", "Pathetic", "Crappy", "Super powered", "Moody"]

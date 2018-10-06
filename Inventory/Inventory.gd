@@ -49,7 +49,12 @@ func get_damage():
 		return(damage)
 
 func find_rnd_item():
-	print("Finding a random item")
+	var i = weapon.inventory + armour.inventory + wearable.inventory
+	var j = i[randi() % i.size()]
+	while j.BaseType == G.BaseType.BodyWeap:
+		j = i[randi() % i.size()]
+#	print(j.Name)
+	return j
 
 func get_ac():
 	var ac
