@@ -27,8 +27,8 @@ func gen_weap(item):
 	w.set_sprite_rect(item.img_rect)
 	w.BaseType = item.base_type
 	w = chk_drop(item, w)
-	var pre = ["Rusted", "Sharp", "Spikey", "Red", "Golden", "Crappy", "Normal", "Basic", "Serrated"]
-	var post = ["of spikes", "of bluntness", "that is on fire", "made of plastic"]
+	var pre = ["Rusted","Sharp","Spikey","Red","Golden","Green","Crappy","Normal","Basic","Serrated","Super","Grand","Legendary","Rare","Unique","Ornamental"]
+	var post = ["of spikes","of bluntness","that is on fire","made of plastic","covered in blood","cutting air","of distraction","with razors"]
 	w.set_name(pre[randi() % pre.size()] + " " + w.get_name() + " " + post[randi() % post.size()])
 	w.set_bonus_dmg(randi() % (G.Dlevel+1))
 	return w
@@ -42,8 +42,8 @@ func gen_armour(item):
 	a.set_ac(item.armor_class)
 	a.set_sprite_rect(item.img_rect)
 	a = chk_drop(item, a)
-	var pre = ["Rusted", "Shiny", "Glowing", "Sparkly", "Red", "Golden", "Crappy", "Normal", "Mood"]
-	var post = ["of brightness.", "of spikes", "of gas", "that glows", "of colors", "that tastes funny"]
+	var pre = ["Rusted","Shiny","Glowing","Sparkly","Red","Golden","Crappy","Normal","Dented","Scratched","Heavily dented","Typical","Superb"]
+	var post = ["of brightness","with shoulder pads","puffy vest","of armour","of colors","that tastes funny","that shimmers","- tank armour"]
 	a.set_name(pre[randi() % pre.size()] + " " + a.get_name() + " " + post[randi() % post.size()])
 	a.set_bonus_ac(randi() % (G.Dlevel+1))
 	return a
@@ -56,8 +56,8 @@ func gen_wear(item):
 	w.set_bonus_dmg(item.bonus_dmg)
 	w.set_sprite_rect(item.img_rect)
 	w = chk_drop(item, w)
-	var pre = ["Rusted", "Shiny", "Glowing", "Sparkly", "Red", "Golden", "Crappy", "Normal", "Mood"]
-	var post = ["of brightness.", "of spikes", "of gas", "that glows", "of colors", "that tastes funny"]
+	var pre = ["Rusted","Shiny","Glowing","Sparkly","Red","Golden","Crappy","Normal","Mood","Talking","Tiny","Oversized","Typcial"]
+	var post = ["of brightness","of sparks","of flames","that glows","in rainbow colors","that tastes funny","in blood","of joy"]
 	w.set_name(pre[randi() % pre.size()] + " " + w.get_name() + " " + post[randi() % post.size()])
 	w.set_bonus_ac(randi() % (G.Dlevel+1))
 	w.set_bonus_dmg(randi() % (G.Dlevel+1))
