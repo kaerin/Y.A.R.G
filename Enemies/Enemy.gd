@@ -115,18 +115,6 @@ func set_move():
 #	if not $Timer.is_stopped():
 #		$Timer.stop()
 	$Timer.wait_time = randi() % 5 + 1
-#	$Timer.start()
-	
-#	if not is_queued_for_deletion(): #necessary, otherwise grid is updated with new position before being deleted
-#	var temp = randi() % 4
-#	if temp == 0:
-#		direction.x = 1
-#	elif temp == 1:
-#		direction.x = -1
-#	elif temp == 2:
-#		direction.y = 1
-#	elif temp == 3:
-#		direction.y = -1
 	var i = 0
 	while not grid_map.is_cell_empty(get_position(), direction):
 		i += 1
@@ -149,17 +137,6 @@ func set_move():
 			direction.y = -1
 		if i > 10 or temp == 4:
 			break
-#	print("cant go")
-#		elif temp == 5:
-#			direction = UP + RIGHT
-#		elif temp == 6:
-#			direction = RIGHT
-#		elif temp == 7:
-#			direction = DOWN + RIGHT
-#		elif temp == 8:
-#			direction = DOWN
-#		elif temp == 9:
-#			direction = Vector2()
 
 func _process(delta):
 	if not is_moving and not direction == Vector2():

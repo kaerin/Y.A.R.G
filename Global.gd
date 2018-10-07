@@ -28,3 +28,5 @@ func is_within(i,j):
 		return true
 	else:
 		return false
+
+var debug = false

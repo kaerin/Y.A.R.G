@@ -4,7 +4,7 @@
 [ext_resource path="res://Inventory/Stats_Visu.gd" type="Script" id=2]
 [ext_resource path="res://Inventory/Item_Visu.gd" type="Script" id=3]
 
-[node name="Inventory" type="CanvasLayer" index="0"]
+[node name="Inventory" type="CanvasLayer"]
 
 layer = 1
 offset = Vector2( 0, 0 )

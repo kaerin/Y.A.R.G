@@ -66,7 +66,7 @@ func _process(delta):
 	if Input.is_action_just_pressed("sell_items"):
 		gold += Inventory.sell_items() #simple function to sell all unequipped gear
 	if Input.is_action_just_pressed("add_enemy"):
-		Game.Dialog.print_label("You have added an enemy")
+		Game.Dialog.print_label("You have added enemies")
 		grid_map.add_enemies()
 	if Input.is_action_just_pressed("next_level"):
 		grid_map.chg_level(get_position(),1)
@@ -109,6 +109,8 @@ func _process(delta):
 #	var target_pos = grid_map.update_child_pos(self)
 #	set_position(target_pos)
 
+
+
 	if not is_moving and not direction == Vector2():
 		target_direction = direction
 #		print(target_direction)
@@ -116,13 +118,7 @@ func _process(delta):
 			target_pos = grid_map.update_child_pos(self)
 			is_moving = true
 		elif grid_map.is_cell_enemy(get_position(), target_direction) and not is_fighting:
-			print("fight")
-			is_fighting = true
-			var enemy = grid_map.get_cell_node(get_position(), target_direction)
-			if enemy:
-				var roll = randi() % 20
-				enemy.take_dmg(roll, Inventory.get_damage()) #weapon needs to get equippped
-			$Timer.start()
+			attack()
 	elif is_moving:
 		speed = MAX_SPEED
 		velocity = speed * target_direction.normalized() * delta
@@ -140,31 +136,17 @@ func _process(delta):
 			velocity.y = distance_to_target.y * target_direction.y
 			is_moving = false
 			emit_signal("enemy_move")
-#	if direction:
-#
-#		velocity = speed * direction.normalized() * delta
-		if false:
-			if grid_map.is_target_grid_valid(self,direction):		
-				#check target cell contents in gridmap 
-				var obsticle = grid_map.has_target_grid_obsticle(self, direction)
-				#if empty move to player position
-				if obsticle == null: 
-					position = grid_map.set_new_grid_pos(self, direction)
-				#TODO else set contact/damage with object
-				else:
-					#TEMP basic attack for testing
-					var damage = Inventory.get_damage() #can call the method in inventory
-					damage = Inventory.weapon.get_damage() #can call the method from the weapon class in inventory
-					print (Inventory.weapon.equipped) #can get active weapon index from inventory
-					damage = Inventory.weapon.equipped.get_damage() #can directly call get damage from a specific weapon in the weapon inventory
-					#alter damage with environmental effects
-					#damage = damage + environment.get_damage()
-					obsticle.set_contact(Inventory.get_damage()) #Use inventory get_damage for now
-				#Only trigger turn if movement was valid	
-				grid_map.set_enemy_move()
+
+func attack():
+	var enemy = grid_map.get_cell_node(get_position(), target_direction)
+	if enemy:
+		is_fighting = true
+		var roll = randi() % 20
+		enemy.take_dmg(roll, Inventory.get_damage()) #weapon needs to get equippped
+		$Timer.start()
 
 func take_dmg(roll, dmg = 0):
-	stats.test_print_method() #4. Used as a trigger to call methods in wepaon from attrib
+#	stats.test_print_method() #4. Used as a trigger to call methods in wepaon from attrib
 	if roll > Inventory.get_ac():
 		hp -= dmg
 		print("roll:",roll, " target:",Inventory.get_ac(), "You took " + str(dmg) + " damage. HP:" + str(hp))

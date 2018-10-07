@@ -13,13 +13,14 @@ func _ready():
 	$Label.text = item.get_name()
 	self.texture = item.get_sprite_texture()
 	set_region_rect(item.get_sprite_rect())
-			
-	match item.BaseType:
-		G.BaseType.Weap:
-			print("Weapon drop")
-		G.BaseType.Armour:
-			print("Armour drop")
-		G.BaseType.Wear:
-			print("Wearable drop")
-		_:
-			print("Dropped something else")
+	
+	if G.debug:
+		match item.BaseType:
+			G.BaseType.Weap:
+				print("Weapon drop")
+			G.BaseType.Armour:
+				print("Armour drop")
+			G.BaseType.Wear:
+				print("Wearable drop")
+			_:
+				print("Dropped something else")
