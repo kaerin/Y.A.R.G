@@ -1,4 +1,4 @@
-extends "res://Items/Inv.gd"
+extends "res://Items/Base.gd"
 
 #Class to store all wepaon information
 var BaseType = G.BaseType.Weap

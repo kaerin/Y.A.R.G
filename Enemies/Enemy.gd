@@ -36,7 +36,7 @@ onready var dic_classes = get_node("/root/BaseNode/Dictionaries/Classes").classe
 onready var Weapon = load("res://Items/Weapon.gd")
 onready var Armour = load("res://Items/Armour.gd")
 onready var Wearable = load("res://Items/Wearable.gd")
-onready var Inventory = load("res://Inventory/Inventory.gd")
+onready var Inventory = load("res://Inv/Inv.gd")
 
 onready var Attrib = load("res://Player/Attributes.gd")
 onready var Stats = load("res://Player/Stats.gd")
@@ -78,13 +78,13 @@ func _ready():
 #	if temp == 1:
 	if enemy.base_name == G.En.Rat or enemy.base_name == G.En.Mole: #Rat short be a global constant not plain text
 		inv.weapon.add_weapon(dic_weapon[G.WEAP.TEETH]) #add teeth weapon
-		inv.weapon.inventory[0].set_equipped(true) #equip teeth
+		inv.weapon.inv[0].set_equipped(true) #equip teeth
 	elif enemy.base_name == G.En.Turtle:
 		inv.weapon.add_weapon(dic_weapon[G.WEAP.CLAW]) #add teeth weapon
-		inv.weapon.inventory[0].set_equipped(true) #equip teeth
+		inv.weapon.inv[0].set_equipped(true) #equip teeth
 	elif enemy.base_name == G.En.Bee:
 		inv.weapon.add_weapon(dic_weapon[G.WEAP.TAIL]) #add teeth weapon
-		inv.weapon.inventory[0].set_equipped(true)
+		inv.weapon.inv[0].set_equipped(true)
 	else: #or add a random weapon to the inventory
 		var rnd_item = randi() % (dic_weapon.size()) 
 		while not dic_weapon[rnd_item].base_type == G.BaseType.Weap: #dont't assign body weapons to inventory

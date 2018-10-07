@@ -1,7 +1,7 @@
 extends Reference
 
 var Weapons = load("res://Items/Weapons.gd")
-var inventory = []
+var inv = []
 
 func _init(i):
 	if i == G.CHAR.ENEMY:
@@ -10,12 +10,12 @@ func _init(i):
 	elif i == G.CHAR.PLAYER:
 		print("Weapon reference initialised, adding fist as first weapon ")
 		var w = Weapons.new()
-		inventory.push_front(w)
-		inventory[0].set_name(G.Weap.Fist)
-		inventory[0].set_dmg_type(G.WeapType.Blunt)
-		inventory[0].set_damage(91,92)
-		inventory[0].set_sprite_rect(Rect2(864,928,32,32))
-		inventory[0].set_equipped()
+		inv.push_front(w)
+		inv[0].set_name(G.Weap.Fist)
+		inv[0].set_dmg_type(G.WeapType.Blunt)
+		inv[0].set_damage(91,92)
+		inv[0].set_sprite_rect(Rect2(864,928,32,32))
+		inv[0].set_equipped()
 		#inventory[0].add_to_group("Weapon")
 
 func print_test():
@@ -25,36 +25,40 @@ func print_test():
 #Weapons class contain weapons in inventory
 #Repeat class for armor
 
-func collect_weapon(item):
-	inventory.push_front(item) #directly copy dropped item into inventory
-	#active += 1 #hack, dont do it this way
+func collect_weapon(item): #adding existing class weapons
+	inv.push_front(item) 
 
-func add_weapon(item, i = false):
+func add_weapon(item, i = false): #Adding base weapons from the dictionary
 	var w = Weapons.new()
-	inventory.push_front(w)
-	inventory[0].set_name(item.base_name)
-	inventory[0].set_dmg_type(item.damage_type)
-	inventory[0].set_damage(item.min_damage,item.max_damage)
-	inventory[0].set_sprite_rect(item.img_rect)
-	inventory[0].BaseType = item.base_type
+	inv.push_front(w)
+	inv[0].set_name(item.base_name)
+	inv[0].set_dmg_type(item.damage_type)
+	inv[0].set_damage(item.min_damage,item.max_damage)
+	inv[0].set_sprite_rect(item.img_rect)
+	inv[0].BaseType = item.base_type
+	if item.has("droppable"):
+		if item.droppable:
+			inv[0].set_droppable(true)
+		else:
+			inv[0].set_droppable(false)
 	#inventory[0].add_to_group("Weapon")
 	#active += 1 #hack, dont do it this way
 	if i:
 		alter_stats(0,10)
 		
 func get_active_name():
-	for n in inventory:
+	for n in inv:
 		if n.is_equipped:
 			return n.get_name()
 
 func get_name(i = -1):
 	if i < 0:
 		return get_active_name()
-	return inventory[i].get_name()
+	return inv[i].get_name()
 
 func get_type():
 	#return equipped.get_dmg_type()
-	for n in inventory:
+	for n in inv:
 		if n.is_equipped:
 			return n.get_dmg_type()
 			
@@ -62,19 +66,19 @@ func equip_weapon(equipped):
 	equipped
 
 func get_equipped():
-	for n in inventory:
+	for n in inv:
 		if n.is_equipped:
 			return n
 	
 func get_damage():
 	#return equipped.get_damage()
-	for n in inventory:
+	for n in inv:
 		if n.is_equipped:
 			return n.get_damage()
 	
 func get_bonus_damage():
 	#return equipped[0].get_bonus_damage()
-	for n in inventory:
+	for n in inv:
 		if n.is_equipped:
 			return n.get_bonus_damage()
 
@@ -82,8 +86,8 @@ func get_bonus_damage():
 func alter_stats(i,rng):
 	var pre = ["Rusted", "Sharp", "Spikey", "Red", "Golden", "Crappy", "Normal", "Basic", "Serrated"]
 	var post = ["of spikes", "of bluntness", "that is on fire", "made of plastic"]
-	inventory[0].set_name(pre[randi() % pre.size()] + " " + get_name(0) + " " + post[randi() % post.size()])
-	inventory[0].set_bonus_dmg(randi() % rng)
+	inv[0].set_name(pre[randi() % pre.size()] + " " + get_name(0) + " " + post[randi() % post.size()])
+	inv[0].set_bonus_dmg(randi() % rng)
 
 #every item class, instead of just weapons
 #perhaps a single item class could work for every item type

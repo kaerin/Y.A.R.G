@@ -6,7 +6,7 @@ onready var Weapon = load("res://Items/Weapon.gd")
 onready var Armour = load("res://Items/Armour.gd")
 onready var Wearable = load("res://Items/Wearable.gd")
 onready var Game = get_node("/root/BaseNode") #Get the Game node for diallog
-onready var Inv_Visu = load("res://Inventory/Inventory_Visu.tscn")
+onready var Inv_Visu = load("res://Inv/Inv_Visu.tscn")
 onready var parent = get_parent()
 
 
@@ -33,33 +33,35 @@ func _process(delta):
 			_inventory()
 
 func get_damage():
-		var damage = 0 #= randi() % (equipped[WEAPON].max_damage + 1 - equipped[WEAPON].min_damage) + equipped[WEAPON].min_damage
+	print("You are using the wrong get_damage function")
+	var damage = 0 #= randi() % (equipped[WEAPON].max_damage + 1 - equipped[WEAPON].min_damage) + equipped[WEAPON].min_damage
 #		print("AC:", armour.get_ac(), " Bonus:",wearable.get_bonus_ac())
 #		print("Bonus dmg:", wearable.get_bonus_dmg())
-		#can do this add all damage and bonuses together
-		#damage = weapon.get_damage() + ring.get_dmg_bonus() + amulet.get_dmg_bonus() 
-		
-		if parent.CHARTYPE == G.CHAR.PLAYER: #FIX THIS
-			damage = weapon.get_damage() + wearable.get_bonus_dmg() #get damage from equipped weapon class, the same as inventory.weapon.get_damage() called from the player class
-		else:
-			damage = weapon.get_damage() #FIX THIS
-		
+	#can do this add all damage and bonuses together
+	#damage = weapon.get_damage() + ring.get_dmg_bonus() + amulet.get_dmg_bonus() 
+	
+	if parent.CHARTYPE == G.CHAR.PLAYER: #FIX THIS
+		damage = weapon.get_damage() + wearable.get_bonus_dmg() #get damage from equipped weapon class, the same as inventory.weapon.get_damage() called from the player class
+	else:
+		damage = weapon.get_damage() #FIX THIS
+	
 #		print("Weapon damage: ", damage) #get the currently equppied weapons damage from the class
-		if parent.CHARTYPE == G.CHAR.PLAYER:
-			Game.Dialog.print_label("Your weapon: " + weapon.get_active_name() + " did " + str(damage) + " damage.", 2)
-		if not damage:
-			damage = 0
-		return(damage)
+	if parent.CHARTYPE == G.CHAR.PLAYER:
+		Game.Dialog.print_label("Your weapon: " + weapon.get_active_name() + " did " + str(damage) + " damage.", 2)
+	if not damage:
+		damage = 0
+	return(damage)
 
 func find_rnd_item():
-	var i = weapon.inventory + armour.inventory + wearable.inventory
+	var i = weapon.inv + armour.inv + wearable.inv
 	var j = i[randi() % i.size()]
-	while j.BaseType == G.BaseType.BodyWeap:
+	while not j.droppable:#j.BaseType == G.BaseType.BodyWeap:
 		j = i[randi() % i.size()]
 #	print(j.Name)
 	return j
 
 func get_ac():
+	print("You are using the wrong ac function, also should be a resistance function")
 	var ac = armour.get_ac() + wearable.get_bonus_ac()
 	return ac
 
@@ -68,7 +70,7 @@ func sell_items():
 		var gold = 0
 		var invErase = []
 		var a = []
-		for i in weapon.inventory + armour.inventory + wearable.inventory:
+		for i in weapon.inv + armour.inv + wearable.inv:
 			if not i.is_equipped:
 				print("You sold ", i.Name)
 				invErase.append(i)
@@ -76,11 +78,11 @@ func sell_items():
 			gold += 1
 			match i.BaseType:
 				G.BaseType.Weap:
-					weapon.inventory.erase(i)
+					weapon.inv.erase(i)
 				G.BaseType.Armour:
-					armour.inventory.erase(i)
+					armour.inv.erase(i)
 				G.BaseType.Wear:
-					wearable.inventory.erase(i)
+					wearable.inv.erase(i)
 		Game.Dialog.print_label("You sold stuff for " + str(gold) + " gold.")	
 		return gold
 				

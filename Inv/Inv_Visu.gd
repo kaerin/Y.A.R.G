@@ -22,7 +22,7 @@ var wearable
 func update_inventory():
 	purge_inventory_screen()
 	get_inventory()
-	for j in weapon.inventory:
+	for j in weapon.inv:
 		var entry = item_label.duplicate()
 		entry.item = j
 		if j.is_equipped:
@@ -30,7 +30,7 @@ func update_inventory():
 		else:
 			inv_panel.add_child(entry)
 
-	for j in armour.inventory:
+	for j in armour.inv:
 		var entry = item_label.duplicate()
 		entry.item = j
 		if j.is_equipped:
@@ -38,7 +38,7 @@ func update_inventory():
 		else:
 			inv_panel.add_child(entry)
 
-	for j in wearable.inventory:
+	for j in wearable.inv:
 		var entry = item_label.duplicate()
 		entry.item = j
 		if j.is_equipped:

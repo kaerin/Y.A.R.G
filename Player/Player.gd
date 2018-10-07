@@ -9,7 +9,7 @@ extends KinematicBody2D
 onready var grid_map = get_parent()
 onready var dic_weapon = get_node("/root/BaseNode/Dictionaries/Items").weapons
 onready var dic_classes = get_node("/root/BaseNode/Dictionaries/Classes").classes
-onready var Inventory = get_node("Inventory")
+onready var inv = get_node("Inv") #cause its labeled inv elswhere
 onready var Game = get_node("/root/BaseNode")
 onready var Attrib = load("res://Player/Attributes.gd")
 onready var Stats = load("res://Player/Stats.gd")
@@ -47,9 +47,9 @@ func _ready():
 	attributes = Attrib.new()
 	attributes.set_attributes(dic_classes[G.PlayerClass])
 	stats = Stats.new()
-	stats.set_weapon(Inventory.weapon) #1. get the weapon class from the inventory class and send it too the attrib class
-	stats.set_wearable(Inventory.wearable) #1. get the weapon class from the inventory class and send it too the attrib class
-	stats.set_armour(Inventory.armour) #1. get the weapon class from the inventory class and send it too the attrib class
+	stats.set_weapon(inv.weapon) #1. get the weapon class from the inventory class and send it too the attrib class
+	stats.set_wearable(inv.wearable) #1. get the weapon class from the inventory class and send it too the attrib class
+	stats.set_armour(inv.armour) #1. get the weapon class from the inventory class and send it too the attrib class
 	stats.set_attributes(attributes)
 #	grid_map.create_grid()
 #	grid_map.set_grid_pos(self, Map.start)
@@ -60,11 +60,11 @@ func _process(delta):
 	if Input.is_action_just_pressed("ui_p"):
 		var item = grid_map.get_item(self)
 		if item:
-			Inventory.add_item(item)
+			inv.add_item(item)
 	if Input.is_action_just_pressed("level"):
 		grid_map.chg_level(get_position()) #Make this better
 	if Input.is_action_just_pressed("sell_items"):
-		gold += Inventory.sell_items() #simple function to sell all unequipped gear
+		gold += inv.sell_items() #simple function to sell all unequipped gear
 	if Input.is_action_just_pressed("add_enemy"):
 		Game.Dialog.print_label("You have added enemies")
 		grid_map.add_enemies()
@@ -142,14 +142,14 @@ func attack():
 	if enemy:
 		is_fighting = true
 		var roll = randi() % 20
-		enemy.take_dmg(roll, Inventory.get_damage()) #weapon needs to get equippped
+		enemy.take_dmg(roll, inv.get_damage()) #weapon needs to get equippped
 		$Timer.start()
 
 func take_dmg(roll, dmg = 0):
 #	stats.test_print_method() #4. Used as a trigger to call methods in wepaon from attrib
-	if roll > Inventory.get_ac():
+	if roll > inv.get_ac():
 		hp -= dmg
-		print("roll:",roll, " target:",Inventory.get_ac(), "You took " + str(dmg) + " damage. HP:" + str(hp))
+		print("roll:",roll, " target:",inv.get_ac(), "You took " + str(dmg) + " damage. HP:" + str(hp))
 
 func _on_Timer_timeout():
 	is_fighting = false

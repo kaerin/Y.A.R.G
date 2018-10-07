@@ -7,6 +7,7 @@ var sprite_rect = G.TODO_img
 
 var Name
 var is_equipped
+var droppable = true
 
 #set data
 func set_sprite_rect(i):
@@ -15,8 +16,8 @@ func set_sprite_rect(i):
 func set_equipped(i = true):
 	is_equipped = i
 
-#func set_not_equipped(): #Use set_equipped(false)
-#	is_equipped = false
+func set_droppable(i = true): 
+	droppable = i
 
 func set_name(i):
 	Name = i
@@ -36,3 +37,6 @@ func get_sprite_texture():
 
 func get_sprite_rect():
 	return sprite_rect
+
+func get_droppable():
+	return droppable

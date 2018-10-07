@@ -41,12 +41,12 @@ func get_dmg_text():	#this would be extended to include spells effec etc
 	var min_dmg = 0
 	var max_dmg = 0
 	var bonus_dmg = 0
-	for n in weapon.inventory:
+	for n in weapon.inv:
 		if n.is_equipped:
 			min_dmg += (n.get_min_dmg())
 			max_dmg += (n.get_max_dmg())
 			bonus_dmg += (n.get_bonus_dmg())
-	for n in wearable.inventory:
+	for n in wearable.inv:
 		if n.is_equipped:
 			bonus_dmg += (n.get_bonus_dmg())
 
@@ -59,11 +59,11 @@ func get_dmg_text():	#this would be extended to include spells effec etc
 	
 func get_dmg_list(): #this would be extended to include spells effec etc
 	var list = []
-	for n in weapon.inventory:
+	for n in weapon.inv:
 		if n.is_equipped:
 			list.append(n)
 			
-	for n in wearable.inventory:
+	for n in wearable.inv:
 		if n.is_equipped:
 			if n.get_bonus_dmg():
 				list.append(n)
@@ -75,11 +75,11 @@ func get_ac_text():	#this would be extended to include spells effec etc
 	
 func get_ac_list(): #this would be extended to include spells effec etc
 	var list = []
-	for n in armour.inventory:
+	for n in armour.inv:
 		if n.is_equipped:
 			list.append(n)
 			
-	for n in wearable.inventory:
+	for n in wearable.inv:
 		if n.is_equipped:
 			if n.get_bonus_ac():
 				list.append(n)

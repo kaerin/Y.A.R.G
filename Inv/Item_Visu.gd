@@ -13,7 +13,7 @@ var is_dragging
 
 onready var equip_panel 		= get_parent().get_parent().get_node("Equip") #how to better define this
 onready var inv_panel 			= get_parent().get_parent().get_node("Inv") #how to better define this
-onready var inventory 			= get_parent().get_parent().get_parent().get_parent().get_parent() #Get the Game node for diallog
+onready var inv 			= get_parent().get_parent().get_parent().get_parent().get_parent() #Get the Game node for diallog
 onready var inventory_visu 		= get_parent().get_parent().get_parent().get_parent() #Get the Game node for diallog
 onready var item_label 			= get_node("Template/Item")
 onready var stats 				= get_parent().get_parent().get_node("Stats/Text")
@@ -51,18 +51,18 @@ func _process(delta):
 
 func unequip_equippped_item(item):
 	if item.BaseType == "Weapon":
-		for n in inventory.weapon.inventory:
+		for n in inv.weapon.inv:
 			if n.is_equipped:
 				n.set_equipped(false)
 				print(n.get_name(), " unequipped")
 	if item.BaseType == "Wearable":
-		for n in inventory.wearable.inventory:
+		for n in inv.wearable.inv:
 			if n.Type == item.Type:
 				if n.is_equipped:
 					n.set_equipped(false)
 					print(n.get_name(), " unequipped")
 	if item.BaseType == "Armour":
-		for n in inventory.armour.inventory:
+		for n in inv.armour.inv:
 			if n.Location == item.Location:
 				if n.is_equipped:
 					n.set_equipped(false)

@@ -9,7 +9,7 @@
 [ext_resource path="res://Map/Grid.gd" type="Script" id=7]
 [ext_resource path="res://Player/Player.gd" type="Script" id=8]
 [ext_resource path="res://Data/ProjectUtumno_full.png" type="Texture" id=9]
-[ext_resource path="res://Inventory/Inventory.gd" type="Script" id=10]
+[ext_resource path="res://Inv/Inv.gd" type="Script" id=10]
 [ext_resource path="res://Player/CharSheet.gd" type="Script" id=11]
 
 [node name="BaseNode" type="Node" index="0"]
@@ -97,7 +97,7 @@ region_enabled = true
 region_rect = Rect2( 992, 2432, 32, 32 )
 _sections_unfolded = [ "Offset", "Region", "Transform", "Z Index" ]
 
-[node name="Inventory" type="Node" parent="Grid/Player" index="1"]
+[node name="Inv" type="Node" parent="Grid/Player" index="1"]
 
 script = ExtResource( 10 )
 

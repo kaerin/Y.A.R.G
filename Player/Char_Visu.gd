@@ -5,7 +5,7 @@ extends CanvasLayer
 # var b = "textvar"
 
 onready var Char = get_parent().get_parent()
-onready var Inventory = get_parent().get_parent().get_node("Inventory")
+onready var Inventory = get_parent().get_parent().get_node("Inv")
 onready var Item = get_node("Template/Item")
 onready var Attributes = get_node("Cont/HBox/Attributes")
 onready var Stats = get_node("Cont/HBox/Stats")
