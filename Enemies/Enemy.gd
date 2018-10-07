@@ -32,16 +32,31 @@ onready var dic_weapon = get_parent().get_parent().get_node("Dictionaries/Items"
 onready var dic_chest = get_parent().get_parent().get_node("Dictionaries/Items").chest
 onready var dic_armour = get_parent().get_parent().get_node("Dictionaries/Items").armour
 onready var dic_wear = get_parent().get_parent().get_node("Dictionaries/Items").wear
+onready var dic_classes = get_node("/root/BaseNode/Dictionaries/Classes").classes
 onready var Weapon = load("res://Items/Weapon.gd")
 onready var Armour = load("res://Items/Armour.gd")
 onready var Wearable = load("res://Items/Wearable.gd")
 onready var Inventory = load("res://Inventory/Inventory.gd")
 
+onready var Attrib = load("res://Player/Attributes.gd")
+onready var Stats = load("res://Player/Stats.gd")
+var attributes
+var stats
+var gold = 0
 
 func _ready():
 	print(G.MAT.CLOTH)
+	attributes = Attrib.new()
+	attributes.set_attributes(dic_classes[4]) #FIX this static index
 	inv = Inventory.new()
 	add_child(inv)
+	stats = Stats.new()
+	stats.set_weapon(inv.weapon) #1. get the weapon class from the inventory class and send it too the attrib class
+	stats.set_wearable(inv.wearable) #1. get the weapon class from the inventory class and send it too the attrib class
+	stats.set_armour(inv.armour) #1. get the weapon class from the inventory class and send it too the attrib class
+	stats.set_attributes(attributes)
+	
+	
 	player.connect("enemy_move", self, "set_move")
 	type = grid_map.ENEMY
 #	weapon = Weapon.new(G.CHAR.ENEMY) #enemies can be given the same weapon class and weapon inventory
