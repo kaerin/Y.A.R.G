@@ -47,7 +47,7 @@ var gold = 0
 var genItems
 
 func _ready():
-	print(G.MAT.CLOTH)
+#	print(G.MAT.CLOTH)
 	genItems = GenItems.new()
 	attributes = Attrib.new()
 	attributes.set_attributes(dic_classes[4]) #FIX this static index
@@ -67,7 +67,7 @@ func _ready():
 #	wearable = Wearable.new(G.CHAR.ENEMY)
 	#TODO random instancing of enemies in dictionary
 	var enemy = dic_enemies[randi() % dic_enemies.size()] #simplify
-	enemy = dic_enemies[0] #new enemy testing
+#	enemy = dic_enemies[0] #new enemy testing
 	hp = randi() % (enemy.max_hp - enemy.min_hp) + enemy.min_hp
 	hp += G.Dlevel #increase hp by level
 	$Sprite/Label.text = enemy.base_name
@@ -86,7 +86,7 @@ func _ready():
 		inv.add_item(genItems.gen_weap(dic_weapon[G.WEAP.CLAW]),true) #add teeth weapon
 #		inv.weapon.inv[0].set_equipped(true) #equip teeth
 	elif enemy.base_name == G.En.Bee:
-		inv.add_item(genItems.gen_weap(dic_weapon[G.WEAP.TAIL]).true) #add teeth weapon
+		inv.add_item(genItems.gen_weap(dic_weapon[G.WEAP.TAIL]),true) #add teeth weapon
 #		inv.weapon.inv[0].set_equipped(true)
 	else: #or add a random weapon to the inventory
 		var rnd_item = randi() % (dic_weapon.size()) 

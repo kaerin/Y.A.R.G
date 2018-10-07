@@ -48,7 +48,7 @@ func update_inventory():
 
 func purge_inventory_screen():
 	var inv_list = inv_panel.get_children()
-	print(inv_list)
+#	print(inv_list)
 	for n in inv_list:
 		if n.is_in_group("Item"):
 			n.queue_free()

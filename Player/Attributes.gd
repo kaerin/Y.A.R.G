@@ -12,7 +12,7 @@ var charm = 0			#buy sell stuff
 var attrib = {}
 
 func set_attributes(Class):
-	print(Class)
+#	print(Class)
 	strength 		= Class.strength#dic_classes.classes[dic_classes.CLASS[G.PlayerClass]].strength
 	agility 		= Class.agility#dic_classes.classes[dic_classes.CLASS[G.PlayerClass]].agility
 	fortitude		= Class.fortitude#dic_classes.classes[dic_classes.CLASS[G.PlayerClass]].fortitude

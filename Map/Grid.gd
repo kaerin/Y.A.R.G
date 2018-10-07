@@ -189,8 +189,10 @@ func chg_level(pos, next = 0):
 
 
 func add_enemies(num = false):
+	if G.Dlevel == -1:
+		return
 	if not num:
-		num = grid_size.x*grid_size.y/enemy_factor
+		num = int(grid_size.x*grid_size.y/enemy_factor)
 	var positions = []
 	randomize()
 	for n in num:
