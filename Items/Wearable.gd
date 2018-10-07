@@ -37,6 +37,7 @@ func add_item(item):
 	inv.push_front(item)
 	
 func add2_wearable(item, i = false):
+	print("this should not execute")
 	var w = Wearables.new()
 	inv.push_front(w)
 	inv[0].set_name(item.base_name)
@@ -92,10 +93,5 @@ func get_bonus_dmg():
 #func get_ring_bonus_dmg():
 #	return inventory[active_ring].get_bonus_dmg() #fix mne
 
-func alter_stats(i,rng):
-	var pre = ["Rusted", "Shiny", "Glowing", "Sparkly", "Red", "Golden", "Crappy", "Normal", "Mood"]
-	var post = ["of brightness.", "of spikes", "of gas", "that glows", "of colors", "that tastes funny"]
-	inv[0].set_name(pre[randi() % pre.size()] + " " + get_name(0) + " " + post[randi() % post.size()])
-	inv[0].set_bonus_ac(randi() % rng)
-	inv[0].set_bonus_dmg(randi() % rng)
+
 	

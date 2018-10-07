@@ -85,11 +85,7 @@ func get_bonus_dmg():
 			return n.get_bonus_dmg()
 
 
-func alter_stats(i,rng):
-	var pre = ["Rusted", "Sharp", "Spikey", "Red", "Golden", "Crappy", "Normal", "Basic", "Serrated"]
-	var post = ["of spikes", "of bluntness", "that is on fire", "made of plastic"]
-	inv[0].set_name(pre[randi() % pre.size()] + " " + get_name(0) + " " + post[randi() % post.size()])
-	inv[0].set_bonus_dmg(randi() % rng)
+
 
 #every item class, instead of just weapons
 #perhaps a single item class could work for every item type

@@ -84,7 +84,7 @@ func _process(delta):
 	if Input.is_action_just_pressed("prev_level"):
 		grid_map.chg_level(get_position(),-1)
 	if Input.is_action_just_pressed("rest"):
-		hp +=1
+		hp +=25 #super healing
 		if hp > hp_max:
 			hp = hp_max
 		print("Resting hp:",hp)

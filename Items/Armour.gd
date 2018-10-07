@@ -39,6 +39,7 @@ func add_item(item):
 #	active[G.LOC.CHEST] += 1 #hack, dumb way of doing it, dont repeat, use an index
 #	active[G.LOC.HEAD] += 1 #hack, dumb way of doing it, dont repeat, use an index
 func add2_armour(item, i = false):
+	print("this should not execute")
 	var a = Armours.new()
 	inv.push_front(a)
 	inv[0].set_name(item.base_name)
@@ -91,8 +92,3 @@ func get_bonus_ac(loc):
 	return ac
 
 
-func alter_stats(i,rng):
-	var pre = ["Rusted", "Shiny", "Glowing", "Sparkly", "Red", "Golden", "Crappy", "Normal", "Mood"]
-	var post = ["of brightness.", "of spikes", "of gas", "that glows", "of colors", "that tastes funny"]
-	inv[0].set_name(pre[randi() % pre.size()] + " " + get_name(0) + " " + post[randi() % post.size()])
-	inv[0].set_bonus_ac(randi() % rng)
