@@ -142,14 +142,14 @@ func attack():
 	if enemy:
 		is_fighting = true
 		var roll = randi() % 20
-		enemy.take_dmg(roll, inv.get_damage()) #weapon needs to get equippped
+		enemy.take_dmg(roll, stats.get_dmg()) #weapon needs to get equippped
 		$Timer.start()
 
 func take_dmg(roll, dmg = 0):
 #	stats.test_print_method() #4. Used as a trigger to call methods in wepaon from attrib
-	if roll > inv.get_ac():
+	if roll > stats.get_res():
 		hp -= dmg
-		print("roll:",roll, " target:",inv.get_ac(), "You took " + str(dmg) + " damage. HP:" + str(hp))
+		print("roll:",roll, " target:",stats.get_res(), "You took " + str(dmg) + " damage. HP:" + str(hp))
 
 func _on_Timer_timeout():
 	is_fighting = false

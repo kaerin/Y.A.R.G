@@ -31,11 +31,15 @@ func get_dmg():
 	#not now, but maybe damage should have a type associated to it. eg slashing, blunt etc.
 	#eg. turtle has slash damage resistance, but low Blunt damage resistance. 
 	
-	var dmg = weapon.get_damage()			#could be done with inventory instead of seperated like this.
-	dmg += wearable.get_bonus_damage()
+	var dmg = weapon.get_dmg()			#could be done with inventory instead of seperated like this.
+	dmg += wearable.get_bonus_dmg()
 	#dmg += effect.get_damage()		#doesnt exist yet
 	#dmg += skill.get_damage()		#doesnt exist yet
 	return(dmg)
+	
+func get_res():
+	var res = armour.get_ac() + wearable.get_bonus_ac()
+	return res
 	
 func get_dmg_text():	#this would be extended to include spells effec etc
 	var min_dmg = 0

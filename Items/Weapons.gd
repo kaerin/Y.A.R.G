@@ -12,7 +12,7 @@ var BonusDamage = 0
 func set_dmg_type(i):
 	DmgType = i
 
-func set_damage(i,j):
+func set_dmg(i,j):
 	MinDamage = i
 	MaxDamage = j
 
@@ -23,10 +23,10 @@ func set_bonus_dmg(i):
 func get_dmg_type():
 	return DmgType	
 	
-func get_damage(): #weapon total damage
-	return get_weapon_damage() + BonusDamage
+func get_dmg(): #weapon total damage
+	return get_weapon_dmg() + BonusDamage
 
-func get_weapon_damage(): #weapon damage
+func get_weapon_dmg(): #weapon damage
 	return randi() % (MaxDamage - MinDamage) + MinDamage
 	
 func get_bonus_dmg(): #weapon total damage

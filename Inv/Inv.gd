@@ -60,10 +60,7 @@ func find_rnd_item():
 #	print(j.Name)
 	return j
 
-func get_ac():
-	print("You are using the wrong ac function, also should be a resistance function")
-	var ac = armour.get_ac() + wearable.get_bonus_ac()
-	return ac
+
 
 func sell_items():
 	if G.level < 0:

@@ -13,7 +13,7 @@ func _init(i):
 		inv.push_front(w)
 		inv[0].set_name(G.Weap.Fist)
 		inv[0].set_dmg_type(G.WeapType.Blunt)
-		inv[0].set_damage(91,92)
+		inv[0].set_dmg(91,92)
 		inv[0].set_sprite_rect(Rect2(864,928,32,32))
 		inv[0].set_equipped()
 		#inventory[0].add_to_group("Weapon")
@@ -33,7 +33,7 @@ func add_weapon(item, i = false): #Adding base weapons from the dictionary
 	inv.push_front(w)
 	inv[0].set_name(item.base_name)
 	inv[0].set_dmg_type(item.damage_type)
-	inv[0].set_damage(item.min_damage,item.max_damage)
+	inv[0].set_dmg(item.min_damage,item.max_damage)
 	inv[0].set_sprite_rect(item.img_rect)
 	inv[0].BaseType = item.base_type
 	if item.has("droppable"):
@@ -70,17 +70,17 @@ func get_equipped():
 		if n.is_equipped:
 			return n
 	
-func get_damage():
+func get_dmg():
 	#return equipped.get_damage()
 	for n in inv:
 		if n.is_equipped:
-			return n.get_damage()
+			return n.get_dmg()
 	
-func get_bonus_damage():
+func get_bonus_dmg():
 	#return equipped[0].get_bonus_damage()
 	for n in inv:
 		if n.is_equipped:
-			return n.get_bonus_damage()
+			return n.get_bonus_dmg()
 
 
 func alter_stats(i,rng):
