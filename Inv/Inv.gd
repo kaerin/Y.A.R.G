@@ -21,11 +21,19 @@ var wearable
 
 func _ready():
 	
-	weapon = Weapon.new(parent.CHARTYPE) #enemies can be given the same weapon class and weapon inventory
+	weapon = Weapon.new() #enemies can be given the same weapon class and weapon inventory
 	armour = Armour.new(parent.CHARTYPE)
 	wearable = Wearable.new(parent.CHARTYPE)
 	#could also have npc and companions to also have the same weapon class and inventory	
 	#have helper functions like auto-equip highest dmg weapon to use for player or others
+
+#func add_item(item):
+#	if BaseType == G.BaseType.Weap:
+#		weapon.add_item(item)
+#	if BaseType == G.BaseType.Armour:
+#		armour.add_item(item)
+#	if BaseType == G.BaseType.Wear:
+#		wearable.add_item(item)
 
 func _process(delta):
 	if parent.CHARTYPE == G.CHAR.PLAYER:
@@ -63,7 +71,7 @@ func find_rnd_item():
 
 
 func sell_items():
-	if G.level < 0:
+	if G.Dlevel < 0:
 		var gold = 0
 		var invErase = []
 		var a = []
@@ -89,20 +97,21 @@ func sell_items():
 
 		
 
-func add_item(item):
+func add_item(item, equip = false):
+	item.set_equipped(equip)
 	match item.BaseType:
-		G.BaseType.Weap:
-			weapon.collect_weapon(item) #collect new inventory weapon
-			weapon.alter_stats(0,10 + G.level) #alter stats of normal weapon dropped by enemy
-			Game.Dialog.print_label("You just collected a weapon name: " + item.get_name() + " type: " + item.get_dmg_type())
+		G.BaseType.Weap, G.BaseType.BodyWeap:
+			weapon.add_item(item) #collect new inventory weapon
+#			weapon.alter_stats(0,10 + G.level) #alter stats of normal weapon dropped by enemy
+#			Game.Dialog.print_label("You just collected a weapon name: " + item.get_name() + " type: " + item.get_dmg_type())
 		G.BaseType.Armour:
-			armour.collect_armour(item) #collect new inventory weapon
-			armour.alter_stats(0,10 + G.level) #alter stats of normal weapon dropped by enemy
-			Game.Dialog.print_label("You just collected some: " + item.get_name() + " for your " + item.get_loc_name())
+			armour.add_item(item) #collect new inventory weapon
+#			armour.alter_stats(0,10 + G.level) #alter stats of normal weapon dropped by enemy
+#			Game.Dialog.print_label("You just collected some: " + item.get_name() + " for your " + item.get_loc_name())
 		G.BaseType.Wear:
-			wearable.collect_wearable(item) #collect new inventory weapon
-			wearable.alter_stats(0,10 + G.level) #alter stats of normal weapon dropped by enemy
-			Game.Dialog.print_label("You just collected a " + item.get_name())
+			wearable.add_item(item) #collect new inventory weapon
+#			wearable.alter_stats(0,10 + G.level) #alter stats of normal weapon dropped by enemy
+#			Game.Dialog.print_label("You just collected a " + item.get_name())
 
 func _inventory():
 	if inv_displayed: 

@@ -5,39 +5,40 @@ var active = [0,1,0,0]
 var inv = []
 
 func _init(i):
-	if i == G.CHAR.ENEMY:
-		pass
-#		print("New enemy armour class")
-	elif i == G.CHAR.PLAYER:
-#		print("Armour reference initialised, adding t-shirt")
-		var a = Armours.new()
-		inv.append(a)
-		a = Armours.new()
-		inv.append(a)
-		inv[0].set_name("T-Shirt")
-		inv[0].set_mat(G.Mat.Cloth)
-		inv[0].set_location(G.LOC.CHEST)
-		inv[0].set_loc_name(G.Loc.Chest)
-		inv[0].set_sprite_rect(Rect2(1824,1120,32,32))
-		inv[0].set_equipped()
-		inv[0].set_ac(1)
-		inv[1].set_name("Hat")
-		inv[1].set_mat(G.Mat.Cloth)
-		inv[1].set_location(G.LOC.HEAD)
-		inv[1].set_loc_name(G.Loc.Head)
-		inv[1].set_sprite_rect(Rect2(1440,1152,32,32))
-		inv[1].set_ac(1)
-		inv[1].set_equipped()
+	pass
+#	if i == G.CHAR.ENEMY:
+#		pass
+##		print("New enemy armour class")
+#	elif i == G.CHAR.PLAYER:
+##		print("Armour reference initialised, adding t-shirt")
+#		var a = Armours.new()
+#		inv.append(a)
+#		a = Armours.new()
+#		inv.append(a)
+#		inv[0].set_name("T-Shirt")
+#		inv[0].set_mat(G.Mat.Cloth)
+#		inv[0].set_location(G.LOC.CHEST)
+#		inv[0].set_loc_name(G.Loc.Chest)
+#		inv[0].set_sprite_rect(Rect2(1824,1120,32,32))
+#		inv[0].set_equipped()
+#		inv[0].set_ac(1)
+#		inv[1].set_name("Hat")
+#		inv[1].set_mat(G.Mat.Cloth)
+#		inv[1].set_location(G.LOC.HEAD)
+#		inv[1].set_loc_name(G.Loc.Head)
+#		inv[1].set_sprite_rect(Rect2(1440,1152,32,32))
+#		inv[1].set_ac(1)
+#		inv[1].set_equipped()
 		#inventory[1].add_to_group("Armour")
 		
 func print():
 	print("Executed debug print function from armour class")
 
-func collect_armour(item):
+func add_item(item):
 	inv.push_front(item)
-	active[G.LOC.CHEST] += 1 #hack, dumb way of doing it, dont repeat, use an index
-	active[G.LOC.HEAD] += 1 #hack, dumb way of doing it, dont repeat, use an index
-func add_armour(item, i = false):
+#	active[G.LOC.CHEST] += 1 #hack, dumb way of doing it, dont repeat, use an index
+#	active[G.LOC.HEAD] += 1 #hack, dumb way of doing it, dont repeat, use an index
+func add2_armour(item, i = false):
 	var a = Armours.new()
 	inv.push_front(a)
 	inv[0].set_name(item.base_name)

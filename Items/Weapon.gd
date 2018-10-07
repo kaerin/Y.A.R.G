@@ -3,20 +3,21 @@ extends Reference
 var Weapons = load("res://Items/Weapons.gd")
 var inv = []
 
-func _init(i):
-	if i == G.CHAR.ENEMY:
-		print("New enemy weapon class")
-		pass
-	elif i == G.CHAR.PLAYER:
-		print("Weapon reference initialised, adding fist as first weapon ")
-		var w = Weapons.new()
-		inv.push_front(w)
-		inv[0].set_name(G.Weap.Fist)
-		inv[0].set_dmg_type(G.WeapType.Blunt)
-		inv[0].set_dmg(91,92)
-		inv[0].set_sprite_rect(Rect2(864,928,32,32))
-		inv[0].set_equipped()
-		#inventory[0].add_to_group("Weapon")
+func _init():
+	pass
+#	if i == G.CHAR.ENEMY:
+#		print("New enemy weapon class")
+#		pass
+#	elif i == G.CHAR.PLAYER:
+#		print("Weapon reference initialised, adding fist as first weapon ")
+#		var w = Weapons.new()
+#		inv.push_front(w)
+#		inv[0].set_name(G.Weap.Fist)
+#		inv[0].set_dmg_type(G.WeapType.Blunt)
+#		inv[0].set_dmg(91,92)
+#		inv[0].set_sprite_rect(Rect2(864,928,32,32))
+#		inv[0].set_equipped()
+		
 
 func print_test():
 	print("Executed debug print function from weapon class")
@@ -25,10 +26,11 @@ func print_test():
 #Weapons class contain weapons in inventory
 #Repeat class for armor
 
-func collect_weapon(item): #adding existing class weapons
+func add_item(item): #adding existing class weapons
 	inv.push_front(item) 
 
-func add_weapon(item, i = false): #Adding base weapons from the dictionary
+func add2_weapon(item, i = false): #Adding base weapons from the dictionary
+	print("this should not execute")
 	var w = Weapons.new()
 	inv.push_front(w)
 	inv[0].set_name(item.base_name)

@@ -37,15 +37,18 @@ onready var Weapon = load("res://Items/Weapon.gd")
 onready var Armour = load("res://Items/Armour.gd")
 onready var Wearable = load("res://Items/Wearable.gd")
 onready var Inventory = load("res://Inv/Inv.gd")
+onready var GenItems = load("res://Items/GenItems.gd")
 
 onready var Attrib = load("res://Player/Attributes.gd")
 onready var Stats = load("res://Player/Stats.gd")
 var attributes
 var stats
 var gold = 0
+var genItems
 
 func _ready():
 	print(G.MAT.CLOTH)
+	genItems = GenItems.new()
 	attributes = Attrib.new()
 	attributes.set_attributes(dic_classes[4]) #FIX this static index
 	inv = Inventory.new()
@@ -64,9 +67,9 @@ func _ready():
 #	wearable = Wearable.new(G.CHAR.ENEMY)
 	#TODO random instancing of enemies in dictionary
 	var enemy = dic_enemies[randi() % dic_enemies.size()] #simplify
-#	enemy = dic_enemies[0] #rat testing
+	enemy = dic_enemies[0] #new enemy testing
 	hp = randi() % (enemy.max_hp - enemy.min_hp) + enemy.min_hp
-	hp += G.level #increase hp by level
+	hp += G.Dlevel #increase hp by level
 	$Sprite/Label.text = enemy.base_name
 	$Sprite.set_region_rect(enemy.img_rect)
 	Name = enemy.base_name
@@ -77,30 +80,34 @@ func _ready():
 #	temp = 3 #testing
 #	if temp == 1:
 	if enemy.base_name == G.En.Rat or enemy.base_name == G.En.Mole: #Rat short be a global constant not plain text
-		inv.weapon.add_weapon(dic_weapon[G.WEAP.TEETH]) #add teeth weapon
-		inv.weapon.inv[0].set_equipped(true) #equip teeth
+		inv.add_item(genItems.gen_weap(dic_weapon[G.WEAP.TEETH]),true)
+#		inv.weapon.inv[0].set_equipped(true) #equip teeth
 	elif enemy.base_name == G.En.Turtle:
-		inv.weapon.add_weapon(dic_weapon[G.WEAP.CLAW]) #add teeth weapon
-		inv.weapon.inv[0].set_equipped(true) #equip teeth
+		inv.add_item(genItems.gen_weap(dic_weapon[G.WEAP.CLAW]),true) #add teeth weapon
+#		inv.weapon.inv[0].set_equipped(true) #equip teeth
 	elif enemy.base_name == G.En.Bee:
-		inv.weapon.add_weapon(dic_weapon[G.WEAP.TAIL]) #add teeth weapon
-		inv.weapon.inv[0].set_equipped(true)
+		inv.add_item(genItems.gen_weap(dic_weapon[G.WEAP.TAIL]).true) #add teeth weapon
+#		inv.weapon.inv[0].set_equipped(true)
 	else: #or add a random weapon to the inventory
 		var rnd_item = randi() % (dic_weapon.size()) 
 		while not dic_weapon[rnd_item].base_type == G.BaseType.Weap: #dont't assign body weapons to inventory
 			rnd_item = randi() % (dic_weapon.size())
 	#		inventory.append(dic_weapon[rnd_item])
-		inv.weapon.add_weapon(dic_weapon[rnd_item]) #equip enemy with random base weapon
+		inv.add_item(genItems.gen_weap(dic_weapon[rnd_item]),true) #equip enemy with random base weapon
+#		inv.weapon.inv[0].set_equipped(true)
 	#	elif temp == 2:
 	var rnd_item = randi() % dic_armour[0].size() #change pick random location then random armour
 	var i = randi() % 2
 #		inventory.append(dic_armour[i][rnd_item]) #0 should be random
-	inv.armour.add_armour(dic_armour[i][rnd_item])
+	var equip = false
+	if enemy.base_name == G.En.Gnome:
+		equip = true
+	inv.add_item(genItems.gen_armour(dic_armour[i][rnd_item]),equip)
 #	elif temp == 3:
 	rnd_item = randi() % dic_wear.size() 
 #		inventory.append(dic_wear[rnd_item])
-	inv.wearable.add_wearable(dic_wear[rnd_item])
-	$Timer.wait_time = randi() % 5 + 1
+	inv.add_item(genItems.gen_wear(dic_wear[rnd_item]),equip)
+	$Timer.wait_time = randi() % 10 + 1
 
 
 
@@ -122,9 +129,9 @@ func take_dmg(roll, dmg):
 		
 #after player moves all enemies are triggered to move from Grid_Map		
 func attack():
-	var roll = randi() % 20 + G.level
+	var roll = randi() % 20 + G.Dlevel
 	print("Attacks with ", inv.weapon.get_name(), " rolls:", roll)
-	player.take_dmg(roll, stats.get_dmg()+G.level)
+	player.take_dmg(roll, stats.get_dmg()+G.Dlevel)
 	
 func set_move():
 #	if not $Timer.is_stopped():

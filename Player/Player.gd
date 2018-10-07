@@ -7,12 +7,13 @@ extends KinematicBody2D
 
 
 onready var grid_map = get_parent()
-onready var dic_weapon = get_node("/root/BaseNode/Dictionaries/Items").weapons
+onready var DicItems = get_node("/root/BaseNode/Dictionaries/Items")
 onready var dic_classes = get_node("/root/BaseNode/Dictionaries/Classes").classes
 onready var inv = get_node("Inv") #cause its labeled inv elswhere
 onready var Game = get_node("/root/BaseNode")
 onready var Attrib = load("res://Player/Attributes.gd")
 onready var Stats = load("res://Player/Stats.gd")
+onready var GenItems = load("res://Items/GenItems.gd")
 #onready var weapons = load("res://Items/Weapon.gd") #load class
 #onready var Map = get_node("../../Map")
 
@@ -28,9 +29,10 @@ var is_fighting = false
 var target_pos = Vector2()
 var target_direction = Vector2()
 var facing = false
-var hp = 100
-var hp_max = 100
-var gold = 0
+var hp = 100 #should belong in stats
+var hp_max = 100 #should belong in stats
+var gold = 0 #should belong in stats
+var level = 1 #should belong in stats
 
 var attributes
 var stats
@@ -41,6 +43,15 @@ var Dialog
 #var weap #weapon class
 
 func _ready():
+	var genItems = GenItems.new()
+	
+	inv.add_item(genItems.gen_weap(DicItems.weapons[G.WEAP.FIST]))
+	inv.weapon.inv[0].set_equipped(true)
+	inv.add_item(genItems.gen_armour(DicItems.armour[G.LOC.CHEST][G.MAT.CLOTH]))
+	inv.armour.inv[0].set_equipped(true)
+	inv.add_item(genItems.gen_wear(DicItems.wear[G.WEAR.NECKLACE]))
+	inv.wearable.inv[0].set_equipped(true)
+	
 	type = grid_map.PLAYER
 	if G.PlayerColor:
 		modulate = G.PlayerColor

@@ -6,24 +6,26 @@ var Wearables = load("res://Items/Wearables.gd")
 var inv = []
 
 func _init(i):
-	if i == G.CHAR.ENEMY:
-		pass
-	elif i == G.CHAR.PLAYER:
-#		print("Wearable reference initialised, adding large plastic clock amulet")
-		var w = Wearables.new()
-		inv.append(w)
-		inv[0].set_name("Clock Amulet of the 80s")
-		inv[0].set_type(G.WearType.Amulet)
-		inv[0].set_bonus_ac(-1)
-		inv[0].set_bonus_dmg(1)
-		inv[0].set_equipped()
-		#inventory[0].add_to_group("Wearable")
-		w = Wearables.new()
-		inv.append(w)
-		inv[1].set_name("Toy ring")
-		inv[1].set_type(G.WearType.Ring)
-		inv[1].set_equipped()
+	pass
+#	if i == G.CHAR.ENEMY:
+#		pass
+#	elif i == G.CHAR.PLAYER:
+##		print("Wearable reference initialised, adding large plastic clock amulet")
+#		var w = Wearables.new()
+#		inv.append(w)
+#		inv[0].set_name("Clock Amulet of the 80s")
+#		inv[0].set_type(G.WearType.Amulet)
+#		inv[0].set_bonus_ac(-1)
+#		inv[0].set_bonus_dmg(1)
+#		inv[0].set_equipped()
+#		#inventory[0].add_to_group("Wearable")
+#		w = Wearables.new()
+#		inv.append(w)
+#		inv[1].set_name("Toy ring")
+#		inv[1].set_type(G.WearType.Ring)
+#		inv[1].set_equipped()
 		#inventory[1].add_to_group("Wearable")	
+		
 func print():
 	print("Executed debug print function from wearable class")
 
@@ -31,10 +33,10 @@ func print():
 #Weapons class contain weapons in inventory
 #Repeat class for armor
 
-func collect_wearable(item):
+func add_item(item):
 	inv.push_front(item)
 	
-func add_wearable(item, i = false):
+func add2_wearable(item, i = false):
 	var w = Wearables.new()
 	inv.push_front(w)
 	inv[0].set_name(item.base_name)

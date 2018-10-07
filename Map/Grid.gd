@@ -39,7 +39,7 @@ func _process(delta):
 
 func start(startpos = "S"):
 	var Player = get_node("Player")
-	if G.level < 0:
+	if G.Dlevel < 0:
 		print("You are on the surface")
 		Player.set_position(map_to_world(Vector2(50,50)) + half_tile_size)
 		grid_size = Vector2(100,100)
@@ -53,15 +53,15 @@ func start(startpos = "S"):
 		end = Vector2(50,50)
 		return
 	var map = Map.new()
-	if map_levels.size() <= G.level:
-#		print("generating new map and saving to index:",G.level)
-		mapgrid = map.map(Vector2(G.level+6,G.level+6))
+	if map_levels.size() <= G.Dlevel:
+#		print("generating new map and saving to index:",G.Dlevel)
+		mapgrid = map.map(Vector2(G.Dlevel+6,G.Dlevel+6))
 		map_levels.append(mapgrid)
 	else:
-#		print("Using exising map for level:",G.level)
-		mapgrid = map_levels[G.level]
+#		print("Using exising map for level:",G.Dlevel)
+		mapgrid = map_levels[G.Dlevel]
 		found_hidden = true
-	grid_size = Vector2(G.level+6,G.level+6)
+	grid_size = Vector2(G.Dlevel+6,G.Dlevel+6)
 	create_grid()
 #	print(mapgrid.size())
 	for x in mapgrid.size():
@@ -171,12 +171,12 @@ func chg_level(pos, next = 0):
 	var genmap = true
 	if (pos == end and found_hidden and not next < 0) or next > 0:
 		found_hidden = false
-		G.level += 1
+		G.Dlevel += 1
 		chg = true
 		spos = "S"
-	elif (pos == start or next < 0 ) and G.level > -1:
+	elif (pos == start or next < 0 ) and G.Dlevel > -1:
 		found_hidden = true
-		G.level -= 1
+		G.Dlevel -= 1
 		chg = true
 		spos = "E"
 	if chg:
