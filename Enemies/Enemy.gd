@@ -67,7 +67,7 @@ func _ready():
 #	wearable = Wearable.new(G.CHAR.ENEMY)
 	#TODO random instancing of enemies in dictionary
 	var enemy = dic_enemies[randi() % dic_enemies.size()] #simplify
-#	enemy = dic_enemies[0] #new enemy testing
+	enemy = dic_enemies[0] #new enemy testing
 	hp = randi() % (enemy.max_hp - enemy.min_hp) + enemy.min_hp
 	hp += G.Dlevel #increase hp by level
 	$Sprite/Label.text = enemy.base_name

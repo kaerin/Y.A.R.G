@@ -47,11 +47,12 @@ func get_damage():
 #		print("Bonus dmg:", wearable.get_bonus_dmg())
 	#can do this add all damage and bonuses together
 	#damage = weapon.get_damage() + ring.get_dmg_bonus() + amulet.get_dmg_bonus() 
-	
+	var dmg = weapon.get_damage()
+	for i in dmg:
+		damage += i[1]
 	if parent.CHARTYPE == G.CHAR.PLAYER: #FIX THIS
-		damage = weapon.get_damage() + wearable.get_bonus_dmg() #get damage from equipped weapon class, the same as inventory.weapon.get_damage() called from the player class
-	else:
-		damage = weapon.get_damage() #FIX THIS
+		damage += wearable.get_bonus_dmg() #get damage from equipped weapon class, the same as inventory.weapon.get_damage() called from the player class
+		#FIX the above line, enemeies have bonuses too, I think the problem wss when nothing is assigned
 	
 #		print("Weapon damage: ", damage) #get the currently equppied weapons damage from the class
 	if parent.CHARTYPE == G.CHAR.PLAYER:
@@ -71,7 +72,7 @@ func find_rnd_item():
 
 
 func sell_items():
-	if G.Dlevel < 0:
+	if G.Dlevel > -9: #always sell to that random guy
 		var gold = 0
 		var invErase = []
 		var a = []

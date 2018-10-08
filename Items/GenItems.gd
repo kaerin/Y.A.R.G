@@ -22,15 +22,20 @@ func gen_weap(item):
 #	var item  = DicItems.weapons[i]
 	var w = Weapons.new()
 	w.set_name(item.base_name)
-	w.set_dmg_type(item.damage_type)
-	w.set_dmg(item.min_damage,item.max_damage)
 	w.set_sprite_rect(item.img_rect)
 	w.BaseType = item.base_type
+	
+	for j in item.damage:
+		w.add_dmg(j)
+	
 	w = chk_drop(item, w)
-	var pre = ["Rusted","Sharp","Spikey","Red","Golden","Green","Crappy","Normal","Basic","Serrated","Super","Grand","Legendary","Rare","Unique","Ornamental"]
-	var post = ["of spikes","of bluntness","that is on fire","made of plastic","covered in blood","cutting air","of distraction","with razors"]
-	w.set_name(pre[randi() % pre.size()] + " " + w.get_name() + " " + post[randi() % post.size()])
-	w.set_bonus_dmg(randi() % (G.Dlevel+1))
+	if item.has("post_name") or item.has("pre_name"):
+		w.set_name(item.pre_name + " " +  item.base_name + " " + item.post_name)
+	else:
+		var pre = ["Rusted","Sharp","Spikey","Red","Golden","Green","Crappy","Normal","Basic","Serrated","Super","Grand","Legendary","Rare","Unique","Ornamental"]
+		var post = ["of spikes","of bluntness","that is on fire","made of plastic","covered in blood","cutting air","of distraction","with razors"]
+		w.set_name(pre[randi() % pre.size()] + " " + w.get_name() + " " + post[randi() % post.size()])
+		w.set_bonus_dmg(randi() % (G.Dlevel+1))
 	return w
 	
 func gen_armour(item):

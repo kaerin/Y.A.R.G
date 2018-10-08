@@ -13,16 +13,19 @@ func _ready():
 # ---------- WEAPONS ------------ #
 # ------------------------------- #
 
-	weapons[G.WEAP.SWORD] 	= {base_type = G.BaseType.Weap, base_name = G.Weap.Sword, min_damage = 6, max_damage = 12 , damage_type = G.WeapType.Slash, weight = 10, img_rect = Rect2(960,1472,32,32)}
-	weapons[G.WEAP.DAGGER] 	= {base_type = G.BaseType.Weap, base_name = G.Weap.Dagger, min_damage = 1, max_damage = 4, damage_type = G.WeapType.Stab, weight = 4, img_rect = Rect2(864,1472,32,32)}
-	weapons[G.WEAP.CLUB] 	= {base_type = G.BaseType.Weap, base_name = G.Weap.Club, min_damage = 2, max_damage = 6, damage_type = G.WeapType.Blunt, weight = 6, img_rect = Rect2(1760,1408,32,32)}
-	weapons[G.WEAP.SPEAR] 	= {base_type = G.BaseType.Weap, base_name = G.Weap.Spear, min_damage = 1, max_damage = 10, damage_type = G.WeapType.Stab, weight = 5, img_rect = Rect2(864,1504,32,32)}
+	weapons[G.WEAP.SWORD] 	= {base_type = G.BaseType.Weap, base_name = G.Weap.Sword, damage = [[G.DmgType.Slash,6,12]], weight = 10, img_rect = Rect2(960,1472,32,32)}
+	weapons[G.WEAP.DAGGER] 	= {base_type = G.BaseType.Weap, base_name = G.Weap.Dagger, damage = [[G.DmgType.Stab,1,4]], weight = 4, img_rect = Rect2(864,1472,32,32)}
+	weapons[G.WEAP.CLUB] 	= {base_type = G.BaseType.Weap, base_name = G.Weap.Club, damage = [[G.DmgType.Blunt,2,6]], weight = 6, img_rect = Rect2(1760,1408,32,32)}
+	weapons[G.WEAP.SPEAR] 	= {base_type = G.BaseType.Weap, base_name = G.Weap.Spear, damage = [[G.DmgType.Stab,1,10]], weight = 5, img_rect = Rect2(864,1504,32,32)}
 	
-	weapons[G.WEAP.FIST] 	= {base_type = G.BaseType.BodyWeap, base_name = G.Weap.Fist, min_damage = 90, max_damage = 99, damage_type = G.WeapType.Blunt, weight = 0, img_rect = Rect2(864,928,32,32), droppable = false}
-	weapons[G.WEAP.TEETH] 	= {base_type = G.BaseType.BodyWeap, base_name = G.Weap.Teeth, min_damage = 2, max_damage = 3, damage_type = G.WeapType.Blunt, weight = 0, img_rect = Rect2(864,928,32,32), droppable = false}
-	weapons[G.WEAP.CLAW] 	= {base_type = G.BaseType.BodyWeap, base_name = G.Weap.Claw, min_damage = 0, max_damage = 1, damage_type = G.WeapType.Slash, weight = 0, img_rect = Rect2(864,928,32,32), droppable = false}
-	weapons[G.WEAP.TAIL] 	= {base_type = G.BaseType.BodyWeap, base_name = G.Weap.Tail, min_damage = 1, max_damage = 2, damage_type = G.WeapType.Stab, weight = 0, img_rect = Rect2(864,928,32,32), droppable = false}
+	weapons[G.WEAP.FIST] 	= {base_type = G.BaseType.BodyWeap, base_name = G.Weap.Fist, damage = [[G.DmgType.Blunt,90,99]], weight = 0, img_rect = Rect2(864,928,32,32), droppable = false}
+	weapons[G.WEAP.TEETH] 	= {base_type = G.BaseType.BodyWeap, base_name = G.Weap.Teeth, damage = [[G.DmgType.Blunt,2,3]], weight = 0, img_rect = Rect2(864,928,32,32), droppable = false}
+	weapons[G.WEAP.CLAW] 	= {base_type = G.BaseType.BodyWeap, base_name = G.Weap.Claw, damage = [[G.DmgType.Slash,0,1]], weight = 0, img_rect = Rect2(864,928,32,32), droppable = false}
+	weapons[G.WEAP.TAIL] 	= {base_type = G.BaseType.BodyWeap, base_name = G.Weap.Tail, damage = [[G.DmgType.Slash,1,2]], weight = 0, img_rect = Rect2(864,928,32,32), droppable = false}
 	
+	weapons[G.WEAP.SWORD] 	= {base_type = G.BaseType.Weap, base_name = G.Weap.Sword, post_name = "of fire", damage = [[G.DmgType.Slash,6,12],[G.DmgType.Fire,6,12]], weight = 10, img_rect = Rect2(960,1472,32,32)}
+	weapons[G.WEAP.SWORD] 	= {base_type = G.BaseType.Weap, base_name = G.Weap.Sword, pre_name = "Flaming", damage = [[G.DmgType.Slash,6,12],[G.DmgType.Fire,6,12]], weight = 10, img_rect = Rect2(960,1472,32,32)}
+	weapons[G.WEAP.SWORD] 	= {base_type = G.BaseType.Weap, base_name = G.Weap.Sword, pre_name = "Flaming", post_name = "of fire", damage = [[G.DmgType.Slash,6,12],[G.DmgType.Fire,6,12]], weight = 10, img_rect = Rect2(960,1472,32,32)}
 	 #power punch for testing
 
 #Change all text and enum to global variables
