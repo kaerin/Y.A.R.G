@@ -20,4 +20,5 @@ func _ready():
 	Name[MAGE] = "Special sky fairy"
 	Name[THIEF] = "Some theiving bastard"
 	Name[DEMI_GOD] = "All charcter's smooshed as one"
+	Name[ENEMY] = "Squishy Things"
 

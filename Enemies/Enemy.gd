@@ -118,9 +118,9 @@ func chg_name():
 	
 #TEMP ONLY for basic player enemy interaction test.
 func take_dmg(roll, dmg):
-	if roll > stats.get_res():
-		hp -= dmg
-		print("roll:",roll, " target:", stats.get_res(), " ",Name, " took " + str(dmg) + " damage. HP:" + str(hp))
+	if roll > stats.get_res(dmg):
+		hp -= dmg[0][1]		# THIS IS SHITTY. was working on resistance and just needed a hack here for now.
+		print("roll:",roll, " target:", stats.get_res(dmg), " ",Name, " took " + str(dmg) + " damage. HP:" + str(hp))
 		if hp <= 0:
 			grid_map.set_kill_me(self)
 		else:
@@ -131,7 +131,9 @@ func take_dmg(roll, dmg):
 func attack():
 	var roll = randi() % 20 + G.Dlevel
 	print("Attacks with ", inv.weapon.get_name(), " rolls:", roll)
-	player.take_dmg(roll, stats.get_dmg()+G.Dlevel)
+	player.take_dmg(roll, stats.get_dmg())#+G.Dlevel)
+	#this should call for each individual attack type. but im out of time.
+	#hacked above in Take_damage that only first attack does acctual damage.
 	
 func set_move():
 #	if not $Timer.is_stopped():

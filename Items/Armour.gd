@@ -72,18 +72,32 @@ func get_equip_name(loc):
 func get_equip(loc):
 	return active[loc]
 
+func get_res():
+	for n in inv:
+		if n.is_equipped:
+			return(n.get_res())
+
+func get_res_specific(type):
+	var res = 0
+	for n in inv:
+		if n.is_equipped:
+			res += n.get_res_specific(type)
+	return res
+
 func get_ac():
 	var ac = 0
 	for n in inv:
 		if n.is_equipped:
 			ac += n.get_ac()
 	return ac
+	
 func get_armour_ac(loc):
 	var ac = 0
 	for n in inv:
 		if n.is_equipped:
 			ac += n.get_armour_ac()
 	return ac
+	
 func get_bonus_ac(loc):
 	var ac = 0
 	for n in inv:

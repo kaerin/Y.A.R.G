@@ -45,6 +45,8 @@ func gen_armour(item):
 	a.set_location(item.location)
 	a.set_loc_name(item.loc_name)
 	a.set_ac(item.armor_class)
+	for j in item.res:
+		a.add_res(j)
 	a.set_sprite_rect(item.img_rect)
 	a = chk_drop(item, a)
 	var pre = ["Rusted","Shiny","Glowing","Sparkly","Red","Golden","Crappy","Normal","Dented","Scratched","Heavily dented","Typical","Superb"]

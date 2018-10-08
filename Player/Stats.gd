@@ -24,26 +24,19 @@ func set_attributes(i):
 	attributes = i #2. assign class sent by player to a variable	
 	
 func get_dmg():		
-	#I figure everything in combat should pull damage from here. Stats just act as a combiner of all things.
-	#effect, spells and skills dont really belong in inventory, but make up part of damage.
-	#would mean inventory just becomes a storage container for items.
-	
-	#not now, but maybe damage should have a type associated to it. eg slashing, blunt etc.
-	#eg. turtle has slash damage resistance, but low Blunt damage resistance. 
 	var dmg = 0
 	var damage = weapon.get_dmg()
-	for i in damage:
-		dmg += i[1] #add all damage values currently operates the same as before
+	print (weapon.get_dmg())
 	
-	dmg += wearable.get_bonus_dmg()
-	#dmg += effect.get_damage()		#doesnt exist yet
-	#dmg += skill.get_damage()		#doesnt exist yet
-	return(dmg)
+	#for i in damage:
+	#	dmg += i[1] #add all damage values currently operates the same as before
 	
-func get_res():
-	var res = armour.get_ac() + wearable.get_bonus_ac()
-	return res
+	#dmg += wearable.get_bonus_dmg()
+	return(damage)		# damage is now sent as array of arrays. needed for resistance testing.
 	
+func get_res(dmg):
+		return armour.get_res_specific(dmg[0])	#collects all armours pieces resistance for applied damage type
+		
 func get_dmg_text():	#this would be extended to include spells effec etc
 	var min_dmg = 0
 	var max_dmg = 0

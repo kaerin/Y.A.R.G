@@ -11,6 +11,7 @@ enum	CHAR	{PLAYER, ENEMY, NPC}
 const Mat = {Cloth = "Cloth", Leather = "Leather", Chain = "Chain", Plate = "Plate"}
 const BaseType = {BodyWeap = "Body Weapon", Weap = "Weapon", Armour = "Armour", Wear = "Wearable"}
 const DmgType = {Slash = "Slash", Stab = "Stab", Blunt = "Blunt", Fire = "Fire"}
+const ResType = DmgType
 const Weap = {Fist = "Fist", Sword = "Sword", Dagger = "Dagger", Club = "Club", Spear = "Spear", Teeth = "Teeth", Claw = "Claw", Tail="Tail"}
 const Loc = {Chest = "Chest", Head = "Head", Arms = "Arms", Legs = "Legs"}
 const WearType = {Amulet = "Amulet", Ring = "Ring"}

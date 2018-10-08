@@ -158,9 +158,9 @@ func attack():
 
 func take_dmg(roll, dmg = 0):
 #	stats.test_print_method() #4. Used as a trigger to call methods in wepaon from attrib
-	if roll > stats.get_res():
-		hp -= dmg
-		print("roll:",roll, " target:",stats.get_res(), "You took " + str(dmg) + " damage. HP:" + str(hp))
+	if roll > stats.get_res(dmg):
+		hp -= dmg[0][1]		# THIS IS SHITTY. was working on resistance and just needed a hack here for now.
+		print("roll:",roll, " target:",stats.get_res(dmg), "You took " + str(dmg) + " damage. HP:" + str(hp))
 
 func _on_Timer_timeout():
 	is_fighting = false

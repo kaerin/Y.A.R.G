@@ -1,15 +1,21 @@
 extends "res://Items/Base.gd"
 
 #Class to store all wepaon information
+enum	RES	 {TYPE, VALUE}
+
 var BaseType = G.BaseType.Armour
 var Mat
 var Location
 var LocName
 var ArmourClass = 0
 var BonusAC = 0
+var Res = [] #resistance array of array like weapons
 var ImgRect
 
 #set data
+func add_res(i):
+	Res.append([i[0],i[1]])
+	
 func set_mat(i):
 	Mat = i
 	
@@ -26,6 +32,15 @@ func set_bonus_ac(i):
 	BonusAC = i
 	
 #get data
+func get_res():
+	return Res
+
+func get_res_specific(type):
+	var j = 0
+	for i in Res:
+		if i[RES.TYPE] == type[RES.TYPE]:
+			return i[RES.VALUE]
+
 func get_mat():
 	return Mat
 
