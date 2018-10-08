@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Scenes/CharGen.gd" type="Script" id=1]
 
-[node name="CharGen" type="Label"]
+[node name="CharGen" type="Label" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -180,6 +180,7 @@ max_lines_visible = -1
 
 [node name="Button" type="Button" parent="Template" index="0"]
 
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0

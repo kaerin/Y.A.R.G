@@ -10,7 +10,7 @@ func _ready():
 	var i = 0
 	for n in classes.CLASS:
 		var choice = class_choice.duplicate()
-		choice.text = j.Name[classes.CLASS[n]]
+		choice.text = str(j.Name[classes.CLASS[n]])
 		choice.show()
 		choice.connect("pressed", self, "ButtonPressed", [n])
 		class_vbox.add_child(choice)
