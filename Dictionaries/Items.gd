@@ -19,14 +19,14 @@ func _ready():
 	weapons[G.WEAP.SPEAR] 	= {base_type = G.BaseType.Weap, base_name = G.Weap.Spear, damage = [[G.DmgType.Stab,1,10]], weight = 5, img_rect = Rect2(864,1504,32,32)}
 	
 	weapons[G.WEAP.FIST] 	= {base_type = G.BaseType.BodyWeap, base_name = G.Weap.Fist, damage = [[G.DmgType.Blunt,90,99]], weight = 0, img_rect = Rect2(864,928,32,32), droppable = false}
-	weapons[G.WEAP.TEETH] 	= {base_type = G.BaseType.BodyWeap, base_name = G.Weap.Teeth, damage = [[G.DmgType.Blunt,2,3]], weight = 0, img_rect = Rect2(864,928,32,32), droppable = false}
-	weapons[G.WEAP.CLAW] 	= {base_type = G.BaseType.BodyWeap, base_name = G.Weap.Claw, damage = [[G.DmgType.Slash,0,1]], weight = 0, img_rect = Rect2(864,928,32,32), droppable = false}
+	weapons[G.WEAP.TEETH] 	= {base_type = G.BaseType.BodyWeap, base_name = G.Weap.Teeth, damage = [[G.DmgType.Blunt,2,3],[G.DmgType.Fire,4,5]], weight = 0, img_rect = Rect2(864,928,32,32), droppable = false}
+	weapons[G.WEAP.CLAW] 	= {base_type = G.BaseType.BodyWeap, base_name = G.Weap.Claw, damage = [[G.DmgType.Slash,0,1],[G.DmgType.Poison,4,5]], weight = 0, img_rect = Rect2(864,928,32,32), droppable = false}
 	weapons[G.WEAP.TAIL] 	= {base_type = G.BaseType.BodyWeap, base_name = G.Weap.Tail, damage = [[G.DmgType.Slash,1,2]], weight = 0, img_rect = Rect2(864,928,32,32), droppable = false}
 	
 	weapons[G.WEAP.SWORD] 	= {base_type = G.BaseType.Weap, base_name = G.Weap.Sword, post_name = "of fire", damage = [[G.DmgType.Slash,6,12],[G.DmgType.Fire,6,12]], weight = 10, img_rect = Rect2(960,1472,32,32)}
 	weapons[G.WEAP.SWORD] 	= {base_type = G.BaseType.Weap, base_name = G.Weap.Sword, pre_name = "Flaming", damage = [[G.DmgType.Slash,6,12],[G.DmgType.Fire,6,12]], weight = 10, img_rect = Rect2(960,1472,32,32)}
 	weapons[G.WEAP.SWORD] 	= {base_type = G.BaseType.Weap, base_name = G.Weap.Sword, pre_name = "Flaming", post_name = "of fire", damage = [[G.DmgType.Slash,6,12],[G.DmgType.Fire,6,12]], weight = 10, img_rect = Rect2(960,1472,32,32)}
-	 #power punch for testing
+	#every sword is a flaming sword of fire, FIX ME
 
 #Change all text and enum to global variables
 
@@ -43,6 +43,7 @@ func _ready():
 	armour[G.LOC.CHEST][G.MAT.LEATHER]	= {base_type = G.BaseType.Armour, location = G.LOC.CHEST, loc_name = 'Chest', base_name = 'Leather', armor_class = 4, res = [[G.DmgType.Slash,4],[G.DmgType.Stab,4],[G.DmgType.Blunt,4],[G.DmgType.Fire,4]], to_hit = 0, weight = 6, img_rect = Rect2(1504,1216,32,32)}
 	armour[G.LOC.CHEST][G.MAT.CHAIN] 	= {base_type = G.BaseType.Armour, location = G.LOC.CHEST, loc_name = 'Chest', base_name = 'Chain', armor_class = 6, res = [[G.DmgType.Slash,4],[G.DmgType.Stab,4],[G.DmgType.Blunt,4],[G.DmgType.Fire,4]], to_hit = -1, weight = 6, img_rect = Rect2(1472,1184,32,32)}
 	armour[G.LOC.CHEST][G.MAT.PLATE] 	= {base_type = G.BaseType.Armour, location = G.LOC.CHEST, loc_name = 'Chest', base_name = 'Plate', armor_class = 8, res = [[G.DmgType.Slash,4],[G.DmgType.Stab,4],[G.DmgType.Blunt,4],[G.DmgType.Fire,4]], to_hit = -2, weight = 6, img_rect = Rect2(480,1216,32,32)}
+	armour[G.LOC.CHEST][G.MAT.SKIN] 	= {base_type = G.BaseType.Armour, location = G.LOC.CHEST, loc_name = 'Chest', base_name = 'Skin', pre_name="Enemy ", post_name="", armor_class = 8, res = [[G.DmgType.Slash,2],[G.DmgType.Stab,2],[G.DmgType.Blunt,2],[G.DmgType.Fire,2]], to_hit = -2, weight = 6, img_rect = Rect2(480,1216,32,32), droppable = false}
 	
 	armour[G.LOC.HEAD][G.MAT.CLOTH] 	= {base_type = G.BaseType.Armour, location = G.LOC.HEAD, loc_name = 'Head', base_name = 'Cloth', armor_class = 2, res = [[G.DmgType.Slash,4],[G.DmgType.Stab,4],[G.DmgType.Blunt,4],[G.DmgType.Fire,4]], to_hit = 0, weight = 6, img_rect = Rect2(1440,1152,32,32)}
 	armour[G.LOC.HEAD][G.MAT.LEATHER]	= {base_type = G.BaseType.Armour, location = G.LOC.HEAD, loc_name = 'Head', base_name = 'Leather', armor_class = 4, res = [[G.DmgType.Slash,4],[G.DmgType.Stab,4],[G.DmgType.Blunt,4],[G.DmgType.Fire,4]], to_hit = 0, weight = 6, img_rect = Rect2(1312,1152,32,32)}

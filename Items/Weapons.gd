@@ -7,7 +7,7 @@ var BonusDamage = 0
 
 #set data
 func add_dmg(i):
-	Dmg.append([i[0],i[1],i[2]])
+	Dmg.append([i[0],i[1]+G.Dlevel,i[2]+G.Dlevel])
 	
 func set_bonus_dmg(i):
 	BonusDamage = i
@@ -23,7 +23,7 @@ func get_dmg(): #weapon total damage
 	return j #dmg aray create of type and damage
 
 func get_weapon_dmg(i=0): #weapon damage
-	return randi() % (get_max_dmg(i) - get_min_dmg(i) + get_min_dmg(i))
+	return randi() % (get_max_dmg(i) - get_min_dmg(i)) + get_min_dmg(i)
 	
 func get_bonus_dmg(): #weapon total damage
 	return BonusDamage

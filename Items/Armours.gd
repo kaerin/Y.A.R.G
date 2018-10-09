@@ -14,7 +14,7 @@ var ImgRect
 
 #set data
 func add_res(i):
-	Res.append([i[0],i[1]])
+	Res.append([i[0],i[1]+G.Dlevel])
 	
 func set_mat(i):
 	Mat = i
@@ -40,6 +40,7 @@ func get_res_specific(type):
 	for i in Res:
 		if i[RES.TYPE] == type[RES.TYPE]:
 			return i[RES.VALUE]
+	return 0
 
 func get_mat():
 	return Mat

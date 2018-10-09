@@ -38,6 +38,7 @@ onready var Armour = load("res://Items/Armour.gd")
 onready var Wearable = load("res://Items/Wearable.gd")
 onready var Inventory = load("res://Inv/Inv.gd")
 onready var GenItems = load("res://Items/GenItems.gd")
+onready var Combat = load("res://Player/Combat.gd")
 
 onready var Attrib = load("res://Player/Attributes.gd")
 onready var Stats = load("res://Player/Stats.gd")
@@ -45,9 +46,12 @@ var attributes
 var stats
 var gold = 0
 var genItems
+var combat
+var level = G.Dlevel
 
 func _ready():
 #	print(G.MAT.CLOTH)
+	combat = Combat.new()
 	genItems = GenItems.new()
 	attributes = Attrib.new()
 	attributes.set_attributes(dic_classes[4]) #FIX this static index
@@ -66,8 +70,11 @@ func _ready():
 #	armour = Armour.new(G.CHAR.ENEMY)
 #	wearable = Wearable.new(G.CHAR.ENEMY)
 	#TODO random instancing of enemies in dictionary
-	var enemy = dic_enemies[randi() % dic_enemies.size()] #simplify
-	enemy = dic_enemies[0] #new enemy testing
+	var enemyIndex = randi() % (dic_enemies.size()+2)
+	if enemyIndex >= dic_enemies.size():
+		enemyIndex = 0 #Hack to make more gnomes
+	var enemy = dic_enemies[enemyIndex] #simplify
+#	enemy = dic_enemies[1] #new enemy testing
 	hp = randi() % (enemy.max_hp - enemy.min_hp) + enemy.min_hp
 	hp += G.Dlevel #increase hp by level
 	$Sprite/Label.text = enemy.base_name
@@ -96,12 +103,15 @@ func _ready():
 		inv.add_item(genItems.gen_weap(dic_weapon[rnd_item]),true) #equip enemy with random base weapon
 #		inv.weapon.inv[0].set_equipped(true)
 	#	elif temp == 2:
-	var rnd_item = randi() % dic_armour[0].size() #change pick random location then random armour
+	 #change pick random location then random armour
 	var i = randi() % 2
+	var rnd_item = randi() % dic_armour[i].size()
 #		inventory.append(dic_armour[i][rnd_item]) #0 should be random
 	var equip = false
 	if enemy.base_name == G.En.Gnome:
 		equip = true
+	else:
+		inv.add_item(genItems.gen_armour(dic_armour[G.LOC.CHEST][G.MAT.SKIN]),true) #skin armour
 	inv.add_item(genItems.gen_armour(dic_armour[i][rnd_item]),equip)
 #	elif temp == 3:
 	rnd_item = randi() % dic_wear.size() 
@@ -117,18 +127,21 @@ func chg_name():
 	Name = pre[randi() % pre.size()] + " " + Name + " " + post[randi() % post.size()]
 	
 #TEMP ONLY for basic player enemy interaction test.
-func take_dmg(roll, dmg):
-	if roll > stats.get_res(dmg):
-		hp -= dmg[0][1]		# THIS IS SHITTY. was working on resistance and just needed a hack here for now.
-		print("roll:",roll, " target:", stats.get_res(dmg), " ",Name, " took " + str(dmg) + " damage. HP:" + str(hp))
-		if hp <= 0:
-			grid_map.set_kill_me(self)
-		else:
-			attack() #Fight player
+func take_dmg(dmg):
+#	print("Incorrect function")
+#	if roll > stats.get_res(dmg):
+#		hp -= dmg[0][1]		# THIS IS SHITTY. was working on resistance and just needed a hack here for now.
+#		print("roll:",roll, " target:", stats.get_res(dmg), " ",Name, " took " + str(dmg) + " damage. HP:" + str(hp))
+	hp -= dmg
+	if hp <= 0:
+		grid_map.set_kill_me(self)
+	else:
+		combat.attack(self,player) #Fight player
 		
 		
 #after player moves all enemies are triggered to move from Grid_Map		
 func attack():
+	print("Incorrect function")
 	var roll = randi() % 20 + G.Dlevel
 	print("Attacks with ", inv.weapon.get_name(), " rolls:", roll)
 	player.take_dmg(roll, stats.get_dmg())#+G.Dlevel)
@@ -168,13 +181,13 @@ func _process(delta):
 		var attacking = false
 		for i in DIRS:
 			if grid_map.is_cell_player(get_position(), i):
-				attack()
+				combat.attack(self, player)
 				attacking = true
 		if grid_map.is_cell_empty(get_position(), target_direction) and not attacking:
 			target_pos = grid_map.update_child_pos(self)
 			is_moving = true
 		elif grid_map.is_cell_player(get_position(), target_direction) and not attacking:
-			attack() #Fight player
+			combat.attack(self,player) #Fight player
 	elif is_moving:
 		speed = MAX_SPEED
 		velocity = speed * target_direction.normalized() * delta

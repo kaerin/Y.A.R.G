@@ -49,10 +49,13 @@ func gen_armour(item):
 		a.add_res(j)
 	a.set_sprite_rect(item.img_rect)
 	a = chk_drop(item, a)
-	var pre = ["Rusted","Shiny","Glowing","Sparkly","Red","Golden","Crappy","Normal","Dented","Scratched","Heavily dented","Typical","Superb"]
-	var post = ["of brightness","with shoulder pads","puffy vest","of armour","of colors","that tastes funny","that shimmers","- tank armour"]
-	a.set_name(pre[randi() % pre.size()] + " " + a.get_name() + " " + post[randi() % post.size()])
-	a.set_bonus_ac(randi() % (G.Dlevel+1))
+	if item.has("post_name") or item.has("pre_name"):
+		a.set_name(item.pre_name + " " +  item.base_name + " " + item.post_name)
+	else:
+		var pre = ["Rusted","Shiny","Glowing","Sparkly","Red","Golden","Crappy","Normal","Dented","Scratched","Heavily dented","Typical","Superb"]
+		var post = ["of brightness","with shoulder pads","puffy vest","of armour","of colors","that tastes funny","that shimmers","- tank armour"]
+		a.set_name(pre[randi() % pre.size()] + " " + a.get_name() + " " + post[randi() % post.size()])
+		a.set_bonus_ac(randi() % (G.Dlevel+1))
 	return a
 	
 func gen_wear(item):

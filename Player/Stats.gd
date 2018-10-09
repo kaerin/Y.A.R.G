@@ -26,7 +26,7 @@ func set_attributes(i):
 func get_dmg():		
 	var dmg = 0
 	var damage = weapon.get_dmg()
-	print (weapon.get_dmg())
+#	print (weapon.get_dmg())
 	
 	#for i in damage:
 	#	dmg += i[1] #add all damage values currently operates the same as before
@@ -35,7 +35,11 @@ func get_dmg():
 	return(damage)		# damage is now sent as array of arrays. needed for resistance testing.
 	
 func get_res(dmg):
-		return armour.get_res_specific(dmg[0])	#collects all armours pieces resistance for applied damage type
+	var j = []
+	for i in dmg:
+		print("checking",i[0])
+		j.append([i[0],armour.get_res_specific(i)])
+	return j	#collects all armours pieces resistance for applied damage type
 		
 func get_dmg_text():	#this would be extended to include spells effec etc
 	var min_dmg = 0

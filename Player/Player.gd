@@ -14,6 +14,7 @@ onready var Game = get_node("/root/BaseNode")
 onready var Attrib = load("res://Player/Attributes.gd")
 onready var Stats = load("res://Player/Stats.gd")
 onready var GenItems = load("res://Items/GenItems.gd")
+onready var Combat = load("res://Player/Combat.gd")
 #onready var weapons = load("res://Items/Weapon.gd") #load class
 #onready var Map = get_node("../../Map")
 
@@ -29,10 +30,11 @@ var is_fighting = false
 var target_pos = Vector2()
 var target_direction = Vector2()
 var facing = false
-var hp = 100 #should belong in stats
-var hp_max = 100 #should belong in stats
+var hp = 1000 #should belong in stats
+var hp_max = 1000 #should belong in stats
 var gold = 0 #should belong in stats
 var level = 1 #should belong in stats
+var combat
 
 var attributes
 var stats
@@ -45,13 +47,13 @@ var Dialog
 func _ready():
 	var genItems = GenItems.new()
 	
-	inv.add_item(genItems.gen_weap(DicItems.weapons[G.WEAP.FIST]))
-	inv.weapon.inv[0].set_equipped(true)
-	inv.add_item(genItems.gen_armour(DicItems.armour[G.LOC.CHEST][G.MAT.CLOTH]))
-	inv.armour.inv[0].set_equipped(true)
-	inv.add_item(genItems.gen_wear(DicItems.wear[G.WEAR.NECKLACE]))
-	inv.wearable.inv[0].set_equipped(true)
-	
+	inv.add_item(genItems.gen_weap(DicItems.weapons[G.WEAP.FIST]),true)
+#	inv.weapon.inv[0].set_equipped(true)
+	inv.add_item(genItems.gen_armour(DicItems.armour[G.LOC.CHEST][G.MAT.CLOTH]),true)
+#	inv.armour.inv[0].set_equipped(true)
+	inv.add_item(genItems.gen_wear(DicItems.wear[G.WEAR.NECKLACE]),true)
+#	inv.wearable.inv[0].set_equipped(true)
+	combat = Combat.new()
 	type = grid_map.PLAYER
 	if G.PlayerColor:
 		modulate = G.PlayerColor
@@ -66,8 +68,7 @@ func _ready():
 #	grid_map.set_grid_pos(self, Map.start)
 
 func _process(delta):
-	if hp < 0:
-		get_tree().change_scene("res://Scenes/End.tscn")
+
 	if Input.is_action_just_pressed("ui_p"):
 		var item = grid_map.get_item(self)
 		if item:
@@ -84,7 +85,7 @@ func _process(delta):
 	if Input.is_action_just_pressed("prev_level"):
 		grid_map.chg_level(get_position(),-1)
 	if Input.is_action_just_pressed("rest"):
-		hp +=25 #super healing
+		hp +=1000 #super healing
 		if hp > hp_max:
 			hp = hp_max
 		print("Resting hp:",hp)
@@ -129,7 +130,11 @@ func _process(delta):
 			target_pos = grid_map.update_child_pos(self)
 			is_moving = true
 		elif grid_map.is_cell_enemy(get_position(), target_direction) and not is_fighting:
-			attack()
+			var enemy = grid_map.get_cell_node(get_position(), target_direction)
+			if enemy:
+				is_fighting = true
+				$Timer.start()
+				combat.attack(self,enemy)
 	elif is_moving:
 		speed = MAX_SPEED
 		velocity = speed * target_direction.normalized() * delta
@@ -149,6 +154,7 @@ func _process(delta):
 			emit_signal("enemy_move")
 
 func attack():
+	print("Incorrect function")
 	var enemy = grid_map.get_cell_node(get_position(), target_direction)
 	if enemy:
 		is_fighting = true
@@ -156,11 +162,14 @@ func attack():
 		enemy.take_dmg(roll, stats.get_dmg()) #weapon needs to get equippped
 		$Timer.start()
 
-func take_dmg(roll, dmg = 0):
+func take_dmg(dmg):
+#	print("Incorrect function")
 #	stats.test_print_method() #4. Used as a trigger to call methods in wepaon from attrib
-	if roll > stats.get_res(dmg):
-		hp -= dmg[0][1]		# THIS IS SHITTY. was working on resistance and just needed a hack here for now.
-		print("roll:",roll, " target:",stats.get_res(dmg), "You took " + str(dmg) + " damage. HP:" + str(hp))
+#	if roll > stats.get_res(dmg):
+	hp -= dmg		# THIS IS SHITTY. was working on resistance and just needed a hack here for now.
+#	print("roll:",roll, " target:",stats.get_res(dmg), "You took " + str(dmg) + " damage. HP:" + str(hp))
+	if hp < 0:
+		get_tree().change_scene("res://Scenes/End.tscn")
 
 func _on_Timer_timeout():
 	is_fighting = false
