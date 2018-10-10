@@ -7,6 +7,11 @@ var wearable
 var armour
 var attributes
 
+var hp = 1000 #should belong in stats
+var hp_max = 1000 #should belong in stats
+var gold = 0 #should belong in stats
+var level = 1 #should belong in stats
+
 func test_print_method():
 #	weapon.print_test() #3. execute as nmethod as normal
 	print("get dmage ",weapon.get_damage())

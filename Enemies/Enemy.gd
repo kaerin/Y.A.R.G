@@ -6,7 +6,6 @@ const LEFT 	= Vector2(-1, 0)
 const RIGHT	= Vector2(1 , 0)
 const DIRS = [UP,DOWN,LEFT,RIGHT]
 
-var hp = 0
 var inventory
 var weapon
 var armour
@@ -39,19 +38,23 @@ onready var Wearable = load("res://Items/Wearable.gd")
 onready var Inventory = load("res://Inv/Inv.gd")
 onready var GenItems = load("res://Items/GenItems.gd")
 onready var Combat = load("res://Player/Combat.gd")
+onready var Skills = load("res://Player/Skills.gd")
+onready var Spells = load("res://Player/Spells.gd")
 
 onready var Attrib = load("res://Player/Attributes.gd")
 onready var Stats = load("res://Player/Stats.gd")
 var attributes
 var stats
-var gold = 0
 var genItems
 var combat
-var level = G.Dlevel
+var skills
+var spells
 
 func _ready():
 #	print(G.MAT.CLOTH)
 	combat = Combat.new()
+	skills = Skills.new()
+	spells = Spells.new()	
 	genItems = GenItems.new()
 	attributes = Attrib.new()
 	attributes.set_attributes(dic_classes[4]) #FIX this static index
@@ -75,8 +78,8 @@ func _ready():
 		enemyIndex = 0 #Hack to make more gnomes
 	var enemy = dic_enemies[enemyIndex] #simplify
 #	enemy = dic_enemies[1] #new enemy testing
-	hp = randi() % (enemy.max_hp - enemy.min_hp) + enemy.min_hp
-	hp += G.Dlevel #increase hp by level
+	stats.hp = randi() % (enemy.max_hp - enemy.min_hp) + enemy.min_hp
+	stats.hp += G.Dlevel #increase hp by level
 	$Sprite/Label.text = enemy.base_name
 	$Sprite.set_region_rect(enemy.img_rect)
 	Name = enemy.base_name
@@ -132,8 +135,8 @@ func take_dmg(dmg):
 #	if roll > stats.get_res(dmg):
 #		hp -= dmg[0][1]		# THIS IS SHITTY. was working on resistance and just needed a hack here for now.
 #		print("roll:",roll, " target:", stats.get_res(dmg), " ",Name, " took " + str(dmg) + " damage. HP:" + str(hp))
-	hp -= dmg
-	if hp <= 0:
+	stats.hp -= dmg
+	if stats.hp <= 0:
 		grid_map.set_kill_me(self)
 	else:
 		combat.attack(self,player) #Fight player

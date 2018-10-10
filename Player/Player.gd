@@ -15,6 +15,8 @@ onready var Attrib = load("res://Player/Attributes.gd")
 onready var Stats = load("res://Player/Stats.gd")
 onready var GenItems = load("res://Items/GenItems.gd")
 onready var Combat = load("res://Player/Combat.gd")
+onready var Skills = load("res://Player/Skills.gd")
+onready var Spells = load("res://Player/Spells.gd")
 #onready var weapons = load("res://Items/Weapon.gd") #load class
 #onready var Map = get_node("../../Map")
 
@@ -30,12 +32,10 @@ var is_fighting = false
 var target_pos = Vector2()
 var target_direction = Vector2()
 var facing = false
-var hp = 1000 #should belong in stats
-var hp_max = 1000 #should belong in stats
-var gold = 0 #should belong in stats
-var level = 1 #should belong in stats
-var combat
 
+var combat
+var skills
+var spells
 var attributes
 var stats
 
@@ -54,6 +54,9 @@ func _ready():
 	inv.add_item(genItems.gen_wear(DicItems.wear[G.WEAR.NECKLACE]),true)
 #	inv.wearable.inv[0].set_equipped(true)
 	combat = Combat.new()
+	skills = Skills.new()
+	spells = Spells.new()
+	
 	type = grid_map.PLAYER
 	if G.PlayerColor:
 		modulate = G.PlayerColor
@@ -76,7 +79,7 @@ func _process(delta):
 	if Input.is_action_just_pressed("level"):
 		grid_map.chg_level(get_position()) #Make this better
 	if Input.is_action_just_pressed("sell_items"):
-		gold += inv.sell_items() #simple function to sell all unequipped gear
+		stats.gold += inv.sell_items() #simple function to sell all unequipped gear
 	if Input.is_action_just_pressed("add_enemy"):
 		Game.Dialog.print_label("You have added enemies")
 		grid_map.add_enemies()
@@ -85,10 +88,10 @@ func _process(delta):
 	if Input.is_action_just_pressed("prev_level"):
 		grid_map.chg_level(get_position(),-1)
 	if Input.is_action_just_pressed("rest"):
-		hp +=1000 #super healing
-		if hp > hp_max:
-			hp = hp_max
-		print("Resting hp:",hp)
+		stats.hp +=1000 #super healing
+		if stats.hp > stats.hp_max:
+			stats.hp = stats.hp_max
+		print("Resting hp:",stats.hp)
 		emit_signal("enemy_move")
 	direction = Vector2()
 	if Input.is_action_pressed("ui_up"):
@@ -166,9 +169,9 @@ func take_dmg(dmg):
 #	print("Incorrect function")
 #	stats.test_print_method() #4. Used as a trigger to call methods in wepaon from attrib
 #	if roll > stats.get_res(dmg):
-	hp -= dmg		# THIS IS SHITTY. was working on resistance and just needed a hack here for now.
+	stats.hp -= dmg		# THIS IS SHITTY. was working on resistance and just needed a hack here for now.
 #	print("roll:",roll, " target:",stats.get_res(dmg), "You took " + str(dmg) + " damage. HP:" + str(hp))
-	if hp < 0:
+	if stats.hp < 0:
 		get_tree().change_scene("res://Scenes/End.tscn")
 
 func _on_Timer_timeout():
