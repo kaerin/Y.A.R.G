@@ -80,6 +80,7 @@ func _process(delta):
 		grid_map.chg_level(get_position()) #Make this better
 	if Input.is_action_just_pressed("sell_items"):
 		stats.gold += inv.sell_items() #simple function to sell all unequipped gear
+		Game.stats.set_gold(stats.gold)
 	if Input.is_action_just_pressed("add_enemy"):
 		Game.Dialog.print_label("You have added enemies")
 		grid_map.add_enemies()
@@ -170,6 +171,7 @@ func take_dmg(dmg):
 #	stats.test_print_method() #4. Used as a trigger to call methods in wepaon from attrib
 #	if roll > stats.get_res(dmg):
 	stats.hp -= dmg		# THIS IS SHITTY. was working on resistance and just needed a hack here for now.
+	Game.stats.set_hp(stats.hp)
 #	print("roll:",roll, " target:",stats.get_res(dmg), "You took " + str(dmg) + " damage. HP:" + str(hp))
 	if stats.hp < 0:
 		get_tree().change_scene("res://Scenes/End.tscn")

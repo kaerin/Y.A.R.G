@@ -41,7 +41,6 @@ func check_max_msg():
 		
 func _process(delta):
 	if Input.is_action_just_pressed("msg_log"):
-		print("msg log")
 		if $CanvasLayer/PanelContainer.is_visible():
 			$CanvasLayer/PanelContainer.hide()
 		else:
