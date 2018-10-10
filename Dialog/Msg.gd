@@ -38,3 +38,11 @@ func check_max_msg():
 	var b = msg_window.get_parent().get_children()
 	if b.size() >= max_msg:
 		b[1].queue_free()	#skip template label, and delete oldest message
+		
+func _process(delta):
+	if Input.is_action_just_pressed("msg_log"):
+		print("msg log")
+		if $CanvasLayer/PanelContainer.is_visible():
+			$CanvasLayer/PanelContainer.hide()
+		else:
+			$CanvasLayer/PanelContainer.show()
