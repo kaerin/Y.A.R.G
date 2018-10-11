@@ -14,6 +14,7 @@
 
 func attack(from,to):
 	print("Attacking")
+	to.stats.attacker = from
 	var dmg = from.stats.get_dmg()
 	var res = to.stats.get_res(dmg)
 	var totDmg = 0

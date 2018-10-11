@@ -26,6 +26,7 @@ var inv
 
 onready var player = get_node("../Player")
 onready var grid_map = get_parent()
+onready var Game = get_node("/root/BaseNode")
 onready var dic_enemies = get_parent().get_parent().get_node("Dictionaries/Enemies").enemies
 onready var dic_weapon = get_parent().get_parent().get_node("Dictionaries/Items").weapons
 onready var dic_chest = get_parent().get_parent().get_node("Dictionaries/Items").chest
@@ -137,6 +138,9 @@ func take_dmg(dmg):
 #		print("roll:",roll, " target:", stats.get_res(dmg), " ",Name, " took " + str(dmg) + " damage. HP:" + str(hp))
 	stats.hp -= dmg
 	if stats.hp <= 0:
+		var i = stats.attacker
+		i.stats.expr += 10
+		Game.stats.set_exp(i.stats.expr)
 		grid_map.set_kill_me(self)
 	else:
 		combat.attack(self,player) #Fight player

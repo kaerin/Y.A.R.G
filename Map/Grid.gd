@@ -16,6 +16,7 @@ onready var Admin = preload("res://Admin/Admin.tscn")
 onready var item  = preload("res://Items/Item.tscn")
 onready var Map = preload("res://Data/MapGen.gd")
 onready var GridFloor = get_node("../GridFloor")
+onready var Game = get_node("/root/BaseNode")
 var start = Vector2()
 var end = Vector2()
 var hidden = Vector2()
@@ -39,6 +40,8 @@ func _process(delta):
 
 func start(startpos = "S"):
 	var Player = get_node("Player")
+	if Game.stats:
+		Game.stats.set_dungeon(G.Dlevel)
 	if G.Dlevel < 0:
 		print("You are on the surface")
 		Player.set_position(map_to_world(Vector2(50,50)) + half_tile_size)

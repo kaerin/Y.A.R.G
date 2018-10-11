@@ -44,6 +44,9 @@ signal enemy_move
 var Dialog
 #var weap #weapon class
 
+func chk_level():
+	Game.stats.set_level(stats.level)
+	
 func _ready():
 	var genItems = GenItems.new()
 	
@@ -67,6 +70,7 @@ func _ready():
 	stats.set_wearable(inv.wearable) #1. get the weapon class from the inventory class and send it too the attrib class
 	stats.set_armour(inv.armour) #1. get the weapon class from the inventory class and send it too the attrib class
 	stats.set_attributes(attributes)
+	stats.connect("levelup", self, "chk_level")
 #	grid_map.create_grid()
 #	grid_map.set_grid_pos(self, Map.start)
 
