@@ -84,12 +84,12 @@ func get_res_specific(type):
 			res += n.get_res_specific(type)
 	return res
 
-func get_ac():
-	var ac = 0
-	for n in inv:
-		if n.is_equipped:
-			ac += n.get_ac()
-	return ac
+#func get_ac():
+#	var ac = 0
+#	for n in inv:
+#		if n.is_equipped:
+#			ac += n.get_ac()
+#	return ac
 	
 func get_armour_ac(loc):
 	var ac = 0

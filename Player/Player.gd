@@ -50,12 +50,13 @@ func chk_level():
 func _ready():
 	var genItems = GenItems.new()
 	
-	inv.add_item(genItems.gen_weap(DicItems.weapons[G.WEAP.FIST]),true)
-#	inv.weapon.inv[0].set_equipped(true)
+	inv.add_item(genItems.gen_weap(DicItems.weapons[G.WEAP.SWORD]),true)
+	inv.weapon.inv[0].set_bonus_dmg(4)
 	inv.add_item(genItems.gen_armour(DicItems.armour[G.LOC.CHEST][G.MAT.CLOTH]),true)
-#	inv.armour.inv[0].set_equipped(true)
+	inv.armour.inv[0].set_bonus_res(3)
 	inv.add_item(genItems.gen_wear(DicItems.wear[G.WEAR.NECKLACE]),true)
-#	inv.wearable.inv[0].set_equipped(true)
+	inv.wearable.inv[0].set_bonus_dmg(1)
+	inv.wearable.inv[0].set_bonus_res(2)
 	combat = Combat.new()
 	skills = Skills.new()
 	spells = Spells.new()

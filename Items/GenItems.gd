@@ -6,7 +6,7 @@ var Armours = load("res://Items/Armours.gd")
 var Wearables = load("res://Items/Wearables.gd")
 
 func _init():
-	pass
+	randomize()
 
 func chk_drop(i,j):
 	if i.has("droppable"):
@@ -44,7 +44,7 @@ func gen_armour(item):
 	a.set_mat(item.base_name)
 	a.set_location(item.location)
 	a.set_loc_name(item.loc_name)
-	a.set_ac(item.armor_class)
+#	a.set_ac(item.armor_class)
 	for j in item.res:
 		a.add_res(j)
 	a.set_sprite_rect(item.img_rect)
@@ -55,24 +55,25 @@ func gen_armour(item):
 		var pre = ["Rusted","Shiny","Glowing","Sparkly","Red","Golden","Crappy","Normal","Dented","Scratched","Heavily dented","Typical","Superb"]
 		var post = ["of brightness","with shoulder pads","puffy vest","of armour","of colors","that tastes funny","that shimmers","- tank armour"]
 		a.set_name(pre[randi() % pre.size()] + " " + a.get_name() + " " + post[randi() % post.size()])
-		a.set_bonus_ac(randi() % (G.Dlevel+1))
+		a.set_bonus_res(randi() % (G.Dlevel+1))
 	return a
 	
 func gen_wear(item):
 	var w = Wearables.new()
 	w.set_name(item.base_name)
 	w.set_type(item.type)
-	w.set_bonus_ac(item.bonus_ac)
+	w.set_bonus_res(item.bonus_res)
 	w.set_bonus_dmg(item.bonus_dmg)
 	
 	var types = G.ResType.keys()
 	var i = types[randi() % types.size()]
-	var j = randi() % (G.Dlevel + 1)
+	var j = randi() % (G.Dlevel + 1) + 99 #+99 testing
 	w.add_res(i,j)
+	
 	types = G.DmgType.keys() #For when its different
 	i = types[randi() % types.size()]
-	j = randi() % (G.Dlevel + 1)
-	var k = j + randi() % (G.Dlevel + 1) + 1
+	j = randi() % (G.Dlevel + 1) + 2 #testing
+	var k = j + randi() % (G.Dlevel + 1) + 3 #testing
 	w.add_dmg(i,j,k)
 	
 	w.set_sprite_rect(item.img_rect)
@@ -80,6 +81,6 @@ func gen_wear(item):
 	var pre = ["Rusted","Shiny","Glowing","Sparkly","Red","Golden","Crappy","Normal","Mood","Talking","Tiny","Oversized","Typcial"]
 	var post = ["of brightness","of sparks","of flames","that glows","in rainbow colors","that tastes funny","in blood","of joy"]
 	w.set_name(pre[randi() % pre.size()] + " " + w.get_name() + " " + post[randi() % post.size()])
-	w.set_bonus_ac(randi() % (G.Dlevel+1))
+	w.set_bonus_res(randi() % (G.Dlevel+1))
 	w.set_bonus_dmg(randi() % (G.Dlevel+1))
 	return w

@@ -39,34 +39,32 @@ func set_attributes(i):
 	attributes = i #2. assign class sent by player to a variable	
 	
 func get_dmg():		
-	var dmg = 0
 	var damage = weapon.get_dmg()
-#	print (weapon.get_dmg())
-	
-	#for i in damage:
-	#	dmg += i[1] #add all damage values currently operates the same as before
-	
-	#dmg += wearable.get_bonus_dmg()
+	damage = wearable.add_dmg(damage)
 	return(damage)		# damage is now sent as array of arrays. needed for resistance testing.
 	
 func get_res(dmg):
 	var j = []
+	var k = 0
 	for i in dmg:
-		print("checking",i[0])
-		j.append([i[0],armour.get_res_specific(i)])
+		j.append([i[0],armour.get_res_specific(i)])	
+		j[k][1] += wearable.add_res_specific(i)
+		k += 1
 	return j	#collects all armours pieces resistance for applied damage type
 		
-func get_dmg_text():	#this would be extended to include spells effec etc
+func get_dmg_text(i=0):	#this would be extended to include spells effec etc
 	var min_dmg = 0
 	var max_dmg = 0
 	var bonus_dmg = 0
 	for n in weapon.inv:
 		if n.is_equipped:
-			min_dmg += (n.get_min_dmg())
-			max_dmg += (n.get_max_dmg())
+			min_dmg += (n.get_min_dmg(i))
+			max_dmg += (n.get_max_dmg(i))
 			bonus_dmg += (n.get_bonus_dmg())
 	for n in wearable.inv:
 		if n.is_equipped:
+			min_dmg += (n.get_min_dmg(i))
+			max_dmg += (n.get_max_dmg(i))
 			bonus_dmg += (n.get_bonus_dmg())
 
 	var dmg_string = str(min_dmg,"-",max_dmg)
@@ -88,11 +86,11 @@ func get_dmg_list(): #this would be extended to include spells effec etc
 				list.append(n)
 	return(list)	
 	
-func get_ac_text():	#this would be extended to include spells effec etc
-	return(str(armour.get_ac() + wearable.get_bonus_ac() + attributes.get_ac()) #
-)
+func get_res_text():	#this would be extended to include spells effec etc
+	return str("res text, fix me")
+#	return(str(armour.get_ac() + wearable.get_bonus_ac() + attributes.get_ac())) #
 	
-func get_ac_list(): #this would be extended to include spells effec etc
+func get_res_list(): #this would be extended to include spells effec etc
 	var list = []
 	for n in armour.inv:
 		if n.is_equipped:
@@ -100,6 +98,6 @@ func get_ac_list(): #this would be extended to include spells effec etc
 			
 	for n in wearable.inv:
 		if n.is_equipped:
-			if n.get_bonus_ac():
+			if n.get_bonus_res():
 				list.append(n)
 	return(list)		

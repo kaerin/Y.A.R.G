@@ -29,13 +29,26 @@ func get_bonus_dmg(): #weapon total damage
 	return BonusDamage
 	
 func get_min_dmg(i=0):
-	return Dmg[i][1]
+	if i < 0:
+		var j = 0
+		for k in Dmg:
+			j += k[1]
+		return j
+	else:
+		return Dmg[i][1]
 	
 func get_max_dmg(i=0):
-	return Dmg[i][2]
+	if i < 0:
+		var j = 0
+		for k in Dmg:
+			j += k[2]
+		return j
+	else:
+		return Dmg[i][2]
 	
 func get_dmg_text(i=0):
-	var dmg_string = str(get_min_dmg(i),"-",get_max_dmg(i))
+#	var dmg_string = str(get_min_dmg(i),"-",get_max_dmg(i))
+	var dmg_string = str(Dmg) #Fix this string
 	if BonusDamage > 0:
 		dmg_string += str("+",BonusDamage)
 	elif BonusDamage < 0:	

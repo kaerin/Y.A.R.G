@@ -40,15 +40,19 @@ func update_attributes():
 func update_stats():
 	get_dmg()
 	add_spacer()
-	get_ac()
+	get_res()
 	add_spacer()
-	get_hp()
+	disp_txt_value("HP:",Char.stats.hp)
 	add_spacer()
-	get_gold()
+	disp_txt_value("Gold:",Char.stats.gold)
+	add_spacer()
+	disp_txt_value("Exp:",Char.stats.expr)
+	add_spacer()
+	disp_txt_value("Level:",Char.stats.level)
 	
 	
 func get_dmg():
-	var dmg_string = Char.stats.get_dmg_text()
+	var dmg_string = Char.stats.get_dmg_text(-1)
 	var stat1 = Item.duplicate()
 	stat1.get_node("Text").text = "Damage:"
 	stat1.get_node("Value").text = dmg_string
@@ -63,26 +67,26 @@ func get_dmg():
 		stat1items.show()
 		Stats.add_child(stat1items)				
 
-func get_ac():
-	var ac = Char.stats.get_ac_text()
+func get_res():
+	var res = Char.stats.get_res_text()
 	var stat1 = Item.duplicate()
-	stat1.get_node("Text").text = "AC:"
-	stat1.get_node("Value").text = ac
+	stat1.get_node("Text").text = "Res:"
+	stat1.get_node("Value").text = res
 	stat1.show()
 	Stats.add_child(stat1)				
 	
-	var attrib_ac = Char.attributes.get_attrib(1)	#fixed value, crappy solution
+	var attrib_res = Char.attributes.get_attrib(1)	#fixed value, crappy solution
 	var stat1attrib = Item.duplicate()
-	stat1attrib.get_node("Text").text = str("- ",attrib_ac[0])
-	stat1attrib.get_node("Value").text = str(attrib_ac[1])
+	stat1attrib.get_node("Text").text = str("- ",attrib_res[0])
+	stat1attrib.get_node("Value").text = str(attrib_res[1])
 	stat1attrib.show()
 	Stats.add_child(stat1attrib)				
 	
-	var ac_items = Char.stats.get_ac_list()
-	for n in ac_items:
+	var res_items = Char.stats.get_res_list()
+	for n in res_items:
 		var stat1items = Item.duplicate()
 		stat1items.get_node("Text").text = str("- ",n.get_name())
-		stat1items.get_node("Value").text = str(n.get_ac_text())
+		stat1items.get_node("Value").text = str(n.get_res_text())
 		stat1items.show()
 		Stats.add_child(stat1items)				
 		
@@ -92,10 +96,10 @@ func get_ac():
 	#stat1.show()
 	#Stats.add_child(stat1)
 	
-func get_hp():
+func disp_txt_value(txt,value):
 	var stat1 = Item.duplicate()
-	stat1.get_node("Text").text = "HP:"
-	stat1.get_node("Value").text = str(Char.stats.hp)
+	stat1.get_node("Text").text = txt
+	stat1.get_node("Value").text = str(value)
 	stat1.show()
 	Stats.add_child(stat1)
 	

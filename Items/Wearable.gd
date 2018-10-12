@@ -35,7 +35,32 @@ func print():
 
 func add_item(item):
 	inv.push_front(item)
-	
+
+func add_dmg(dmg):
+	var types = []
+	for type in dmg:
+		types.append(type)
+	for wear in inv:
+		if wear.is_equipped:
+			var BonusDmg = wear.BonusDmg
+			for bonus in wear.Dmg:
+				if types.has(bonus[0]):
+					var j = 0
+					for i in dmg:
+						if i[0] == bonus[0]: #If the type matches add the bonus
+							dmg[j] += randi() % (bonus[2] - bonus[1]) + bonus[1] + BonusDmg
+						j += 1
+				else:
+					dmg.append([bonus[0],randi() % (bonus[2] - bonus[1]) + bonus[1] + BonusDmg]) #else add the extra dmg type
+	return dmg
+
+func add_res_specific(type):
+	var res = 0
+	for n in inv:
+		if n.is_equipped:
+			res += n.get_res_specific(type)
+	return res
+
 func add2_wearable(item, i = false):
 	print("this should not execute")
 	var w = Wearables.new()

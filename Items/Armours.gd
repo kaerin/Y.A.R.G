@@ -7,8 +7,8 @@ var BaseType = G.BaseType.Armour
 var Mat
 var Location
 var LocName
-var ArmourClass = 0
-var BonusAC = 0
+#var ArmourClass = 0
+var BonusRes = 0
 var Res = [] #resistance array of array like weapons
 var ImgRect
 
@@ -25,11 +25,11 @@ func set_location(i):
 func set_loc_name(i):
 	LocName = i
 
-func set_ac(i):
-	ArmourClass = i
+#func set_ac(i):
+#	ArmourClass = i
 
-func set_bonus_ac(i):
-	BonusAC = i
+func set_bonus_res(i):
+	BonusRes = i
 	
 #get data
 func get_res():
@@ -39,7 +39,7 @@ func get_res_specific(type):
 	var j = 0
 	for i in Res:
 		if i[RES.TYPE] == type[RES.TYPE]:
-			return i[RES.VALUE] + BonusAC
+			return i[RES.VALUE] + BonusRes
 	return 0
 
 func get_mat():
@@ -51,22 +51,22 @@ func get_location():
 func get_loc_name():
 	return LocName
 	
-func get_ac(): 
-	return get_armour_ac() + get_bonus_ac()
+#func get_ac(): 
+#	return get_armour_ac() + get_bonus_ac()
+#
+func get_res_text(): #same as set(get_ac())
+	return str(Res,BonusRes) #FIX ME
+#
+#func get_armour_ac(): 
+#	return ArmourClass
 
-func get_ac_text(): #same as set(get_ac())
-	return str(get_armour_ac() + get_bonus_ac())
-
-func get_armour_ac(): 
-	return ArmourClass
-
-func get_bonus_ac():
-	return BonusAC
+func get_bonus_res():
+	return BonusRes
 
 func get_all_stats():	
 	var data = str("Name: ", get_name(), "\nEquipped: ", get_equipped(), "\nLocation Name: ", get_loc_name(), "\n")
 	data += "Resistances\n"
 	for i in Res:
 		data += str(i[RES.TYPE],":",i[RES.VALUE],"\n")
-	data += str("Bonus Res: ", BonusAC)
+	data += str("Bonus Res: ", BonusRes)
 	return data
