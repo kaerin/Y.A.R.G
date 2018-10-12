@@ -24,6 +24,8 @@ var found_hidden = false
 var mapgrid
 var map_levels = []
 var admin = false
+var maxEnemies = 0
+var numEnemies = 0
 
 func _ready():
 	start()
@@ -74,6 +76,7 @@ func start(startpos = "S"):
 			if i == "+":
 				j = tile_set.find_tile_by_name(FLOOR[randi() % FLOOR.size()])
 				grid[x][y] = EMPTY
+				maxEnemies += 1
 			elif i == " ":
 				j = tile_set.find_tile_by_name(ROOF[randi() % ROOF.size()])
 				grid[x][y] = WALL
@@ -97,7 +100,7 @@ func start(startpos = "S"):
 	for y in [-1,mapgrid[0].size()]:
 		for x in range(0,mapgrid.size()):
 			set_cell(x,y,tile_set.find_tile_by_name(ROOF[randi() % ROOF.size()]))
-	 
+	maxEnemies /= 2
 	
 	
 #	var start_pos = update_child_pos(
@@ -192,6 +195,12 @@ func chg_level(pos, next = 0):
 
 
 func add_enemies(num = false):
+	var numEnemies = 0
+	for i in get_children():
+		if i.is_in_group("Enemy"):
+			numEnemies += 1
+	if numEnemies > maxEnemies:
+		return
 	if G.Dlevel == -1:
 		return
 	if not num:
@@ -234,3 +243,8 @@ func set_kill_me(child):
 	add_child(new_object)
 			
 	child.queue_free()
+
+
+func _on_EnemyTimer_timeout():
+	$EnemyTimer.wait_time = randi() % 10 + 10
+	add_enemies()
