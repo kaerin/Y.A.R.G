@@ -64,6 +64,17 @@ func gen_wear(item):
 	w.set_type(item.type)
 	w.set_bonus_ac(item.bonus_ac)
 	w.set_bonus_dmg(item.bonus_dmg)
+	
+	var types = G.ResType.keys()
+	var i = types[randi() % types.size()]
+	var j = randi() % (G.Dlevel + 1)
+	w.add_res(i,j)
+	types = G.DmgType.keys() #For when its different
+	i = types[randi() % types.size()]
+	j = randi() % (G.Dlevel + 1)
+	var k = j + randi() % (G.Dlevel + 1) + 1
+	w.add_dmg(i,j,k)
+	
 	w.set_sprite_rect(item.img_rect)
 	w = chk_drop(item, w)
 	var pre = ["Rusted","Shiny","Glowing","Sparkly","Red","Golden","Crappy","Normal","Mood","Talking","Tiny","Oversized","Typcial"]

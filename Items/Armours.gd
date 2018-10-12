@@ -39,7 +39,7 @@ func get_res_specific(type):
 	var j = 0
 	for i in Res:
 		if i[RES.TYPE] == type[RES.TYPE]:
-			return i[RES.VALUE]
+			return i[RES.VALUE] + BonusAC
 	return 0
 
 func get_mat():
@@ -64,4 +64,9 @@ func get_bonus_ac():
 	return BonusAC
 
 func get_all_stats():	
-	return str("Name: ", get_name(), "\nEquipped: ", get_equipped(), "\nLocation Name: ", get_loc_name(), "\nAC: ", get_ac())
+	var data = str("Name: ", get_name(), "\nEquipped: ", get_equipped(), "\nLocation Name: ", get_loc_name(), "\n")
+	data += "Resistances\n"
+	for i in Res:
+		data += str(i[RES.TYPE],":",i[RES.VALUE],"\n")
+	data += str("Bonus Res: ", BonusAC)
+	return data

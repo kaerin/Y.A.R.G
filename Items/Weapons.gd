@@ -43,4 +43,9 @@ func get_dmg_text(i=0):
 	return(dmg_string)
 	
 func get_all_stats():
-	return str("Name: ", get_name(), "\nEquipped: ", get_equipped(), "\nDmg Type: ", get_dmg_type(), "\nMin Dmg: ", get_min_dmg(), "\nMax Dmg: ", get_max_dmg(), "\nBonus Dmg: ", get_bonus_dmg())
+	var data = str("Name: ", get_name(), "\nEquipped: ", get_equipped(), "\n")
+	data += "Damage\n"
+	for i in Dmg:
+		data += str("Type: ", i[0], " Dmg: ", i[1], "-", i[2],"\n")
+	data += str("Bonus Dmg: ", get_bonus_dmg())
+	return data

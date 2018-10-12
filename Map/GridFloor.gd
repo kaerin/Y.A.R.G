@@ -6,4 +6,4 @@ func set_blood(pos):
 	set_cellv(pos,tile_set.find_tile_by_name(BLOOD[randi() % BLOOD.size()]))
 	
 func set_hidden(pos):
-	set_cellv(pos,tile_set.find_tile_by_name("Hidden1"))
+	set_cellv(pos,tile_set.find_tile_by_name("Hidden1")) #This causes hidden to be removed when an enemy is killed on top of it

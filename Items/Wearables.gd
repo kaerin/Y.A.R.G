@@ -5,8 +5,15 @@ var BaseType = G.BaseType.Wear
 var Type
 var BonusAC = 0
 var BonusDmg = 0
+var Res = []
+var Dmg = []
 
 #set data
+func add_res(i,j):
+	Res.append([i,j])
+func add_dmg(i,j,k):
+	Dmg.append([i,j,k])
+	
 func set_type(i):
 	Type = i
 
@@ -37,5 +44,13 @@ func get_dmg_text(): #I'd put all the functions turning numbers into formatted s
 		return(str(BonusDmg))
 	
 func get_all_stats():
-	return str("Name: ", get_name(), "\nEquipped: ", get_equipped(), "\nType: ", get_type(), "\nBonus AC: ", get_bonus_ac(), "\nBonus Dmg: ", get_bonus_dmg())
+	var data = str("Name: ", get_name(), "\nEquipped: ", get_equipped(), "\nType: ", get_type(), "\n")
+	data += "Damage\n"
+	for i in Dmg:
+		data += str("Type: ", i[0], " Dmg: ", i[1], "-", i[2],"\n")
+	data += "Resistances\n"
+	for i in Res:
+		data += str(i[0],":",i[1],"\n")
+	data += str("Bonus AC: ", get_bonus_ac(), "\nBonus Dmg: ", get_bonus_dmg())
+	return data
 	
