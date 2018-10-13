@@ -89,12 +89,6 @@ func get_res():
 		stat1items.get_node("Value").text = str(n.get_res_text())
 		stat1items.show()
 		Stats.add_child(stat1items)				
-		
-	#stat1 = Item.duplicate()
-	#stat1.get_node("Text").text = "AC:"
-	#stat1.get_node("Value").text = str(Inventory.get_ac()) + " Armour:" + str(Inventory.armour.get_ac()) + " Wear:" + str(Inventory.wearable.get_bonus_ac())
-	#stat1.show()
-	#Stats.add_child(stat1)
 	
 func disp_txt_value(txt,value):
 	var stat1 = Item.duplicate()

@@ -27,6 +27,9 @@ func set_bonus_dmg(i):
 #get data
 func get_type():
 	return Type
+
+func get_res():
+	return Res
 	
 func get_bonus_res(): 
 	return BonusRes

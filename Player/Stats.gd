@@ -87,8 +87,39 @@ func get_dmg_list(): #this would be extended to include spells effec etc
 	return(list)	
 	
 func get_res_text():	#this would be extended to include spells effec etc
-	return str("res text, fix me")
-#	return(str(armour.get_ac() + wearable.get_bonus_ac() + attributes.get_ac())) #
+	var res = []
+	var bonus_res = 0
+	for n in armour.inv:
+		if n.is_equipped:
+			for m in n.get_res():					#check all equipped armour
+				var i = 0
+				while i < res.size():
+					var k = res[i][0].find(m[0])	#check if res already exists
+					if k >= 0:
+						res[i][1] += m[1]			#if exists, add to existing
+						break						#break if found
+					i += 1
+				if i == res.size():					#if not found, append
+					res.append(m.duplicate())		#duplicate, otherwise writes only reference to objects res
+		bonus_res +=n.get_bonus_res()
+		print(bonus_res)
+				
+	for n in wearable.inv:
+		if n.is_equipped:
+			for m in n.get_res():					#check all equipped wearables
+				var i = 0
+				while i < res.size():
+					var k = res[i][0].find(m[0])	#check if res already exists
+					if k >= 0:
+						res[i][1] += m[1]			#if exists, add to existing
+						break						#break if found
+					i += 1
+				if i == res.size():					#if not found, append
+					res.append(m.duplicate())		#duplicate, otherwise writes only reference to objects res
+		bonus_res +=n.get_bonus_res()
+		print(bonus_res)
+		
+	return str(res,bonus_res)	
 	
 func get_res_list(): #this would be extended to include spells effec etc
 	var list = []
