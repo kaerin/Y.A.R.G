@@ -72,10 +72,20 @@ func get_equip_name(loc):
 func get_equip(loc):
 	return active[loc]
 
-func get_res():
+func get_res(res):
 	for n in inv:
 		if n.is_equipped:
-			return(n.get_res())
+			for m in n.get_res():					#check all equipped armour
+				var i = 0
+				while i < res.size():
+					var k = res[i][0].find(m[0])	#check if res already exists
+					if k >= 0:
+						res[i][1] += m[1]			#if exists, add to existing
+						break						#break if found
+					i += 1
+				if i == res.size():					#if not found, append
+					res.append(m.duplicate())		#duplicate, otherwise writes only reference to objects res
+	return(res)
 
 func get_res_specific(type):
 	var res = 0

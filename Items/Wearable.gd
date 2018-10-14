@@ -106,6 +106,20 @@ func get_bonus_ac():
 #func get_amulet_bonus_ac():
 #	return inventory[active_amulet].get_bonus_ac() #fix mne
 
+func get_res(res):
+	for n in inv:
+		if n.is_equipped:
+			for m in n.get_res():					#check all equipped wearables
+				var i = 0
+				while i < res.size():
+					var k = res[i][0].find(m[0])	#check if res already exists
+					if k >= 0:
+						res[i][1] += m[1]			#if exists, add to existing
+						break						#break if found
+					i += 1
+				if i == res.size():					#if not found, append
+					res.append(m.duplicate())		#duplicate, otherwise writes only reference to objects res
+	return(res)	
 
 func get_bonus_dmg():
 	var dmg = 0
