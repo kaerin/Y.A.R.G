@@ -85,10 +85,10 @@ func get_all_stats():
 	var data = str("Name: ", get_name(), "\nEquipped: ", get_equipped(), "\nType: ", get_type(), "\n")
 	data += "Damage\n"
 	for i in Dmg:
-		data += str("Type: ", i[0], " Dmg: ", i[1], "-", i[2],"\n")
+		data += str(i[0], " Dmg: ", i[1], "-", i[2],"\n")
 	data += "Resistances\n"
 	for i in Res:
 		data += str(i[0],":",i[1],"\n")
-	data += str("Bonus AC: ", get_bonus_res(), "\nBonus Dmg: ", get_bonus_dmg())
+	data += str("Bonus Res: ", get_bonus_res(), "\nBonus Dmg: ", get_bonus_dmg())
 	return data
 	

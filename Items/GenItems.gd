@@ -67,7 +67,7 @@ func gen_wear(item):
 	
 	var types = G.ResType.keys()
 	var i = types[randi() % types.size()]
-	var j = randi() % (G.Dlevel + 1) + 99 #+99 testing
+	var j = randi() % (G.Dlevel + 1) + 9 #+99 testing
 	w.add_res(i,j)
 	
 	types = G.DmgType.keys() #For when its different
