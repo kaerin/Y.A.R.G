@@ -68,25 +68,33 @@ func get_dmg():
 		Stats.add_child(stat1items)				
 
 func get_res():
-	var res = Char.stats.get_res_text()
+	var res = Char.stats.get_res_all(1)
 	var stat1 = Item.duplicate()
-	stat1.get_node("Text").text = "Res:"
+	stat1.get_node("Text").text = "Resistances:"
 	stat1.get_node("Value").text = res
 	stat1.show()
 	Stats.add_child(stat1)				
+
+	for i in G.DmgType:
+		var stat2 = Item.duplicate()
+		stat2.get_node("Text").text = i
+		var j = Char.stats.get_res_all()		
+		for k in j:
+			if i == k[0]:
+				stat2.get_node("Value").text = str(k[1])
+				break
+			else:
+				stat2.get_node("Value").text = "0"				
+		stat2.show()
+		Stats.add_child(stat2)				
 	
-	var attrib_res = Char.attributes.get_attrib(1)	#fixed value, crappy solution
-	var stat1attrib = Item.duplicate()
-	stat1attrib.get_node("Text").text = str("- ",attrib_res[0])
-	stat1attrib.get_node("Value").text = str(attrib_res[1])
-	stat1attrib.show()
-	Stats.add_child(stat1attrib)				
+	add_spacer()
 	
 	var res_items = Char.stats.get_res_list()
 	for n in res_items:
 		var stat1items = Item.duplicate()
 		stat1items.get_node("Text").text = str("- ",n.get_name())
-		stat1items.get_node("Value").text = str(n.get_res_text())
+		stat1items.get_node("Value").text = Char.stats.convert_to_text(n.get_res())		#str(n.get_res())
 		stat1items.show()
 		Stats.add_child(stat1items)				
 	

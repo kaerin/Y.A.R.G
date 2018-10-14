@@ -72,7 +72,7 @@ func get_equip_name(loc):
 func get_equip(loc):
 	return active[loc]
 
-func get_res(res):
+func get_res_all(res):
 	for n in inv:
 		if n.is_equipped:
 			for m in n.get_res():					#check all equipped armour

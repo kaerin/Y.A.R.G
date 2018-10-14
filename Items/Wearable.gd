@@ -106,7 +106,7 @@ func get_bonus_ac():
 #func get_amulet_bonus_ac():
 #	return inventory[active_amulet].get_bonus_ac() #fix mne
 
-func get_res(res):
+func get_res_all(res):
 	for n in inv:
 		if n.is_equipped:
 			for m in n.get_res():					#check all equipped wearables

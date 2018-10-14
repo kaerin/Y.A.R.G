@@ -86,14 +86,15 @@ func get_dmg_list(): #this would be extended to include spells effec etc
 				list.append(n)
 	return(list)	
 	
-func get_res_text():	#this would be extended to include spells effec etc
+func get_res_all(i=0):	#this would be extended to include spells effec etc
 	var res = []
-	var bonus_res = 0
-	res = armour.get_res(res)
-	res = wearable.get_res(res)
-		
-	return str(res,bonus_res)	
-	
+	#var bonus_res = 0
+	res = armour.get_res_all(res)
+	res = wearable.get_res_all(res)
+	if i==0:		
+		return res	
+	if i==1:
+		return convert_to_text(res)	
 func get_res_list(): #this would be extended to include spells effec etc
 	var list = []
 	for n in armour.inv:
@@ -104,4 +105,14 @@ func get_res_list(): #this would be extended to include spells effec etc
 		if n.is_equipped:
 			if n.get_bonus_res():
 				list.append(n)
-	return(list)		
+	return(list)
+	
+func convert_to_text(i):
+	i = str(i)
+	print(i.find("], ["))
+	i = i.replace(" ["," ")
+	i = i.replace(",",":")
+	i = i.replace("]:",",")
+	i = i.replace("[","")
+	i = i.replace("]","")
+	return i
