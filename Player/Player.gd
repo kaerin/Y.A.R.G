@@ -114,23 +114,6 @@ func _process(delta):
 		if not facing:
 			facing = true
 			$Sprite.set_flip_h(facing)
-#	elif Input.is_action_pressed("ui_up_right"):
-#		direction = RIGHT + UP
-#	elif Input.is_action_pressed("ui_up_left"):
-#		direction = LEFT + UP
-#	elif Input.is_action_pressed("ui_down_left"):
-#		direction = LEFT + DOWN
-#	elif Input.is_action_pressed("ui_down_right"):
-#		direction = RIGHT + DOWN
-#	if not direction == Vector2():
-#		speed = MAX_SPEED
-#	else:
-#		speed = 0
-	
-#	var target_pos = grid_map.update_child_pos(self)
-#	set_position(target_pos)
-
-
 
 	if not is_moving and not direction == Vector2():
 		target_direction = direction

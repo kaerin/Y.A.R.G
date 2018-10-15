@@ -52,63 +52,42 @@ func update_stats():
 	
 	
 func get_dmg():
-	var dmg_string = Char.stats.get_dmg_text(-1)
-	var stat1 = Item.duplicate()
-	stat1.get_node("Text").text = "Damage:"
-	stat1.get_node("Value").text = dmg_string
-	stat1.show()
-	Stats.add_child(stat1)				
+	var dmg_string = Char.stats.get_dmg_all()
+	disp_txt_value("Damage:", Char.stats.convert_to_text(dmg_string))	
 
 	var dmg_items = Char.stats.get_dmg_list()
 	for n in dmg_items:
-		var stat1items = Item.duplicate()
-		stat1items.get_node("Text").text = str("- ",n.get_name())
-		stat1items.get_node("Value").text = n.get_dmg_text()
-		stat1items.show()
-		Stats.add_child(stat1items)				
+		disp_txt_value(str("- ",n.get_name()), Char.stats.convert_to_text(n.get_dmg_all()))	
 
 func get_res():
 	var res = Char.stats.get_res_all(1)
-	var stat1 = Item.duplicate()
-	stat1.get_node("Text").text = "Resistances:"
-	stat1.get_node("Value").text = res
-	stat1.show()
-	Stats.add_child(stat1)				
+	disp_txt_value("Resistances:", res)		
 
+# dont know whether to use above or below visual representation
 	for i in G.DmgType:
-		var stat2 = Item.duplicate()
-		stat2.get_node("Text").text = i
+		var a = ""
 		var j = Char.stats.get_res_all()		
 		for k in j:
 			if i == k[0]:
-				stat2.get_node("Value").text = str(k[1])
+				a = str(k[1])
 				break
 			else:
-				stat2.get_node("Value").text = "0"				
-		stat2.show()
-		Stats.add_child(stat2)				
-	
+				a = "0"				
+		disp_txt_value(i, a)	
 	add_spacer()
 	
 	var res_items = Char.stats.get_res_list()
 	for n in res_items:
-		var stat1items = Item.duplicate()
-		stat1items.get_node("Text").text = str("- ",n.get_name())
-		stat1items.get_node("Value").text = Char.stats.convert_to_text(n.get_res())		#str(n.get_res())
-		stat1items.show()
-		Stats.add_child(stat1items)				
-	
+		disp_txt_value(str("- ",n.get_name()), Char.stats.convert_to_text(n.get_res_all()))
+
+############################
+# Ease Of Use
+############################
+
 func disp_txt_value(txt,value):
 	var stat1 = Item.duplicate()
 	stat1.get_node("Text").text = txt
 	stat1.get_node("Value").text = str(value)
-	stat1.show()
-	Stats.add_child(stat1)
-	
-func get_gold():
-	var stat1 = Item.duplicate()
-	stat1.get_node("Text").text = "Gold:"
-	stat1.get_node("Value").text = str(Char.stats.gold)
 	stat1.show()
 	Stats.add_child(stat1)
 	
@@ -117,11 +96,4 @@ func add_spacer():
 	stat1.set_custom_minimum_size(Vector2(0,20)) 
 	stat1.show()
 	Stats.add_child(stat1)				
-	
 
-
-
-#func _process(delta):
-#	# Called every frame. Delta is time since last frame.
-#	# Update game logic here.
-#	pass

@@ -45,16 +45,10 @@ func get_max_dmg(i=0):
 		return j
 	else:
 		return Dmg[i][2]
-	
-func get_dmg_text(i=0):
-#	var dmg_string = str(get_min_dmg(i),"-",get_max_dmg(i))
-	var dmg_string = str(Dmg) #Fix this string
-	if BonusDamage > 0:
-		dmg_string += str("+",BonusDamage)
-	elif BonusDamage < 0:	
-		dmg_string += str(BonusDamage)
-	return(dmg_string)
-	
+
+func get_dmg_all():
+	return Dmg
+
 func get_all_stats():
 	var data = str("Name: ", get_name(), "\nEquipped: ", get_equipped(), "\n")
 	data += "Damage\n"

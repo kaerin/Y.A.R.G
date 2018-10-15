@@ -74,42 +74,33 @@ func add2_wearable(item, i = false):
 	if i:
 		alter_stats(0,10)
 
-#func get_ring_name():
-#	for i in inventory:
-#		if i.WearType == G.WearType.Ring and i.is_active:
-#			return i.get_name() +"zzz"
-#
-#func get_amulet_name(i = active_amulet):
-#	return inventory[i].get_name()
-
 func get_name(i):
 	return inv[i].get_name()
 
 func get_type(i):
 	return inv[i].get_type()
 
-#func equip_ring(i):
-#	active_ring = i
-#
-#func equip_amulet(i):
-#	active_amulet = i
-	
-func get_bonus_ac():
-	var ac = 0
+func get_dmg_all(dmg):
 	for n in inv:
 		if n.is_equipped:
-			ac += n.get_bonus_ac()
-	return ac
-	
-#func get_ring_bonus_ac():
-#	return inventory[active_ring].get_bonus_ac() #fix mne
-#func get_amulet_bonus_ac():
-#	return inventory[active_amulet].get_bonus_ac() #fix mne
+			for m in n.get_dmg_all():					#check all equipped wearables
+				var i = 0
+				while i < dmg.size():
+					var k = dmg[i][0].find(m[0])	#check if res already exists
+					if k >= 0:
+						dmg[i][1] += m[1]			#if exists, add to existing
+						dmg[i][2] += m[2]			#if exists, add to existing
+						break						#break if found
+					i += 1
+				if i == dmg.size():					#if not found, append
+					dmg.append(m.duplicate())		#duplicate, otherwise writes only reference to objects res
+	return(dmg)	
+
 
 func get_res_all(res):
 	for n in inv:
 		if n.is_equipped:
-			for m in n.get_res():					#check all equipped wearables
+			for m in n.get_res_all():					#check all equipped wearables
 				var i = 0
 				while i < res.size():
 					var k = res[i][0].find(m[0])	#check if res already exists
@@ -127,10 +118,7 @@ func get_bonus_dmg():
 		if n.is_equipped:
 			dmg += n.get_bonus_dmg()
 	return dmg
-#func get_amulet_bonus_dmg():
-#	return inventory[active_amulet].get_bonus_dmg() #fix mne
-#func get_ring_bonus_dmg():
-#	return inventory[active_ring].get_bonus_dmg() #fix mne
+
 
 
 	

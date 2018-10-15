@@ -37,7 +37,11 @@ func set_armour(i):
 
 func set_attributes(i): 
 	attributes = i #2. assign class sent by player to a variable	
-	
+
+###################################
+# DMG & RES. used for combat
+###################################
+
 func get_dmg():		
 	var damage = weapon.get_dmg()
 	damage = wearable.add_dmg(damage)
@@ -51,28 +55,20 @@ func get_res(dmg):
 		j[k][1] += wearable.add_res_specific(i)
 		k += 1
 	return j	#collects all armours pieces resistance for applied damage type
-		
-func get_dmg_text(i=0):	#this would be extended to include spells effec etc
-	var min_dmg = 0
-	var max_dmg = 0
-	var bonus_dmg = 0
-	for n in weapon.inv:
-		if n.is_equipped:
-			min_dmg += (n.get_min_dmg(i))
-			max_dmg += (n.get_max_dmg(i))
-			bonus_dmg += (n.get_bonus_dmg())
-	for n in wearable.inv:
-		if n.is_equipped:
-			min_dmg += (n.get_min_dmg(i))
-			max_dmg += (n.get_max_dmg(i))
-			bonus_dmg += (n.get_bonus_dmg())
 
-	var dmg_string = str(min_dmg,"-",max_dmg)
-	if bonus_dmg > 0:
-		dmg_string += str("+",bonus_dmg) 
-	elif bonus_dmg < 0:
-		dmg_string += str(bonus_dmg)
-	return(dmg_string)
+################################
+# DAMAGE TOTALS. eg. Char Sheet
+################################
+
+func get_dmg_all(i=0):	#this would be extended to include spells effec etc
+	var dmg = []
+	#var bonus_res = 0
+	dmg = weapon.get_dmg_all(dmg)
+	dmg = wearable.get_dmg_all(dmg)
+	if i==0:		
+		return dmg	
+	if i==1:
+		return convert_to_text(dmg)	
 	
 func get_dmg_list(): #this would be extended to include spells effec etc
 	var list = []
@@ -86,6 +82,10 @@ func get_dmg_list(): #this would be extended to include spells effec etc
 				list.append(n)
 	return(list)	
 	
+##############################
+# RESISTANCE TOTALS. eg. Char sheet.
+##############################	
+	
 func get_res_all(i=0):	#this would be extended to include spells effec etc
 	var res = []
 	#var bonus_res = 0
@@ -95,6 +95,7 @@ func get_res_all(i=0):	#this would be extended to include spells effec etc
 		return res	
 	if i==1:
 		return convert_to_text(res)	
+		
 func get_res_list(): #this would be extended to include spells effec etc
 	var list = []
 	for n in armour.inv:
@@ -107,12 +108,22 @@ func get_res_list(): #this would be extended to include spells effec etc
 				list.append(n)
 	return(list)
 	
+##############################
+#	ease of use functions
+##############################	
+	
 func convert_to_text(i):
-	i = str(i)
-	print(i.find("], ["))
-	i = i.replace(" ["," ")
-	i = i.replace(",",":")
-	i = i.replace("]:",",")
-	i = i.replace("[","")
-	i = i.replace("]","")
-	return i
+	var string = ""
+	for j in i:
+		j = str(j)
+		j.erase(j.find("["),1)
+		j.erase(j.find("]"),1)
+		if j.find(","):
+			j = j.insert(j.find(",")+1,":")
+			j.erase(j.find(","),1)
+			if j.find(",") >= 0:
+				j = j.insert(j.find(",")+2,"-")
+				j.erase(j.find(","),2)
+		j += " "		
+		string += j
+	return string

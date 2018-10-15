@@ -7,7 +7,6 @@ var BaseType = G.BaseType.Armour
 var Mat
 var Location
 var LocName
-#var ArmourClass = 0
 var BonusRes = 0
 var Res = [] #resistance array of array like weapons
 var ImgRect
@@ -25,14 +24,11 @@ func set_location(i):
 func set_loc_name(i):
 	LocName = i
 
-#func set_ac(i):
-#	ArmourClass = i
-
 func set_bonus_res(i):
 	BonusRes = i
 	
 #get data
-func get_res():
+func get_res_all():
 	return Res
 
 func get_res_specific(type):
@@ -51,15 +47,6 @@ func get_location():
 func get_loc_name():
 	return LocName
 	
-#func get_ac(): 
-#	return get_armour_ac() + get_bonus_ac()
-#
-func get_res_text(): #same as set(get_ac())
-	return str(Res,BonusRes) #FIX ME
-#
-#func get_armour_ac(): 
-#	return ArmourClass
-
 func get_bonus_res():
 	return BonusRes
 

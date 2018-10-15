@@ -28,9 +28,12 @@ func set_bonus_dmg(i):
 func get_type():
 	return Type
 
-func get_res():
+func get_res_all():
 	return Res
-	
+
+func get_dmg_all():
+	return Dmg
+
 func get_bonus_res(): 
 	return BonusRes
 
@@ -41,8 +44,6 @@ func get_res_specific(type):
 			return i[RES.VALUE] + BonusRes
 	return 0
 
-#func get_ac_text(): #same as str(get_bonus_ac()) which makes more sense
-#	return str(BonusRes)
 func get_min_dmg(i=0):
 	if i < 0:
 		var j = 0
@@ -63,23 +64,6 @@ func get_max_dmg(i=0):
 
 func get_bonus_dmg(): #weapon damage
 	return BonusDmg
-	
-func get_dmg_text(): #I'd put all the functions turning numbers into formatted string of text into visual, stats has all the numbers from everything
-	var dmg_string = str(Dmg)
-	if BonusDmg >= 0: #I'd keep these classes simple just have the data here, leave formatted text up to something else
-		dmg_string += str("+",BonusDmg)
-	else:	
-		dmg_string += str(BonusDmg)
-	return dmg_string
-
-func get_res_text(): #I'd put all the functions turning numbers into formatted string of text into visual, stats has all the numbers from everything
-	var res_string = str(Res)
-	if BonusRes >= 0: #I'd keep these classes simple just have the data here, leave formatted text up to something else
-		res_string += str("+",BonusRes)
-	else:	
-		res_string += str(BonusRes)
-	return res_string
-	
 
 func get_all_stats():
 	var data = str("Name: ", get_name(), "\nEquipped: ", get_equipped(), "\nType: ", get_type(), "\n")

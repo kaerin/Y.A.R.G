@@ -75,7 +75,7 @@ func get_equip(loc):
 func get_res_all(res):
 	for n in inv:
 		if n.is_equipped:
-			for m in n.get_res():					#check all equipped armour
+			for m in n.get_res_all():					#check all equipped armour
 				var i = 0
 				while i < res.size():
 					var k = res[i][0].find(m[0])	#check if res already exists
