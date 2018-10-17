@@ -37,10 +37,9 @@ onready var Weapon = load("res://Items/Weapon.gd")
 onready var Armour = load("res://Items/Armour.gd")
 onready var Wearable = load("res://Items/Wearable.gd")
 onready var Inventory = load("res://Inv/Inv.gd")
+onready var Spells = load("res://Spells/Spells.gd")
 onready var GenItems = load("res://Items/GenItems.gd")
 onready var Combat = load("res://Player/Combat.gd")
-onready var Skills = load("res://Player/Skills.gd")
-onready var Spells = load("res://Player/Spells.gd")
 
 onready var Attrib = load("res://Player/Attributes.gd")
 onready var Stats = load("res://Player/Stats.gd")
@@ -54,8 +53,6 @@ var spells
 func _ready():
 #	print(G.MAT.CLOTH)
 	combat = Combat.new()
-	skills = Skills.new()
-	spells = Spells.new()	
 	genItems = GenItems.new()
 	attributes = Attrib.new()
 	attributes.set_attributes(dic_classes[4]) #FIX this static index

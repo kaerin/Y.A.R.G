@@ -1,6 +1,6 @@
 extends Node
 
-onready var dic_items = get_parent().get_parent().get_parent().get_node("Dictionaries/Items")
+#onready var dic_items = get_parent().get_parent().get_parent().get_node("Dictionaries/Items")
 #onready var Inv = load("res://Inventory/Inventory.tscn")
 onready var Weapon = load("res://Items/Weapon.gd")
 onready var Armour = load("res://Items/Armour.gd")
@@ -40,26 +40,26 @@ func _process(delta):
 		if Input.is_action_just_pressed("ui_inv") || (inv_displayed && Input.is_action_just_pressed("char_sheet")):
 			_inventory()
 
-func get_damage():
-	print("You are using the wrong get_damage function")
-	var damage = 0 #= randi() % (equipped[WEAPON].max_damage + 1 - equipped[WEAPON].min_damage) + equipped[WEAPON].min_damage
+#func get_damage():
+#	print("You are using the wrong get_damage function")
+#	var damage = 0 #= randi() % (equipped[WEAPON].max_damage + 1 - equipped[WEAPON].min_damage) + equipped[WEAPON].min_damage
 #		print("AC:", armour.get_ac(), " Bonus:",wearable.get_bonus_ac())
 #		print("Bonus dmg:", wearable.get_bonus_dmg())
 	#can do this add all damage and bonuses together
 	#damage = weapon.get_damage() + ring.get_dmg_bonus() + amulet.get_dmg_bonus() 
-	var dmg = weapon.get_damage()
-	for i in dmg:
-		damage += i[1]
-	if parent.CHARTYPE == G.CHAR.PLAYER: #FIX THIS
-		damage += wearable.get_bonus_dmg() #get damage from equipped weapon class, the same as inventory.weapon.get_damage() called from the player class
+#	var dmg = weapon.get_damage()
+#	for i in dmg:
+#		damage += i[1]
+#	if parent.CHARTYPE == G.CHAR.PLAYER: #FIX THIS
+#		damage += wearable.get_bonus_dmg() #get damage from equipped weapon class, the same as inventory.weapon.get_damage() called from the player class
 		#FIX the above line, enemeies have bonuses too, I think the problem wss when nothing is assigned
 	
 #		print("Weapon damage: ", damage) #get the currently equppied weapons damage from the class
-	if parent.CHARTYPE == G.CHAR.PLAYER:
-		Game.Dialog.print_label("Your weapon: " + weapon.get_active_name() + " did " + str(damage) + " damage.", 2)
-	if not damage:
-		damage = 0
-	return(damage)
+#	if parent.CHARTYPE == G.CHAR.PLAYER:
+#		Game.Dialog.print_label("Your weapon: " + weapon.get_active_name() + " did " + str(damage) + " damage.", 2)
+#	if not damage:
+#		damage = 0
+#	return(damage)
 
 func find_rnd_item():
 	var i = weapon.inv + armour.inv + wearable.inv

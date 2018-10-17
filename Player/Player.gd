@@ -15,8 +15,6 @@ onready var Attrib = load("res://Player/Attributes.gd")
 onready var Stats = load("res://Player/Stats.gd")
 onready var GenItems = load("res://Items/GenItems.gd")
 onready var Combat = load("res://Player/Combat.gd")
-onready var Skills = load("res://Player/Skills.gd")
-onready var Spells = load("res://Player/Spells.gd")
 #onready var weapons = load("res://Items/Weapon.gd") #load class
 #onready var Map = get_node("../../Map")
 
@@ -58,8 +56,6 @@ func _ready():
 	inv.wearable.inv[0].set_bonus_dmg(1)
 	inv.wearable.inv[0].set_bonus_res(2)
 	combat = Combat.new()
-	skills = Skills.new()
-	spells = Spells.new()
 	
 	type = grid_map.PLAYER
 	if G.PlayerColor:

@@ -6,6 +6,7 @@ enum	MAT		{CLOTH, LEATHER, CHAIN, PLATE, SKIN} #Material
 enum	LOC		{CHEST, HEAD, ARMS, LEGS} #Location
 enum	WEAR	{AMULET, NECKLACE, RING, EARING} #Wear location/type
 enum	CHAR	{PLAYER, ENEMY, NPC}
+enum	SPELL	{HEAL, DMG, BUFF}
 
 #CamelCaseForText
 const Mat = {Cloth = "Cloth", Leather = "Leather", Chain = "Chain", Plate = "Plate"}
@@ -16,6 +17,7 @@ const Weap = {Fist = "Fist", Sword = "Sword", Dagger = "Dagger", Club = "Club", 
 const Loc = {Chest = "Chest", Head = "Head", Arms = "Arms", Legs = "Legs"}
 const WearType = {Amulet = "Amulet", Ring = "Ring"}
 const En = {Rat="Rat", Turtle="Turtle", Mole="Mole", Bee="Bee",Gnome="Gnome"}
+const Heal = {Heal = "Heal"}
 
 var TODO_img = Rect2(1184,1600,32,32)
 
