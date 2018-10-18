@@ -23,5 +23,9 @@ func ButtonPressed(n):
 func _on_Button_pressed():
 	#print(self.get_name())
 	G.PlayerColor = $VBoxContainer/PlayerCol.color
+	if $VBoxContainer/CheckBox.pressed:
+		N.create_server($VBoxContainer/HBox/NameINput.text)
+	else:
+		N.join_server($VBoxContainer/HBox/NameINput.text)
 	get_tree().change_scene("res://Game.tscn")
 

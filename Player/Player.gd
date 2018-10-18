@@ -46,6 +46,7 @@ func chk_level():
 	Game.stats.set_level(stats.level)
 	
 func _ready():
+	
 	var genItems = GenItems.new()
 	
 	inv.add_item(genItems.gen_weap(DicItems.weapons[G.WEAP.SWORD]),true)
@@ -124,6 +125,7 @@ func _process(delta):
 				$Timer.start()
 				combat.attack(self,enemy)
 	elif is_moving:
+		$Name.text = N.players[get_tree().get_network_unique_id()].name
 		speed = MAX_SPEED
 		velocity = speed * target_direction.normalized() * delta
 #		print(velocity)
@@ -142,6 +144,7 @@ func _process(delta):
 			emit_signal("enemy_move")
 
 func attack():
+	
 	print("Incorrect function")
 	var enemy = grid_map.get_cell_node(get_position(), target_direction)
 	if enemy:

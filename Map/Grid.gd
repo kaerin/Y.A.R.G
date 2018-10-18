@@ -164,6 +164,7 @@ func update_child_pos(child_node):
 	grid[new_grid_pos.x][new_grid_pos.y] = child_node.type
 	var target_pos = map_to_world(new_grid_pos) + half_tile_size
 	if child_node.is_in_group("Player"):
+		N.send_pos(target_pos)
 		if new_grid_pos == hidden:
 			set_cellv(end, tile_set.find_tile_by_name("StairDown1"))
 			found_hidden = true
