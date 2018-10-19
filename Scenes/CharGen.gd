@@ -5,6 +5,8 @@ onready var class_choice = get_node("Template/Button")
 onready var class_vbox	= get_node("VBox_Class")
 
 func _ready():
+	randomize()
+	$VBoxContainer/HBox/NameINput.text = str(randi() % 1000)
 	var j = classes.new()
 	add_child(j)
 	var i = 0
