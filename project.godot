@@ -84,6 +84,10 @@ prev_level=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name
 msg_log=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":77,"unicode":0,"echo":false,"script":null)
  ]
 
+[network]
+
+ssl/certificates="res://Data/pub.crt"
+
 [rendering]
 
 quality/2d/use_pixel_snap=true

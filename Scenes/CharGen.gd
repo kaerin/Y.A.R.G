@@ -5,6 +5,7 @@ onready var class_choice = get_node("Template/Button")
 onready var class_vbox	= get_node("VBox_Class")
 
 func _ready():
+	$IPadr.text = N.DEF_IP
 	randomize()
 	$VBoxContainer/HBox/NameINput.text = str(randi() % 1000)
 	var j = classes.new()
@@ -24,6 +25,7 @@ func ButtonPressed(n):
 
 func _on_Button_pressed():
 	#print(self.get_name())
+	N.DEF_IP = $IPadr.text
 	G.PlayerColor = $VBoxContainer/PlayerCol.color
 	if $VBoxContainer/CheckBox.pressed:
 		N.create_server($VBoxContainer/HBox/NameINput.text)
@@ -31,3 +33,17 @@ func _on_Button_pressed():
 		N.join_server($VBoxContainer/HBox/NameINput.text)
 	get_tree().change_scene("res://Game.tscn")
 
+
+
+func _on_CheckBox_pressed():
+	if $VBoxContainer/CheckBox.pressed:
+		$VBoxContainer/CheckBox.text = "Server"
+		N.DEF_IP = $IPadr.text
+		$HTTPRequest.request("https://api.myip.com/")
+	else:
+		$VBoxContainer/CheckBox.text = "Client"
+		$IPadr.text = N.DEF_IP
+
+func _on_HTTPRequest_request_completed(result, response_code, headers, body):
+	var json = JSON.parse(body.get_string_from_utf8())
+	print(json.result)

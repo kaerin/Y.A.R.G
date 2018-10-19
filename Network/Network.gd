@@ -1,6 +1,6 @@
 extends Node
 
-const DEF_IP = '127.0.0.1'
+var DEF_IP = '127.0.0.1'
 const DEF_PORT = 3117
 const MAX_PLAYERS = 10
 
