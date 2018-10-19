@@ -125,7 +125,8 @@ func _process(delta):
 				$Timer.start()
 				combat.attack(self,enemy)
 	elif is_moving:
-		$Name.text = N.players[get_tree().get_network_unique_id()].name
+		if N.is_connected:
+			$Name.text = N.players[get_tree().get_network_unique_id()].name
 		speed = MAX_SPEED
 		velocity = speed * target_direction.normalized() * delta
 #		print(velocity)

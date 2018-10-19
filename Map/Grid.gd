@@ -47,6 +47,7 @@ func start(startpos = "S"):
 	if G.Dlevel < 0:
 		print("You are on the surface")
 		Player.set_position(map_to_world(Vector2(50,50)) + half_tile_size)
+		N.send_pos(Player.position)
 		grid_size = Vector2(100,100)
 		create_grid()
 		for x in grid_size.x:
@@ -108,6 +109,7 @@ func start(startpos = "S"):
 		Player.set_position(map_to_world(start) + half_tile_size)
 	if startpos == "E":
 		Player.set_position(map_to_world(end) + half_tile_size)
+	N.send_pos(Player.position)
 	if found_hidden == true:
 		set_cellv(end, tile_set.find_tile_by_name("StairDown1"))
 #	Player.is_moving = false
@@ -165,6 +167,7 @@ func update_child_pos(child_node):
 	var target_pos = map_to_world(new_grid_pos) + half_tile_size
 	if child_node.is_in_group("Player"):
 		N.send_pos(target_pos)
+#		N.rpc("sending pos", target_pos)
 		if new_grid_pos == hidden:
 			set_cellv(end, tile_set.find_tile_by_name("StairDown1"))
 			found_hidden = true

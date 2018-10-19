@@ -4,6 +4,7 @@ const DEF_IP = '127.0.0.1'
 const DEF_PORT = 3117
 const MAX_PLAYERS = 10
 
+var is_connected = false
 var players = {}	#this represents all connected players, "Others" is for visual representation on grid ?
 var data = { name = '', pos = Vector2() }
 
@@ -12,6 +13,13 @@ var data = { name = '', pos = Vector2() }
 func _ready():
 	get_tree().connect("network_peer_connected", self, "player_connected")
 	get_tree().connect("network_peer_disconnected", self, "player_disconnected")
+	get_tree().connect('connected_to_server', self, 'connected_to_server')
+	get_tree().connect('connection_failed', self, 'connection_failed')
+	get_tree().connect('server_disconnected', self, 'server_disconnected')
+
+func _process(delta):
+	if Input.is_action_just_pressed("debug"):
+		print(players)
 
 func create_server(i):
 	data.name = i
@@ -19,14 +27,11 @@ func create_server(i):
 	var peer = NetworkedMultiplayerENet.new()
 	peer.create_server(DEF_PORT, MAX_PLAYERS)
 	get_tree().set_network_peer(peer)
-#	print("Server created")
 	
 #Joins server and calls "connected to server" method once connected
 #..emits the signal connected_to_server
 func join_server(i):
-#	print("joining server")
 	data.name = i
-	get_tree().connect('connected_to_server', self, 'connected_to_server')
 	var peer = NetworkedMultiplayerENet.new()
 	peer.create_client(DEF_IP, DEF_PORT)
 	get_tree().set_network_peer(peer)
@@ -36,25 +41,56 @@ func join_server(i):
 func connected_to_server():
 	print("Connected to server")
 	players[get_tree().get_network_unique_id()] = data
-	rpc('send_player_info', get_tree().get_network_unique_id(), data)
+	is_connected = true
+#	rpc('send_player_info', get_tree().get_network_unique_id(), data)
 #	print("connected as client")
 
 func player_connected(id):
-	print("Network peer connect, client connected ", id)
-#	print(players)
+	print("This client connected to us ", id)
+	players[id] = { name = '', pos = Vector2() }
+	is_connected = true
+	rpc_id(id, 'sending_pos', data.pos)
+	rpc_id(id, 'get_player', id)
 	
+	var other = load("res://Player/Others.tscn").instance()
+	other.name = str(id)
+	get_node("/root/BaseNode").add_child(other)
+	other.id = id
+	other.init(players[id])
+
+remote func get_player(id):
+	rpc_id(get_tree().get_rpc_sender_id(), 'set_player', id, players[id])
+remote func set_player(id, data):
+	players[id] = data
 
 func player_disconnected(id):
-	print("client disconnected ", id)
-	rpc('remove_player',id)
-
-sync func remove_player(id):
-	print("removing player ",id)
+	print("This client disconnected ", id)
 	players.erase(id)
 	var i = get_node("/root/BaseNode/"+str(id))
 	if i:
 		i.queue_free()
-	print("players: ",players)
+
+func connection_failed():
+	print("Connection failed")
+func server_disconnected():
+	print("Server disconnected")
+	is_connected = false
+
+remote func sending_pos(pos):
+	var id = get_tree().get_rpc_sender_id()
+	print(id, pos)
+	players[id].pos  = pos
+
+
+#	rpc('remove_player',id)
+#
+#sync func remove_player(id):
+#	print("removing player ",id)
+#	players.erase(id)
+#	var i = get_node("/root/BaseNode/"+str(id))
+#	if i:
+#		i.queue_free()
+#	print("players: ",players)
 	
 #this sends back all each players data to requesting client.
 #shouldnt this just send just self data to requesting client, not everyones data ?	
@@ -66,22 +102,22 @@ sync func remove_player(id):
 #..this is simple way so each client can visualise the data
 
 remote func send_player_info(id, info): #remote can only be called by remote clients
-	print("send player info ", id, " ", info)
-	players[id] = info #everyone updates players array
-	if get_tree().is_network_server(): #is network server
-		for peer_id in players:
-			print("Sending to ", peer_id, " data ", players[peer_id])
-			rpc('send_player_info', peer_id, players[peer_id]) #since only the server can call the function and it cant call itself there is no look
-#			rpc_id(id, 'send_player_info', peer_id, players[peer_id]) #since only the server can call the function and it cant call itself there is no look
+	pass
+#	print("send player info ", id, " ", info)
+#	players[id] = info #everyone updates players array
+#	if get_tree().is_network_server(): #is network server
+#		for peer_id in players:
+#			print("Sending to ", peer_id, " data ", players[peer_id])
+#			rpc('send_player_info', peer_id, players[peer_id]) #since only the server can call the function and it cant call itself there is no look
 
-	print("players: ",players)
-	if not id == get_tree().get_network_unique_id():
-		var other = load("res://Player/Others.tscn").instance()
-		other.name = str(id)
-	#	other.set_network_master(id)
-		get_node("/root/BaseNode").add_child(other)
-		other.id = id
-		other.init(info)
+#	print("players: ",players)
+#	if not id == get_tree().get_network_unique_id():
+#		var other = load("res://Player/Others.tscn").instance()
+#		other.name = str(id)
+#	#	other.set_network_master(id)
+#		get_node("/root/BaseNode").add_child(other)
+#		other.id = id
+#		other.init(info)
 	
 	
 
@@ -89,16 +125,17 @@ remote func send_player_info(id, info): #remote can only be called by remote cli
 #..this is called by the function below to updates its own players array
 #..the others node reads this data to show it visually
 remote func send_player_pos(id, pos):
-	if players.has(id):
-		print("Remote player ", players[id].name, " moved ", pos)
-		players[id].pos = pos
-#		data.pos = pos
-#	get_tree().find_node(id).rect_position(pos)
+	pass
+#	if players.has(id):
+#		print("Remote player ", players[id].name, " moved ", pos)
+#		players[id].pos = pos
 
 #sends self updated pos data to all clients to update ?
 #..send player position to all clients, see above, this updates all the remote client with with clients position
 func send_pos(pos):
-	rpc('send_player_pos', get_tree().get_network_unique_id(), pos)
+	data.pos = pos
+	rpc('sending_pos', data.pos)
+	
 	
 	
 #a simialr thing could probably done with rset
