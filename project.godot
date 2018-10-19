@@ -86,7 +86,7 @@ msg_log=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"
 
 [network]
 
-ssl/certificates="res://Data/pub.crt"
+ssl/certificates="res://Data/ca-bundle.crt"
 
 [rendering]
 

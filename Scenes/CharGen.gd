@@ -39,6 +39,7 @@ func _on_CheckBox_pressed():
 	if $VBoxContainer/CheckBox.pressed:
 		$VBoxContainer/CheckBox.text = "Server"
 		N.DEF_IP = $IPadr.text
+		$IPadr.text = "Your IP"
 		$HTTPRequest.request("https://api.myip.com/")
 	else:
 		$VBoxContainer/CheckBox.text = "Client"
@@ -46,4 +47,4 @@ func _on_CheckBox_pressed():
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	var json = JSON.parse(body.get_string_from_utf8())
-	print(json.result)
+	$IPadr.text = json.result.ip
