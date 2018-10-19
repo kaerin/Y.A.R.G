@@ -15,6 +15,7 @@ onready var Attrib = load("res://Player/Attributes.gd")
 onready var Stats = load("res://Player/Stats.gd")
 onready var GenItems = load("res://Items/GenItems.gd")
 onready var Combat = load("res://Player/Combat.gd")
+onready var Chat = load("res://Network/Chat.tscn")
 #onready var weapons = load("res://Items/Weapon.gd") #load class
 #onready var Map = get_node("../../Map")
 
@@ -30,6 +31,7 @@ var is_fighting = false
 var target_pos = Vector2()
 var target_direction = Vector2()
 var facing = false
+var chat_displayed
 
 var combat
 var skills
@@ -74,6 +76,8 @@ func _ready():
 
 func _process(delta):
 
+	if Input.is_action_just_pressed("Chat"):
+		chat()
 	if Input.is_action_just_pressed("ui_p"):
 		var item = grid_map.get_item(self)
 		if item:
@@ -166,3 +170,12 @@ func take_dmg(dmg):
 
 func _on_Timer_timeout():
 	is_fighting = false
+	
+func chat():
+	if chat_displayed: 
+		$Chat.queue_free()
+		chat_displayed = false
+	else:
+		chat_displayed = true #To keep things clean only need to set something when its not
+		var chat = Chat.instance()
+		add_child(chat)
