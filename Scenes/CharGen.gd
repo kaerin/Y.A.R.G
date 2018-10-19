@@ -40,7 +40,7 @@ func _on_CheckBox_pressed():
 		$VBoxContainer/CheckBox.text = "Server"
 		N.DEF_IP = $IPadr.text
 		$IPadr.text = "Your IP"
-		$HTTPRequest.request("https://api.myip.com/")
+#		$HTTPRequest.request("https://api.myip.com/") #Leaving out for testing
 	else:
 		$VBoxContainer/CheckBox.text = "Client"
 		$IPadr.text = N.DEF_IP

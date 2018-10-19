@@ -27,16 +27,18 @@ sync var map_levels = []
 var admin = false
 var maxEnemies = 0
 var numEnemies = 0
+sync var test = "one"
 
 func _ready():
 	map_levels.append(true)
-	self.set_network_master(get_tree().get_network_unique_id())
 	if get_tree().is_network_server():
 		start()
-	
+
 func _process(delta):
 	if Input.is_action_just_pressed("debug"):
-		print(get_tree().get_network_unique_id())
+		print("id", get_tree().get_network_unique_id())
+		print("grid master", self.is_network_master())
+		
 	if Input.is_action_just_pressed("admin"):
 		if not admin:
 			$Player.add_child(Admin.instance())
@@ -70,11 +72,13 @@ func start(startpos = "S"):
 	if map_levels.size() <= G.Dlevel:
 #		print("generating new map and saving to index:",G.Dlevel)
 		mapgrid = map.map(Vector2(G.Dlevel+6,G.Dlevel+6))
+		self.set_network_master(get_tree().get_network_unique_id())
 		map_levels.append(mapgrid)
 		rset("map_levels", map_levels)
 	else:
 #		print("Using exising map for level:",G.Dlevel)
 		mapgrid = map_levels[G.Dlevel]
+		self.set_network_master(false)
 	if startpos == "E":
 		found_hidden = true
 	print(mapgrid)

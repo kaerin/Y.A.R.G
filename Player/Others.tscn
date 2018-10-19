@@ -3,7 +3,7 @@
 [ext_resource path="res://Data/ProjectUtumno_full.png" type="Texture" id=1]
 [ext_resource path="res://Player/Others.gd" type="Script" id=2]
 
-[node name="Sprite" type="Sprite"]
+[node name="Sprite" type="Sprite" index="0"]
 
 texture = ExtResource( 1 )
 region_enabled = true
@@ -27,9 +27,12 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
+custom_colors/font_color = Color( 0, 1, 0.648438, 1 )
+text = "gfdgfd"
 align = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+_sections_unfolded = [ "custom_colors" ]
 
 
