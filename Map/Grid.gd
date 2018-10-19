@@ -23,16 +23,20 @@ var end = Vector2()
 var hidden = Vector2()
 var found_hidden = false
 var mapgrid = []
-var map_levels = []
+sync var map_levels = []
 var admin = false
 var maxEnemies = 0
 var numEnemies = 0
 
 func _ready():
+	map_levels.append(true)
+	self.set_network_master(get_tree().get_network_unique_id())
 	if get_tree().is_network_server():
 		start()
 	
 func _process(delta):
+	if Input.is_action_just_pressed("debug"):
+		print(get_tree().get_network_unique_id())
 	if Input.is_action_just_pressed("admin"):
 		if not admin:
 			$Player.add_child(Admin.instance())
@@ -40,12 +44,14 @@ func _process(delta):
 		else:
 			$Player/Admin.queue_free()
 			admin = false
-	
+
+func sync_map():
+	rset("map_levels", map_levels)
 
 func start(startpos = "S"):
 	if Game.stats:
 		Game.stats.set_dungeon(G.Dlevel)
-	if G.Dlevel < 0:
+	if G.Dlevel < 1:
 		print("You are on the surface")
 		Player.set_position(map_to_world(Vector2(50,50)) + half_tile_size)
 		N.send_pos(Player.position)
@@ -55,22 +61,23 @@ func start(startpos = "S"):
 			for y in grid_size.y:
 				grid[x][y] = EMPTY
 				set_cell(x,y,tile_set.find_tile_by_name(FLOOR[randi() % FLOOR.size()]))
-		set_cellv(Vector2(50,50), tile_set.find_tile_by_name("StairDown1"))
-		found_hidden = true
+#		set_cellv(Vector2(50,50), tile_set.find_tile_by_name("StairDown1"))
+#		found_hidden = true
 		end = Vector2(50,50)
+		rpc("show_stairs")
 		return
 	var map = Map.new()
 	if map_levels.size() <= G.Dlevel:
 #		print("generating new map and saving to index:",G.Dlevel)
 		mapgrid = map.map(Vector2(G.Dlevel+6,G.Dlevel+6))
 		map_levels.append(mapgrid)
+		rset("map_levels", map_levels)
 	else:
 #		print("Using exising map for level:",G.Dlevel)
 		mapgrid = map_levels[G.Dlevel]
+	if startpos == "E":
 		found_hidden = true
-	populate_grid(startpos)
-
-func populate_grid(startpos):
+	print(mapgrid)
 	grid_size = Vector2(G.Dlevel+6,G.Dlevel+6)
 	create_grid()
 #	print(mapgrid.size())
@@ -115,7 +122,8 @@ func populate_grid(startpos):
 		Player.set_position(map_to_world(end) + half_tile_size)
 	N.send_pos(Player.position)
 	if found_hidden == true:
-		set_cellv(end, tile_set.find_tile_by_name("StairDown1"))
+		rpc("show_stairs")
+#		set_cellv(end, tile_set.find_tile_by_name("StairDown1"))
 #	Player.is_moving = false
 #	update_child_pos(Player)
 	add_enemies()
@@ -173,10 +181,14 @@ func update_child_pos(child_node):
 		N.send_pos(target_pos)
 #		N.rpc("sending pos", target_pos)
 		if new_grid_pos == hidden:
-			set_cellv(end, tile_set.find_tile_by_name("StairDown1"))
-			found_hidden = true
-	
+			rpc("show_stairs")
+#			set_cellv(end, tile_set.find_tile_by_name("StairDown1"))
+#			found_hidden = true
 	return target_pos
+
+sync func show_stairs():
+	set_cellv(end, tile_set.find_tile_by_name("StairDown1"))
+	found_hidden = true
 
 func chg_level(pos, next = 0):
 	pos = world_to_map(pos)
@@ -209,7 +221,7 @@ func add_enemies(num = false):
 			numEnemies += 1
 	if numEnemies > maxEnemies:
 		return
-	if G.Dlevel == -1:
+	if G.Dlevel == 0:
 		return
 	if not num:
 		num = int(grid_size.x*grid_size.y/enemy_factor)

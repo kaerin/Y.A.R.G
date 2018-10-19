@@ -42,7 +42,9 @@ func connected_to_server():
 	print("Connected to server")
 	players[get_tree().get_network_unique_id()] = data
 	is_connected = true
-	rpc_id(1,'get_grid',G.Dlevel)
+	get_node("/root/BaseNode/Grid").start()
+#	rpc_id(1,'get_grid',G.Dlevel)
+#	get_node("/root/BaseNode/Grid").sync_map()
 #	rpc('send_player_info', get_tree().get_network_unique_id(), data)
 #	print("connected as client")
 
@@ -52,11 +54,11 @@ func connected_to_server():
 #remote func set_grid(data):
 #	var grid = get_node("/root/BaseNode/Grid")
 #	grid.
-remote func get_map(data):
-	var player = get_node("/root/BaseNode/Grid")
-#	print(data)
-	player.mapgrid = data
-	player.populate_grid("S")
+#remote func get_map(data):
+#	var player = get_node("/root/BaseNode/Grid")
+##	print(data)
+#	player.map_levels.append(data)
+#	player.start("S")
 
 func player_connected(id):
 	print("This client connected to us ", id)
@@ -65,7 +67,9 @@ func player_connected(id):
 	rpc_id(id, 'sending_pos', data.pos)
 	rpc_id(id, 'get_player', id)
 	if get_tree().is_network_server():
-		rpc_id(id, 'get_map', get_node("/root/BaseNode/Grid").map_levels[G.Dlevel])
+		get_node("/root/BaseNode/Grid").sync_map()
+#	get_node("/root/BaseNode/Grid").start()
+#		rpc_id(id, 'get_map', get_node("/root/BaseNode/Grid").map_levels[G.Dlevel])
 	
 	var other = load("res://Player/Others.tscn").instance()
 	other.name = str(id)
