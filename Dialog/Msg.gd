@@ -25,7 +25,10 @@ func print_label(text, time = timer_default):
 	set_label(text)
 	show_label(time)
 
-func set_label_window(text):
+func set_label_window(text, show = false):
+	if show == true:
+		if not $CanvasLayer/PanelContainer.is_visible():
+			$CanvasLayer/PanelContainer.show()
 	check_max_msg()	
 	var a = msg_window.duplicate()
 	a.text = text
