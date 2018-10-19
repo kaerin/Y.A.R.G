@@ -17,18 +17,20 @@ onready var item  = preload("res://Items/Item.tscn")
 onready var Map = preload("res://Data/MapGen.gd")
 onready var GridFloor = get_node("../GridFloor")
 onready var Game = get_node("/root/BaseNode")
+onready var Player = get_node("Player")
 var start = Vector2()
 var end = Vector2()
 var hidden = Vector2()
 var found_hidden = false
-var mapgrid
+var mapgrid = []
 var map_levels = []
 var admin = false
 var maxEnemies = 0
 var numEnemies = 0
 
 func _ready():
-	start()
+	if get_tree().is_network_server():
+		start()
 	
 func _process(delta):
 	if Input.is_action_just_pressed("admin"):
@@ -41,7 +43,6 @@ func _process(delta):
 	
 
 func start(startpos = "S"):
-	var Player = get_node("Player")
 	if Game.stats:
 		Game.stats.set_dungeon(G.Dlevel)
 	if G.Dlevel < 0:
@@ -67,6 +68,9 @@ func start(startpos = "S"):
 #		print("Using exising map for level:",G.Dlevel)
 		mapgrid = map_levels[G.Dlevel]
 		found_hidden = true
+	populate_grid(startpos)
+
+func populate_grid(startpos):
 	grid_size = Vector2(G.Dlevel+6,G.Dlevel+6)
 	create_grid()
 #	print(mapgrid.size())
