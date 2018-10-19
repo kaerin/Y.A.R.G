@@ -9,6 +9,10 @@ var data = { name = '', pos = Vector2() }
 
 #creates server with following ip address and port ?
 #..Only port is needed the ip address is itself
+func _ready():
+	get_tree().connect("network_peer_connected", self, "player_connected")
+	get_tree().connect("network_peer_disconnected", self, "player_disconnected")
+
 func create_server(i):
 	data.name = i
 	players[1] = data
@@ -16,8 +20,7 @@ func create_server(i):
 	peer.create_server(DEF_PORT, MAX_PLAYERS)
 	get_tree().set_network_peer(peer)
 	print("Server created")
-	get_tree().connect("network_peer_connected", self, "player_connected")
-
+	
 #Joins server and calls "connected to server" method once connected
 #..emits the signal connected_to_server
 func join_server(i):
@@ -35,8 +38,20 @@ func connected_to_server():
 	rpc('send_player_info', get_tree().get_network_unique_id(), data)
 	print("connected as client")
 
-func player_connected():
-	print("client connected")
+func player_connected(id):
+	print("client connected ", id)
+	
+
+func player_disconnected(id):
+	print("client disconnected ", id)
+	rpc('remove_player',id)
+
+sync func remove_player(id):
+	print("removing player ",id)
+	players.erase(id)
+	var i = get_node("/root/BaseNode/"+str(id))
+	if i:
+		i.queue_free()
 	
 #this sends back all each players data to requesting client.
 #shouldnt this just send just self data to requesting client, not everyones data ?	
@@ -48,7 +63,7 @@ func player_connected():
 #..this is simple way so each client can visualise the data
 
 remote func send_player_info(id, info): #remote can only be called by remote clients
-	print(info.name)
+#	print(info.name)
 	if get_tree().is_network_server(): #is network server
 		for peer_id in players:
 			rpc_id(id, 'send_player_info', peer_id, players[peer_id]) #since only the server can call the function and it cant call itself there is no look
@@ -56,7 +71,7 @@ remote func send_player_info(id, info): #remote can only be called by remote cli
 	
 	var other = load("res://Player/Others.tscn").instance()
 	other.name = str(id)
-	other.set_network_master(id)
+#	other.set_network_master(id)
 	get_node("/root/BaseNode").add_child(other)
 	other.id = id
 	other.init(info)

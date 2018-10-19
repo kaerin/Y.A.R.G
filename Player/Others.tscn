@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Player/Others.gd" type="Script" id=1]
 
-[node name="Other" type="Label" index="0"]
+[node name="Other" type="Label"]
 
 anchor_left = 0.0
 anchor_top = 0.0

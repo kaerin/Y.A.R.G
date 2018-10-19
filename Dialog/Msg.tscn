@@ -108,6 +108,7 @@ transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer" index="0"]
 
+visible = false
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
