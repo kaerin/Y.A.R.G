@@ -6,7 +6,7 @@ const MAX_PLAYERS = 10
 
 var is_connected = false
 var players = {}	#this represents all connected players, "Others" is for visual representation on grid ?
-var data = { name = '', pos = Vector2() }
+var data = { name = '', pos = Vector2(), Dlevel = 0 }
 
 #creates server with following ip address and port ?
 #..Only port is needed the ip address is itself
@@ -23,6 +23,7 @@ func _process(delta):
 
 func create_server(i):
 	data.name = i
+	data.Dlevel = 0
 	players[1] = data
 	players[0] = data
 	var peer = NetworkedMultiplayerENet.new()
@@ -64,7 +65,7 @@ func connected_to_server():
 
 func player_connected(id):
 	print("This client connected to us ", id)
-	players[id] = { name = '', pos = Vector2() }
+	players[id] = data
 	is_connected = true
 	rpc_id(id, 'sending_pos', data.pos)
 	rpc_id(id, 'get_player', id)
@@ -97,10 +98,21 @@ func server_disconnected():
 	print("Server disconnected")
 	is_connected = false
 
-remote func sending_pos(pos):
+func sync_pos(pos):
+	data.pos = pos
+	rpc('syncing_pos', pos)
+remote func syncing_pos(pos):
 	var id = get_tree().get_rpc_sender_id()
-	print(id, pos)
+#	print(id, pos)
 	players[id].pos  = pos
+
+func sync_dlevel(i):
+	data.Dlevel = i
+	rpc('syncing_dlevel', i)
+remote func syncing_dlevel(i):
+	var id = get_tree().get_rpc_sender_id()
+	print("dlevel", id, "-", i)
+	players[id].Dlevel = i
 
 
 #	rpc('remove_player',id)
@@ -153,9 +165,7 @@ remote func send_player_pos(id, pos):
 
 #sends self updated pos data to all clients to update ?
 #..send player position to all clients, see above, this updates all the remote client with with clients position
-func send_pos(pos):
-	data.pos = pos
-	rpc('sending_pos', data.pos)
+
 	
 	
 	

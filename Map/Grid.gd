@@ -56,7 +56,7 @@ func start(startpos = "S"):
 	if G.Dlevel < 1:
 		print("You are on the surface")
 		Player.set_position(map_to_world(Vector2(50,50)) + half_tile_size)
-		N.send_pos(Player.position)
+		N.sync_pos(Player.position)
 		grid_size = Vector2(100,100)
 		create_grid()
 		for x in grid_size.x:
@@ -124,7 +124,7 @@ func start(startpos = "S"):
 		Player.set_position(map_to_world(start) + half_tile_size)
 	if startpos == "E":
 		Player.set_position(map_to_world(end) + half_tile_size)
-	N.send_pos(Player.position)
+	N.sync_pos(Player.position)
 	if found_hidden == true:
 		rpc("show_stairs")
 #		set_cellv(end, tile_set.find_tile_by_name("StairDown1"))
@@ -182,7 +182,7 @@ func update_child_pos(child_node):
 	grid[new_grid_pos.x][new_grid_pos.y] = child_node.type
 	var target_pos = map_to_world(new_grid_pos) + half_tile_size
 	if child_node.is_in_group("Player"):
-		N.send_pos(target_pos)
+		N.sync_pos(target_pos)
 #		N.rpc("sending pos", target_pos)
 		if new_grid_pos == hidden:
 			rpc("show_stairs")
@@ -204,12 +204,13 @@ func chg_level(pos, next = 0):
 		G.Dlevel += 1
 		chg = true
 		spos = "S"
-	elif (pos == start or next < 0 ) and G.Dlevel > -1:
+	elif (pos == start or next < 0 ) and G.Dlevel > 0:
 		found_hidden = true
 		G.Dlevel -= 1
 		chg = true
 		spos = "E"
 	if chg:
+		N.sync_dlevel(G.Dlevel)
 		for i in get_children():
 			if i.is_in_group("Enemy") or i.is_in_group("Item"):
 				i.queue_free()

@@ -40,12 +40,12 @@ func _on_CheckBox_pressed():
 		$VBoxContainer/CheckBox.text = "Server"
 		N.DEF_IP = $IPadr.text
 		$IPadr.text = "Your IP"
-		$HTTPRequest.request("https://api.ipify.org/") #Leaving out for testing
+#		$HTTPRequest.request("https://api.ipify.org/") #Leaving out for testing
 	else:
 		$VBoxContainer/CheckBox.text = "Client"
 		$IPadr.text = N.DEF_IP
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
-	print(body.get_string_from_utf8())
+#	print(body.get_string_from_utf8())
 #	var json = JSON.parse(body.get_string_from_utf8())
-#	$IPadr.text = json.result.ip
+	$IPadr.text = body.get_string_from_utf8()
