@@ -78,39 +78,39 @@ func _process(delta):
 
 	if Input.is_action_just_pressed("Chat"):
 		chat()
-	if Input.is_action_just_pressed("ui_p"):
+	if Input.is_action_just_pressed("ui_p") and not chat_displayed:
 		var item = grid_map.get_item(self)
 		if item:
 			inv.add_item(item)
-	if Input.is_action_just_pressed("level"):
+	if Input.is_action_just_pressed("level") and not chat_displayed:
 		grid_map.chg_level(get_position()) #Make this better
-	if Input.is_action_just_pressed("sell_items"):
+	if Input.is_action_just_pressed("sell_items") and not chat_displayed:
 		stats.gold += inv.sell_items() #simple function to sell all unequipped gear
 		Game.stats.set_gold(stats.gold)
-	if Input.is_action_just_pressed("add_enemy"):
+	if Input.is_action_just_pressed("add_enemy") and not chat_displayed:
 		Game.Dialog.print_label("You have added enemies")
 		grid_map.add_enemies()
-	if Input.is_action_just_pressed("next_level"):
+	if Input.is_action_just_pressed("next_level") and not chat_displayed:
 		grid_map.chg_level(get_position(),1)
-	if Input.is_action_just_pressed("prev_level"):
+	if Input.is_action_just_pressed("prev_level") and not chat_displayed:
 		grid_map.chg_level(get_position(),-1)
-	if Input.is_action_just_pressed("rest"):
+	if Input.is_action_just_pressed("rest") and not chat_displayed:
 		stats.hp +=1000 #super healing
 		if stats.hp > stats.hp_max:
 			stats.hp = stats.hp_max
 		print("Resting hp:",stats.hp)
 		emit_signal("enemy_move")
 	direction = Vector2()
-	if Input.is_action_pressed("ui_up"):
+	if Input.is_action_pressed("ui_up") and not chat_displayed:
 		direction.y = -1
-	elif Input.is_action_pressed("ui_down"):
+	elif Input.is_action_pressed("ui_down") and not chat_displayed:
 		direction.y = 1
-	if Input.is_action_pressed("ui_left"):
+	if Input.is_action_pressed("ui_left") and not chat_displayed:
 		direction.x = -1
 		if facing:
 			facing = false
 			$Sprite.set_flip_h(facing)
-	elif Input.is_action_pressed("ui_right"):
+	elif Input.is_action_pressed("ui_right") and not chat_displayed:
 		direction.x = 1
 		if not facing:
 			facing = true

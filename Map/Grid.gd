@@ -35,11 +35,11 @@ func _ready():
 		start()
 
 func _process(delta):
-	if Input.is_action_just_pressed("debug"):
+	if Input.is_action_just_pressed("debug") and not Player.chat_displayed:
 		print("id", get_tree().get_network_unique_id())
 		print("grid master", self.is_network_master())
 		
-	if Input.is_action_just_pressed("admin"):
+	if Input.is_action_just_pressed("admin") and not Player.chat_displayed:
 		if not admin:
 			$Player.add_child(Admin.instance())
 			admin = true
@@ -72,13 +72,13 @@ func start(startpos = "S"):
 	if map_levels.size() <= G.Dlevel:
 #		print("generating new map and saving to index:",G.Dlevel)
 		mapgrid = map.map(Vector2(G.Dlevel+6,G.Dlevel+6))
-		self.set_network_master(get_tree().get_network_unique_id())
+		self.set_network_master(get_tree().get_network_unique_id()) #Not sure this is the right thing to do
 		map_levels.append(mapgrid)
 		rset("map_levels", map_levels)
 	else:
 #		print("Using exising map for level:",G.Dlevel)
 		mapgrid = map_levels[G.Dlevel]
-		self.set_network_master(false)
+		self.set_network_master(false)#Not sure this is the right thing to do
 	if startpos == "E":
 		found_hidden = true
 	print(mapgrid)

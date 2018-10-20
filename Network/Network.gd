@@ -18,12 +18,13 @@ func _ready():
 	get_tree().connect('server_disconnected', self, 'server_disconnected')
 
 func _process(delta):
-	if Input.is_action_just_pressed("debug"):
+	if Input.is_action_just_pressed("debug") and not get_node("/root/BaseNode/Grid/Player/").chat_displayed:
 		print(players)
 
 func create_server(i):
 	data.name = i
 	players[1] = data
+	players[0] = data
 	var peer = NetworkedMultiplayerENet.new()
 	peer.create_server(DEF_PORT, MAX_PLAYERS)
 	get_tree().set_network_peer(peer)
@@ -32,6 +33,7 @@ func create_server(i):
 #..emits the signal connected_to_server
 func join_server(i):
 	data.name = i
+	players[0] = data
 	var peer = NetworkedMultiplayerENet.new()
 	peer.create_client(DEF_IP, DEF_PORT)
 	get_tree().set_network_peer(peer)
@@ -160,4 +162,11 @@ func send_pos(pos):
 #a simialr thing could probably done with rset
 #functions can be remote, sync, master or slave. 
 #I dont understand the setup fully, I think some stuff is wrong
+func send_chat(text):
+	rpc('chat_msg', text)
 
+sync func chat_msg(text):
+	var from = N.players[get_tree().get_rpc_sender_id()].name
+	var msg = from + ': ' + text
+	print(msg)
+	get_node("/root/BaseNode").Dialog.set_label_window(msg, true)

@@ -25,6 +25,8 @@ func print_label(text, time = timer_default):
 	set_label(text)
 	show_label(time)
 
+
+
 func set_label_window(text, show = false):
 	if show == true:
 		if not $CanvasLayer/PanelContainer.is_visible():
@@ -43,7 +45,7 @@ func check_max_msg():
 		b[1].queue_free()	#skip template label, and delete oldest message
 		
 func _process(delta):
-	if Input.is_action_just_pressed("msg_log"):
+	if Input.is_action_just_pressed("msg_log") and not get_node("/root/BaseNode/Grid/Player/").chat_displayed:
 		if $CanvasLayer/PanelContainer.is_visible():
 			$CanvasLayer/PanelContainer.hide()
 		else:

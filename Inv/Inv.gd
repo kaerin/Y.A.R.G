@@ -36,7 +36,7 @@ func _ready():
 #		wearable.add_item(item)
 
 func _process(delta):
-	if parent.CHARTYPE == G.CHAR.PLAYER:
+	if parent.CHARTYPE == G.CHAR.PLAYER and not get_node("/root/BaseNode/Grid/Player/").chat_displayed:
 		if Input.is_action_just_pressed("ui_inv") || (inv_displayed && Input.is_action_just_pressed("char_sheet")):
 			_inventory()
 

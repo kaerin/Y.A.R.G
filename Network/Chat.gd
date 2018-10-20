@@ -5,10 +5,8 @@ onready var Game = get_node("/root/BaseNode")
 
 func _on_ChatEdit_text_entered(new_text):
 	print('sent: ', text)
-	rpc('chat_msg', text)
+#	rpc('chat_msg', text)
+	N.send_chat(text)
 	self.text = ''
 	
-remote func chat_msg(text):
-	print('recieved: ',text)
-	Game.Dialog.set_label_window(text, true)
 
