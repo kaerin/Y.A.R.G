@@ -1,4 +1,4 @@
-extends Object
+extends Node
 
 #var dic_classes = get_parent().get_parent().get_node("Dictionaries/Classes").classes
 
@@ -9,19 +9,29 @@ var attributes
 var attacker
 
 var expr = 0 setget chk_level
-var hp = 1000 #should belong in stats
+var hp = 1000 setget update_hp #should belong in stats
 var hp_max = 1000 #should belong in stats
-var gold = 0 #should belong in stats
+var gold = 0 setget update_gold #should belong in stats
 var level = 1 #should belong in stats
 
 signal levelup
+signal disp_update
 
 func chk_level(i):
 	if i >= level * level * 10:
 		level += 1
 		emit_signal("levelup")
 	expr = i
+	emit_signal("disp_update")
+	
+func update_hp(i):
+	hp = i
+	emit_signal("disp_update")
+func update_gold(i):
+	gold = i
+	emit_signal("disp_update")
 
+	
 func test_print_method():
 #	weapon.print_test() #3. execute as nmethod as normal
 	print("get dmage ",weapon.get_damage())

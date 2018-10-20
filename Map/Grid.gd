@@ -51,8 +51,8 @@ func sync_map():
 	rset("map_levels", map_levels)
 
 func start(startpos = "S"):
-	if Game.stats:
-		Game.stats.set_dungeon(G.Dlevel)
+#	if Game.stats:
+#		Game.stats.set_dungeon(G.Dlevel)
 	if G.Dlevel < 1:
 		print("You are on the surface")
 		Player.set_position(map_to_world(Vector2(50,50)) + half_tile_size)
