@@ -5,6 +5,8 @@ const DEF_PORT = 3117
 const MAX_PLAYERS = 10
 
 var is_connected = false
+var is_server = false
+var is_client = false
 var players = {}	#this represents all connected players, "Others" is for visual representation on grid ?
 var data = { name = '', pos = Vector2(), Dlevel = 0 }
 
@@ -22,6 +24,7 @@ func _process(delta):
 		print(players)
 
 func create_server(i):
+	is_server = true
 	data.name = i
 	data.Dlevel = 0
 	players[1] = data
@@ -33,6 +36,7 @@ func create_server(i):
 #Joins server and calls "connected to server" method once connected
 #..emits the signal connected_to_server
 func join_server(i):
+	is_client = true
 	data.name = i
 	players[0] = data
 	var peer = NetworkedMultiplayerENet.new()

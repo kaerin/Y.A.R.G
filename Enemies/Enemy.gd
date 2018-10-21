@@ -180,32 +180,33 @@ func set_move():
 			break
 
 func _process(delta):
-	if not is_moving and not direction == Vector2():
-		target_direction = direction
-		var attacking = false
-		for i in DIRS:
-			if grid_map.is_cell_player(get_position(), i):
-				combat.attack(self, player)
-				attacking = true
-		if grid_map.is_cell_empty(get_position(), target_direction) and not attacking:
-			target_pos = grid_map.update_child_pos(self)
-			is_moving = true
-		elif grid_map.is_cell_player(get_position(), target_direction) and not attacking:
-			combat.attack(self,player) #Fight player
-	elif is_moving:
-		speed = MAX_SPEED
-		velocity = speed * target_direction.normalized() * delta
-		move_and_collide(velocity)
-		
-		var pos = get_position()
-		var distance_to_target = Vector2(abs(target_pos.x - pos.x), abs(target_pos.y - pos.y))
-		if abs(velocity.x) > distance_to_target.x:
-			velocity.x = distance_to_target.x * target_direction.x
-			is_moving = false
-		if abs(velocity.y) > distance_to_target.y:
-			velocity.y = distance_to_target.y * target_direction.y
-			is_moving = false
-	direction = Vector2()
+	if N.is_server:
+		if not is_moving and not direction == Vector2():
+			target_direction = direction
+			var attacking = false
+			for i in DIRS:
+				if grid_map.is_cell_player(get_position(), i):
+					combat.attack(self, player)
+					attacking = true
+			if grid_map.is_cell_empty(get_position(), target_direction) and not attacking:
+				target_pos = grid_map.update_child_pos(self)
+				is_moving = true
+			elif grid_map.is_cell_player(get_position(), target_direction) and not attacking:
+				combat.attack(self,player) #Fight player
+		elif is_moving:
+			speed = MAX_SPEED
+			velocity = speed * target_direction.normalized() * delta
+			move_and_collide(velocity)
+			
+			var pos = get_position()
+			var distance_to_target = Vector2(abs(target_pos.x - pos.x), abs(target_pos.y - pos.y))
+			if abs(velocity.x) > distance_to_target.x:
+				velocity.x = distance_to_target.x * target_direction.x
+				is_moving = false
+			if abs(velocity.y) > distance_to_target.y:
+				velocity.y = distance_to_target.y * target_direction.y
+				is_moving = false
+		direction = Vector2()
 #		if not direction == Vector2():
 #
 #			if grid_map.is_target_grid_valid(self,direction):

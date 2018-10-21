@@ -186,9 +186,9 @@ func update_child_pos(child_node):
 #		N.rpc("sending pos", target_pos)
 		if new_grid_pos == hidden:
 			rpc("show_stairs")
-#			set_cellv(end, tile_set.find_tile_by_name("StairDown1"))
-#			found_hidden = true
+#			set_cellv(end, tile_set.find_tile_by_name("Sta
 	return target_pos
+
 
 sync func show_stairs():
 	set_cellv(end, tile_set.find_tile_by_name("StairDown1"))
@@ -220,29 +220,41 @@ func chg_level(pos, next = 0):
 
 
 func add_enemies(num = false):
-	var numEnemies = 0
-	for i in get_children():
-		if i.is_in_group("Enemy"):
-			numEnemies += 1
-	if numEnemies > maxEnemies:
-		return
-	if G.Dlevel == 0:
-		return
-	if not num:
-		num = int(grid_size.x*grid_size.y/enemy_factor)
-	var positions = []
-	randomize()
-	for n in num:
-		var grid_pos = Vector2(randi() % int(grid_size.x), randi() % int(grid_size.y))
-		while not is_cell_empty(map_to_world(grid_pos)):
-			grid_pos = Vector2(randi() % int(grid_size.x), randi() % int(grid_size.y))
-		positions.append(grid_pos)
-	
-	for pos in positions:
-		var new_object = enemy.instance()
-		new_object.set_position(map_to_world(pos) + half_tile_size)
-		add_child(new_object)
-		grid[pos.x][pos.y] = new_object.type
+	if N.is_server:
+		var numEnemies = 0
+		for i in get_children():
+			if i.is_in_group("Enemy"):
+				numEnemies += 1
+		if numEnemies > maxEnemies:
+			return
+		if G.Dlevel == 0:
+			return
+		if not num:
+			num = int(grid_size.x*grid_size.y/enemy_factor)
+		var positions = []
+		randomize()
+		for n in num:
+			var grid_pos = Vector2(randi() % int(grid_size.x), randi() % int(grid_size.y))
+			while not is_cell_empty(map_to_world(grid_pos)):
+				grid_pos = Vector2(randi() % int(grid_size.x), randi() % int(grid_size.y))
+			positions.append(grid_pos)
+		
+		for pos in positions:
+			var new_object = enemy.instance()
+			var pos2 = (map_to_world(pos) + half_tile_size)
+			new_object.set_position(pos2)
+			add_child(new_object)
+			grid[pos.x][pos.y] = new_object.type
+			var name_ = new_object.get_name()
+			rpc('server_add_enemies', pos2, pos, name_)
+			print("adding enemies to clients")
+
+remote func server_add_enemies(pos2, pos, name):
+	var new_object = enemy.instance()
+	add_child(new_object)
+	new_object.set_name(name)
+	new_object.set_position(pos2)
+	grid[pos.x][pos.y] = new_object.type 
 
 func get_item(child): #Returns dropped item
 	var grid_pos = world_to_map(child.get_position())
@@ -266,9 +278,11 @@ func set_kill_me(child):
 #		j = i[randi() % i.size()] #find a non body weapon item
 	new_object.item = j
 	add_child(new_object)
-			
+	rpc('server_kill_me', child.get_name())
 	child.queue_free()
 
+remote func server_kill_me(name_):
+	get_node(name_).queue_free()
 
 func _on_EnemyTimer_timeout():
 	$EnemyTimer.wait_time = randi() % 10 + 10
