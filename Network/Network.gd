@@ -109,6 +109,11 @@ remote func syncing_pos(pos):
 	var id = get_tree().get_rpc_sender_id()
 #	print(id, pos)
 	players[id].pos  = pos
+	
+#func sync_enemy(child, pos):
+#	rpc('syncing_enemy', child, pos)
+#remote func syncing_enemy(child, pos):
+#	get_node(child).position = pos
 
 func sync_dlevel(i):
 	data.Dlevel = i

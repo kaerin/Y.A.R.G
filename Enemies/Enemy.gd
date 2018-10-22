@@ -203,10 +203,16 @@ func _process(delta):
 			if abs(velocity.x) > distance_to_target.x:
 				velocity.x = distance_to_target.x * target_direction.x
 				is_moving = false
+#				rpc('sync_move', position)
 			if abs(velocity.y) > distance_to_target.y:
 				velocity.y = distance_to_target.y * target_direction.y
 				is_moving = false
+#				rpc('sync_move', position)
 		direction = Vector2()
+
+#sync func sync_move(pos):
+#	position = pos
+
 #		if not direction == Vector2():
 #
 #			if grid_map.is_target_grid_valid(self,direction):

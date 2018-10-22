@@ -12,6 +12,7 @@ var ROOF = ["Wall1","Wall2","Wall3","Wall4"]
 const INVALID = -999
 
 onready var enemy = preload("res://Enemies/Enemy.tscn")
+onready var enemy_dummy = preload("res://Enemies/Enemy_Dummy.tscn")
 onready var Admin = preload("res://Admin/Admin.tscn")
 onready var item  = preload("res://Items/Item.tscn")
 onready var Map = preload("res://Data/MapGen.gd")
@@ -187,6 +188,8 @@ func update_child_pos(child_node):
 		if new_grid_pos == hidden:
 			rpc("show_stairs")
 #			set_cellv(end, tile_set.find_tile_by_name("Sta
+#	if child_node.is_in_group("Enemy"):
+#		N.sync_enemy(child_node.get_path(), target_pos)
 	return target_pos
 
 
@@ -245,16 +248,20 @@ func add_enemies(num = false):
 			new_object.set_position(pos2)
 			add_child(new_object)
 			grid[pos.x][pos.y] = new_object.type
-			var name_ = new_object.get_name()
-			rpc('server_add_enemies', pos2, pos, name_)
-			print("adding enemies to clients")
+			new_object.set_name(new_object.get_name())			#annoying BS that wont work without this. Godot adds @ symbols to instanced names, which dont copy properly when setting same name to another node. 
+			rpc('server_add_enemies', pos2, pos, new_object.get_name())
+			#var name_ = new_object.get_name()
+			#print('new name ' + new_object.get_name())
+			#print('sent name ' + name_)
 
-remote func server_add_enemies(pos2, pos, name):
-	var new_object = enemy.instance()
+remote func server_add_enemies(pos2, pos, child):
+	print('name at function ', child)
+	var new_object = enemy_dummy.instance()
+	new_object.set_name(child)
 	add_child(new_object)
-	new_object.set_name(name)
 	new_object.set_position(pos2)
-	grid[pos.x][pos.y] = new_object.type 
+	#print('name at function2 ', name_)
+	#grid[pos.x][pos.y] = new_object.type 
 
 func get_item(child): #Returns dropped item
 	var grid_pos = world_to_map(child.get_position())
@@ -282,6 +289,7 @@ func set_kill_me(child):
 	child.queue_free()
 
 remote func server_kill_me(name_):
+	print('to kill ' + name_)
 	get_node(name_).queue_free()
 
 func _on_EnemyTimer_timeout():
