@@ -16,9 +16,9 @@ onready var enemy_dummy = preload("res://Enemies/Enemy_Dummy.tscn")
 onready var Admin = preload("res://Admin/Admin.tscn")
 onready var item  = preload("res://Items/Item.tscn")
 onready var Map = preload("res://Data/MapGen.gd")
-onready var GridFloor = get_node("../GridFloor")
+onready var GridFloor = get_node("Grids/Floor")
 onready var Game = get_node("/root/BaseNode")
-onready var Player = get_node("Player")
+onready var Player = get_node("../Player")
 var start = Vector2()
 var end = Vector2()
 var hidden = Vector2()
@@ -314,5 +314,5 @@ remote func server_kill_me(name_):
 	get_node(name_).queue_free()
 
 func _on_EnemyTimer_timeout():
-	$EnemyTimer.wait_time = randi() % 10 + 10
+	$Enemies/EnemyTimer.wait_time = randi() % 10 + 10
 	add_enemies()

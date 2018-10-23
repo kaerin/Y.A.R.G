@@ -4,9 +4,10 @@ extends KinematicBody2D
 #const DOWN 	= Vector2(0 , 1)
 #const LEFT 	= Vector2(-1, 0)
 #const RIGHT	= Vector2(1 , 0)
+enum GRID_ITEMS {EMPTY, PLAYER, WALL, ITEM, ENEMY}
 
-
-onready var grid_map = get_parent()
+#onready var grid_map = get_parent()
+var grid_map
 onready var DicItems = get_node("/root/BaseNode/Dictionaries/Items")
 onready var dic_classes = get_node("/root/BaseNode/Dictionaries/Classes").classes
 onready var inv = get_node("Inv") #cause its labeled inv elswhere
@@ -49,7 +50,8 @@ func chk_level():
 #	Game.stats.set_level(stats.level)
 	
 func _ready():
-	
+	onready grid_map = get_node("../Level-"+str(G.Dlevel))
+	print(grid_map)
 	var genItems = GenItems.new()
 	
 	inv.add_item(genItems.gen_weap(DicItems.weapons[G.WEAP.SWORD]),true)
@@ -61,7 +63,7 @@ func _ready():
 	inv.wearable.inv[0].set_bonus_res(2)
 	combat = Combat.new()
 	
-	type = grid_map.PLAYER
+	type = GRID_ITEMS.PLAYER
 	if G.PlayerColor:
 		modulate = G.PlayerColor
 	attributes = Attrib.new()

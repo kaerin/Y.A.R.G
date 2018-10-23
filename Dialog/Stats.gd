@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-onready var stats = get_node("/root/BaseNode/Grid/Player/").stats
+onready var stats = get_node("/root/BaseNode/Player/").stats
 
 func _ready():
 	stats.connect('disp_update', self, 'disp_update')

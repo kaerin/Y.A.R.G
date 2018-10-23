@@ -13,7 +13,7 @@ func _ready():
 	pass
 
 func _process(delta):
-	if get_parent().CHARTYPE == G.CHAR.PLAYER and not get_node("/root/BaseNode/Grid/Player/").chat_displayed:
+	if get_parent().CHARTYPE == G.CHAR.PLAYER and not get_node("/root/BaseNode/Player/").chat_displayed:
 		if Input.is_action_just_pressed("char_sheet") || (charsheet_displayed && Input.is_action_just_pressed("ui_inv")):
 			_character_sheet()
 		
