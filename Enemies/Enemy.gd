@@ -24,14 +24,14 @@ var target_pos = Vector2()
 var target_direction = Vector2()
 var inv
 
-onready var player = get_node("../Player")
-onready var grid_map = get_parent()
+onready var player = get_node("/root/BaseNode/Player")
+onready var grid_map = get_parent().get_parent()
 onready var Game = get_node("/root/BaseNode")
-onready var dic_enemies = get_parent().get_parent().get_node("Dictionaries/Enemies").enemies
-onready var dic_weapon = get_parent().get_parent().get_node("Dictionaries/Items").weapons
-onready var dic_chest = get_parent().get_parent().get_node("Dictionaries/Items").chest
-onready var dic_armour = get_parent().get_parent().get_node("Dictionaries/Items").armour
-onready var dic_wear = get_parent().get_parent().get_node("Dictionaries/Items").wear
+onready var dic_enemies = Game.get_node("Dictionaries/Enemies").enemies
+onready var dic_weapon = Game.get_node("Dictionaries/Items").weapons
+onready var dic_chest = Game.get_node("Dictionaries/Items").chest
+onready var dic_armour = Game.get_node("Dictionaries/Items").armour
+onready var dic_wear = Game.get_node("Dictionaries/Items").wear
 onready var dic_classes = get_node("/root/BaseNode/Dictionaries/Classes").classes
 onready var Weapon = load("res://Items/Weapon.gd")
 onready var Armour = load("res://Items/Armour.gd")
@@ -66,7 +66,7 @@ func _ready():
 	
 	
 	player.connect("enemy_move", self, "set_move")
-	type = grid_map.ENEMY
+	type = Game.ENEMY
 #	weapon = Weapon.new(G.CHAR.ENEMY) #enemies can be given the same weapon class and weapon inventory
 #	armour = Armour.new(G.CHAR.ENEMY)
 #	wearable = Wearable.new(G.CHAR.ENEMY)

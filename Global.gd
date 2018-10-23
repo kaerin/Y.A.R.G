@@ -21,7 +21,7 @@ const Heal = {Heal = "Heal"}
 
 var TODO_img = Rect2(1184,1600,32,32)
 
-var Dlevel = 0 #Dungeon Level
+var Dlevel = 1 #Dungeon Level
 
 var PlayerColor
 var PlayerClass = 0

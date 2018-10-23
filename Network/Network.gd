@@ -9,6 +9,7 @@ var is_server = false
 var is_client = false
 var players = {}	#this represents all connected players, "Others" is for visual representation on grid ?
 var data = { name = '', pos = Vector2(), Dlevel = 0 }
+var levels = {}
 
 #creates server with following ip address and port ?
 #..Only port is needed the ip address is itself
@@ -22,6 +23,10 @@ func _ready():
 func _process(delta):
 	if Input.is_action_just_pressed("debug") and not get_node("/root/BaseNode/Grid/Player/").chat_displayed:
 		print(players)
+
+sync func sync_lvl(i):
+	levels[i] = get_tree().get_network_unique_id()
+	print("Set lvl ",i," to ", get_tree().get_network_unique_id())
 
 func create_server(i):
 	is_server = true
@@ -49,7 +54,7 @@ func connected_to_server():
 	print("Connected to server")
 	players[get_tree().get_network_unique_id()] = data
 	is_connected = true
-	get_node("/root/BaseNode/Grid").start()
+#	get_node("/root/BaseNode/Level-0").start()
 #	rpc_id(1,'get_grid',G.Dlevel)
 #	get_node("/root/BaseNode/Grid").sync_map()
 #	rpc('send_player_info', get_tree().get_network_unique_id(), data)
@@ -74,7 +79,7 @@ func player_connected(id):
 	rpc_id(id, 'sending_pos', data.pos)
 	rpc_id(id, 'get_player', id)
 	if get_tree().is_network_server():
-		get_node("/root/BaseNode/Grid").sync_map()
+		get_node("/root/BaseNode/Level-0").sync_map()
 #	get_node("/root/BaseNode/Grid").start()
 #		rpc_id(id, 'get_map', get_node("/root/BaseNode/Grid").map_levels[G.Dlevel])
 	

@@ -45,7 +45,7 @@ func check_max_msg():
 		b[1].queue_free()	#skip template label, and delete oldest message
 		
 func _process(delta):
-	if Input.is_action_just_pressed("msg_log") and not get_node("/root/BaseNode/Grid/Player/").chat_displayed:
+	if Input.is_action_just_pressed("msg_log") and not get_node("/root/BaseNode/Player/").chat_displayed:
 		if $CanvasLayer/PanelContainer.is_visible():
 			$CanvasLayer/PanelContainer.hide()
 		else:
