@@ -34,6 +34,27 @@ func _ready():
 	map_levels.append(true)
 	if get_tree().is_network_server():
 		start()
+	
+	self.set_network_master(1)
+	print("Calling a function normally")
+	test_master()
+	test_slave()
+	test_remote()
+	test_sync()
+	print("Calling a function with rpc")
+	rpc('test_master')
+	rpc('test_slave')
+	rpc('test_remote')
+	rpc('test_sync')
+
+master func test_master():
+	print("Master function executed")
+slave func test_slave():
+	print("Slave function executesd")
+remote func test_remote():
+	print("Remote function executed")
+sync func test_sync():
+	print("Sync function execute")
 
 func _process(delta):
 	if Input.is_action_just_pressed("debug") and not Player.chat_displayed:
@@ -213,7 +234,7 @@ func chg_level(pos, next = 0):
 		chg = true
 		spos = "E"
 	if chg:
-		N.sync_dlevel(G.Dlevel)
+		N.rpc('sync_dlevel', G.Dlevel)
 		for i in get_children():
 			if i.is_in_group("Enemy") or i.is_in_group("Item"):
 				i.queue_free()

@@ -115,10 +115,11 @@ remote func syncing_pos(pos):
 #remote func syncing_enemy(child, pos):
 #	get_node(child).position = pos
 
-func sync_dlevel(i):
+#func sync_dlevel(i):
+#	data.Dlevel = i
+#	rpc('syncing_dlevel', i)
+sync func sync_dlevel(i):
 	data.Dlevel = i
-	rpc('syncing_dlevel', i)
-remote func syncing_dlevel(i):
 	var id = get_tree().get_rpc_sender_id()
 	print("dlevel", id, "-", i)
 	players[id].Dlevel = i
@@ -181,9 +182,6 @@ remote func send_player_pos(id, pos):
 #a simialr thing could probably done with rset
 #functions can be remote, sync, master or slave. 
 #I dont understand the setup fully, I think some stuff is wrong
-func send_chat(text):
-	rpc('chat_msg', text)
-
 sync func chat_msg(text):
 	var from = N.players[get_tree().get_rpc_sender_id()].name
 	var msg = from + ': ' + text

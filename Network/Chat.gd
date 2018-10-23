@@ -6,7 +6,7 @@ onready var Game = get_node("/root/BaseNode")
 func _on_ChatEdit_text_entered(new_text):
 	print('sent: ', text)
 #	rpc('chat_msg', text)
-	N.send_chat(text)
+	N.rpc('chat_msg', text)
 	self.text = ''
 	
 
