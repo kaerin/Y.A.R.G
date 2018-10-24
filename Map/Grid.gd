@@ -306,7 +306,7 @@ remote func server_add_enemies(pos2, pos, child):
 	print('name at function ', child)
 	var new_object = enemy_dummy.instance()
 	new_object.set_name(child)
-	add_child(new_object)
+	Enemies.add_child(new_object)
 	new_object.set_position(pos2)
 	#print('name at function2 ', name_)
 	#grid[pos.x][pos.y] = new_object.type 

@@ -79,7 +79,7 @@ func player_connected(id):
 	rpc_id(id, 'sending_pos', data.pos)
 	rpc_id(id, 'get_player', id)
 	if get_tree().is_network_server():
-		get_node("/root/BaseNode/Level-0").sync_map()
+		get_node("/root/BaseNode/Level-1").sync_map()
 #	get_node("/root/BaseNode/Grid").start()
 #		rpc_id(id, 'get_map', get_node("/root/BaseNode/Grid").map_levels[G.Dlevel])
 	

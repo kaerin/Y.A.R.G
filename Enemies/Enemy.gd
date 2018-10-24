@@ -191,6 +191,7 @@ func _process(delta):
 			if grid_map.is_cell_empty(get_position(), target_direction) and not attacking:
 				target_pos = grid_map.update_child_pos(self)
 				is_moving = true
+				rpc('sync_move', target_pos, target_direction)
 			elif grid_map.is_cell_player(get_position(), target_direction) and not attacking:
 				combat.attack(self,player) #Fight player
 		elif is_moving:
@@ -203,15 +204,13 @@ func _process(delta):
 			if abs(velocity.x) > distance_to_target.x:
 				velocity.x = distance_to_target.x * target_direction.x
 				is_moving = false
-#				rpc('sync_move', position)
+#				rpc('sync_move', target_pos)
 			if abs(velocity.y) > distance_to_target.y:
 				velocity.y = distance_to_target.y * target_direction.y
 				is_moving = false
-#				rpc('sync_move', position)
 		direction = Vector2()
 
-#sync func sync_move(pos):
-#	position = pos
+
 
 #		if not direction == Vector2():
 #

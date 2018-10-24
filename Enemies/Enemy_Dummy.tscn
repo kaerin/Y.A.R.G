@@ -1,19 +1,26 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Data/ProjectUtumno_full.png" type="Texture" id=1]
-[ext_resource path="res://Enemies/Enemy_Dummy.gd" type="Script" id=2]
+[ext_resource path="res://Enemies/Enemy_Dummy.gd" type="Script" id=1]
+[ext_resource path="res://Data/ProjectUtumno_full.png" type="Texture" id=2]
 
-[node name="Sprite" type="Sprite" index="0" groups=[
+[node name="Enemy" type="KinematicBody2D" index="0" groups=[
 "Enemy",
 ]]
 
-texture = ExtResource( 1 )
-region_enabled = true
-region_rect = Rect2( 992, 2432, 32, 32 )
-script = ExtResource( 2 )
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+collision/safe_margin = 0.08
+script = ExtResource( 1 )
 _sections_unfolded = [ "Region", "Transform" ]
 
-[node name="Name" type="Label" parent="." index="0"]
+[node name="Sprite" type="Sprite" parent="." index="0"]
+
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 992, 2432, 32, 32 )
+
+[node name="Name" type="Label" parent="." index="1"]
 
 anchor_left = 0.0
 anchor_top = 0.0
