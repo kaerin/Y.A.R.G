@@ -297,19 +297,23 @@ func add_enemies(num = false):
 			Enemies.add_child(new_object)
 			grid[pos.x][pos.y] = new_object.type
 			new_object.set_name(new_object.get_name())			#annoying BS that wont work without this. Godot adds @ symbols to instanced names, which dont copy properly when setting same name to another node. 
-			rpc('server_add_enemies', pos2, pos, new_object.get_name())
+			
+			#Vars for RPC call, only for readability
+			var a = new_object.get_name()
+			var b = new_object.enemy
+			var c = new_object.get_node('Sprite').get_region_rect()
+			rpc('server_add_enemies', pos2, a, b, c)
 			#var name_ = new_object.get_name()
 			#print('new name ' + new_object.get_name())
 			#print('sent name ' + name_)
 
-remote func server_add_enemies(pos2, pos, child):
-	print('name at function ', child)
+remote func server_add_enemies(pos2, node_name, enemy, region):
 	var new_object = enemy_dummy.instance()
-	new_object.set_name(child)
-	Enemies.add_child(new_object)
+	new_object.enemy = enemy
 	new_object.set_position(pos2)
-	#print('name at function2 ', name_)
-	#grid[pos.x][pos.y] = new_object.type 
+	new_object.set_name(node_name)
+	new_object.get_node('Sprite').set_region_rect(region)
+	Enemies.add_child(new_object)
 
 func get_item(child): #Returns dropped item
 	var grid_pos = world_to_map(child.get_position())

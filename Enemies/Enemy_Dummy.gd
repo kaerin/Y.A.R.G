@@ -11,9 +11,10 @@ var velocity = Vector2()
 var is_moving = false
 var target_pos = Vector2()
 var target_direction = Vector2()
+var enemy
 
 func _ready():
-	pass
+	$Name.text = enemy.base_name
 
 func _process(delta):
 	if is_moving:
@@ -38,3 +39,4 @@ remote func sync_move(pos, dir):
 	target_pos = pos
 	target_direction = dir
 	is_moving = true
+	

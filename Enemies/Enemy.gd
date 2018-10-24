@@ -49,6 +49,7 @@ var genItems
 var combat
 var skills
 var spells
+var enemy
 
 func _ready():
 #	print(G.MAT.CLOTH)
@@ -74,7 +75,7 @@ func _ready():
 	var enemyIndex = randi() % (dic_enemies.size()+2)
 	if enemyIndex >= dic_enemies.size():
 		enemyIndex = 0 #Hack to make more gnomes
-	var enemy = dic_enemies[enemyIndex] #simplify
+	enemy = dic_enemies[enemyIndex] #simplify
 #	enemy = dic_enemies[1] #new enemy testing
 	stats.hp = randi() % (enemy.max_hp - enemy.min_hp) + enemy.min_hp
 	stats.hp += G.Dlevel #increase hp by level
