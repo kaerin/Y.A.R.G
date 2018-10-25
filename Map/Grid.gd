@@ -24,7 +24,7 @@ var start = Vector2()
 var end = Vector2()
 var hidden = Vector2()
 var found_hidden = false
-var mapgrid = []
+sync var mapgrid = []
 sync var map_levels = []
 var admin = false
 var maxEnemies = 0
@@ -33,7 +33,18 @@ sync var test = "one"
 var level = 0
 var add_enemies = false
 
+signal data_rcvd #used to wait for data
+
 func _ready():
+	if N.levels.has(G.Dlevel):
+		print("Set network master to: ", N.levels[G.Dlevel])
+		set_network_master(N.levels[G.Dlevel])
+	else:
+		print("Not setting newtwork master")
+		
+	if not N.is_connected and not get_tree().is_network_server(): #I dont think this is being used
+		yield(N, "peer_connect") #I dont think this is being used
+		
 	if N.levels.has(G.Dlevel):
 		print("Level owner:",N.levels[G.Dlevel])
 	map_levels.append(true)
@@ -62,9 +73,11 @@ func _ready():
 #	print("Sync function execute")
 
 func _process(delta):
+
 	if Input.is_action_just_pressed("debug") and not Player.chat_displayed:
 		print("id", get_tree().get_network_unique_id())
-		print("grid master", self.is_network_master())
+		print("grid master is: ", self.get_network_master())
+		print(N.levels)
 		
 	if Input.is_action_just_pressed("admin") and not Player.chat_displayed:
 		if not admin:
@@ -77,7 +90,19 @@ func _process(delta):
 func sync_map():
 	rset("map_levels", map_levels)
 
+master func send_map():
+	print("master sending map")
+	var id = get_tree().get_rpc_sender_id()
+	rpc_id(id, 'rcv_map', mapgrid)
+slave func rcv_map(i):
+	print("slave received map")
+	mapgrid = i
+	emit_signal('data_rcvd')
+	
 func start(startpos = "S"):
+	if not N.is_connected and not get_tree().is_network_server():
+		print("waiting on connection")
+		yield(N, "peer_connect")
 	if G.Dlevel < 1:
 		print("You are on the surface")
 		Player.set_position(map_to_world(Vector2(50,50)) + half_tile_size)
@@ -106,22 +131,29 @@ func start(startpos = "S"):
 ##		print("Using exising map for level:",G.Dlevel)
 #		mapgrid = map_levels[G.Dlevel]
 #		self.set_network_master(false)#Not sure this is the right thing to do
-		
-	if mapgrid == []:
+#	if N.levels.has(G.Dlevel):
+#		print("Levels: ",N.levels[G.Dlevel])
+	if mapgrid == [] and not N.levels.has(G.Dlevel):# == get_tree().get_network_unique_id(): #and self.get_network_master() == get_tree().get_network_unique_id():
 		print("Maps doesnt exists, creating")
 		mapgrid = map.map(Vector2(G.Dlevel+6,G.Dlevel+6))
 		self.set_network_master(get_tree().get_network_unique_id()) #Not sure this is the right thing to do
-		N.sync_lvl(get_tree().get_network_unique_id())
+#		N.sync_lvl(get_tree().get_network_unique_id())
+		N.sync_lvl()
 		map_levels.append(mapgrid)
 		add_enemies = true
 	else:
-		print("Map exists, displaying")
+		print("Map exists at ", self.get_network_master())
+		print("sending map")
+		rpc('send_map')
+		print("waiting for map")
+		yield(self,'data_rcvd')
 		print(mapgrid)
 		add_enemies = false
 		for i in $Enemies.get_children():
 			if i.is_in_group("Enemy"):
 				i.show()
-		
+
+
 	
 	if startpos == "E":
 		found_hidden = true

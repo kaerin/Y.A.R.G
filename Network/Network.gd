@@ -9,7 +9,9 @@ var is_server = false
 var is_client = false
 var players = {}	#this represents all connected players, "Others" is for visual representation on grid ?
 var data = { name = '', pos = Vector2(), Dlevel = 0 }
-var levels = {}
+remote var levels = {}
+
+signal peer_connect
 
 #creates server with following ip address and port ?
 #..Only port is needed the ip address is itself
@@ -21,12 +23,15 @@ func _ready():
 	get_tree().connect('server_disconnected', self, 'server_disconnected')
 
 func _process(delta):
-	if Input.is_action_just_pressed("debug") and not get_node("/root/BaseNode/Grid/Player/").chat_displayed:
+	if Input.is_action_just_pressed("debug") and not get_node("/root/BaseNode/Player/").chat_displayed:
 		print(players)
 
-sync func sync_lvl(i):
+sync func sync_lvl():
+	var i = G.Dlevel
 	levels[i] = get_tree().get_network_unique_id()
+	rset('levels', levels)
 	print("Set lvl ",i," to ", get_tree().get_network_unique_id())
+	print (levels)
 
 func create_server(i):
 	is_server = true
@@ -74,6 +79,8 @@ func connected_to_server():
 
 func player_connected(id):
 	print("This client connected to us ", id)
+	levels[1] = 1
+	emit_signal('peer_connect')
 	players[id] = data
 	is_connected = true
 	rpc_id(id, 'sending_pos', data.pos)

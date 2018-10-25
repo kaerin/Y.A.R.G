@@ -21,6 +21,7 @@ func _ready():
 	self.add_child(level)
 	$Player.grid_map = get_node("Level-1")
 	$Player.grid_map.start()
+	self.set_network_master(get_tree().get_network_unique_id(),false)
 
 func chg_lvl(spos):
 	if not has_node("Level-"+str(G.Dlevel)):
@@ -31,6 +32,6 @@ func chg_lvl(spos):
 		$Player.grid_map = get_node("Level-"+str(G.Dlevel))
 		$Player.grid_map.start(spos)
 	else:
-		print("map exists: ", G.Dlevel)
+		print("map node exists: ", G.Dlevel)
 		$Player.grid_map = get_node("Level-"+str(G.Dlevel))
 		$Player.grid_map.start(spos)
