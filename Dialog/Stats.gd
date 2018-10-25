@@ -4,6 +4,7 @@ onready var stats = get_node("/root/BaseNode/Player/").stats
 
 func _ready():
 	stats.connect('disp_update', self, 'disp_update')
+	G.connect('disp_update', self, 'disp_update')
 	
 func disp_update():
 	set_hp(stats.hp)

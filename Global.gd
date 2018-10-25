@@ -21,10 +21,12 @@ const Heal = {Heal = "Heal"}
 
 var TODO_img = Rect2(1184,1600,32,32)
 
-var Dlevel = 1 #Dungeon Level
+var Dlevel = 1 setget dlvl_update #Dungeon Level
 
 var PlayerColor
 var PlayerClass = 0
+
+signal disp_update
 
 func is_within(i,j):
 	if i.x < j.x and i.x >= 0 and i.y < j.y and i.y >= 0:
@@ -33,3 +35,7 @@ func is_within(i,j):
 		return false
 
 var debug = false
+
+func dlvl_update(i):
+	Dlevel = i
+	emit_signal("disp_update")
