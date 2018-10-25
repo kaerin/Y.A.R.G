@@ -374,7 +374,8 @@ func set_kill_me(child):
 
 remote func server_kill_me(name_):
 	print('to kill ' + name_)
-	Enemies.get_node(name_).queue_free()
+	if Enemies.has_node(name_):
+		Enemies.get_node(name_).queue_free()
 
 func _on_EnemyTimer_timeout():
 	$Enemies/EnemyTimer.wait_time = randi() % 10 + 10
