@@ -246,7 +246,7 @@ func is_cell_player(pos, direction = Vector2()):
 
 func get_cell_node(pos, direction  = Vector2()):
 	var grid_pos = world_to_map(pos) + direction
-	for i in get_children():
+	for i in Enemies.get_children():
 		if i.is_in_group("Enemy"):
 			if grid_pos == world_to_map(i.get_position()):
 				return i
@@ -374,7 +374,7 @@ func set_kill_me(child):
 
 remote func server_kill_me(name_):
 	print('to kill ' + name_)
-	get_node(name_).queue_free()
+	Enemies.get_node(name_).queue_free()
 
 func _on_EnemyTimer_timeout():
 	$Enemies/EnemyTimer.wait_time = randi() % 10 + 10
