@@ -201,7 +201,7 @@ func start(startpos = "S"):
 		Player.set_position(map_to_world(end) + half_tile_size)
 	N.sync_pos(Player.position)
 	if found_hidden == true:
-		rpc("show_stairs")
+		rpc("show_stairs",G.Dlevel)
 #		set_cellv(end, tile_set.find_tile_by_name("StairDown1"))
 #	Player.is_moving = false
 #	update_child_pos(Player)
@@ -261,16 +261,17 @@ func update_child_pos(child_node):
 		N.sync_pos(target_pos)
 #		N.rpc("sending pos", target_pos)
 		if new_grid_pos == hidden:
-			rpc("show_stairs")
+			rpc("show_stairs",G.Dlevel)
 #			set_cellv(end, tile_set.find_tile_by_name("Sta
 #	if child_node.is_in_group("Enemy"):
 #		N.sync_enemy(child_node.get_path(), target_pos)
 	return target_pos
 
 
-sync func show_stairs():
-	set_cellv(end, tile_set.find_tile_by_name("StairDown1"))
-	found_hidden = true
+sync func show_stairs(i):
+	if i == G.Dlevel:
+		set_cellv(end, tile_set.find_tile_by_name("StairDown1"))
+		found_hidden = true
 
 func chg_level(pos, next = 0):
 	pos = world_to_map(pos)
