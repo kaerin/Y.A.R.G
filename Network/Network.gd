@@ -10,6 +10,7 @@ var is_client = false
 var players = {}	#this represents all connected players, "Others" is for visual representation on grid ?
 var data = { name = '', pos = Vector2(), Dlevel = 0 }
 remote var levels = {}
+sync var on_level = {}
 
 signal peer_connect
 

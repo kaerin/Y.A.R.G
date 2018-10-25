@@ -142,18 +142,17 @@ func start(startpos = "S"):
 		map_levels.append(mapgrid)
 		add_enemies = true
 	else:
-		print("Map exists at ", self.get_network_master())
-		print("sending map")
-		rpc('send_map')
-		print("waiting for map")
-		yield(self,'data_rcvd')
+		if not N.levels[G.Dlevel] == get_tree().get_network_unique_id():
+			print("Map exists at ", self.get_network_master())
+			print("sending map")
+			rpc('send_map')
+			print("waiting for map")
+			yield(self,'data_rcvd')
 		print(mapgrid)
 		add_enemies = false
 		for i in $Enemies.get_children():
 			if i.is_in_group("Enemy"):
 				i.show()
-
-
 	
 	if startpos == "E":
 		found_hidden = true
