@@ -302,7 +302,7 @@ func chg_level(pos, next = 0):
 		Game.chg_lvl(spos)
 
 
-func add_enemies(num = false):
+master func add_enemies(num = false):
 	if N.is_server:
 		var numEnemies = 0
 		for i in Enemies.get_children():

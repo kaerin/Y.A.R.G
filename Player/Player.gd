@@ -96,7 +96,7 @@ func _process(delta):
 #		Game.stats.set_gold(stats.gold)
 	if Input.is_action_just_pressed("add_enemy") and not chat_displayed:
 		Game.Dialog.print_label("You have added enemies")
-		grid_map.add_enemies()
+		grid_map.rpc('add_enemies')
 	if Input.is_action_just_pressed("next_level") and not chat_displayed:
 		grid_map.chg_level(get_position(),1)
 	if Input.is_action_just_pressed("prev_level") and not chat_displayed:
