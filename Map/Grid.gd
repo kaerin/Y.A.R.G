@@ -25,11 +25,11 @@ var end = Vector2()
 var hidden = Vector2()
 var found_hidden = false
 sync var mapgrid = []
-sync var map_levels = []
+sync var map_levels = [] #FIXME This value shouldnt be used, each node has its own mapgrid, this was used to store all maps
 var admin = false
 var maxEnemies = 0
 var numEnemies = 0
-sync var test = "one"
+sync var test = "one" #UNUSED?
 var level = 0
 var add_enemies = false
 
@@ -47,7 +47,7 @@ func _ready():
 		
 	if N.levels.has(G.Dlevel):
 		print("Level owner:",N.levels[G.Dlevel])
-	map_levels.append(true)
+	map_levels.append(true) #UNUSED?
 #	if get_tree().is_network_server():
 #		start()
 	
@@ -87,8 +87,8 @@ func _process(delta):
 			Player.get_node("Admin").queue_free()
 			admin = false
 
-func sync_map():
-	rset("map_levels", map_levels)
+func sync_map():#UNUSED?
+	rset("map_levels", map_levels) #UNUSED?
 
 master func send_map():
 	print("master sending map")
@@ -97,7 +97,7 @@ master func send_map():
 slave func rcv_map(i):
 	print("slave received map")
 	mapgrid = i
-	emit_signal('data_rcvd')
+	emit_signal('data_rcvd') #emit signal once data received
 	
 func start(startpos = "S"):
 	if not N.is_connected and not get_tree().is_network_server():
@@ -139,7 +139,7 @@ func start(startpos = "S"):
 		self.set_network_master(get_tree().get_network_unique_id()) #Not sure this is the right thing to do
 #		N.sync_lvl(get_tree().get_network_unique_id())
 		N.sync_lvl()
-		map_levels.append(mapgrid)
+		map_levels.append(mapgrid) #UNUSED?
 		add_enemies = true
 	else:
 		if not N.levels[G.Dlevel] == get_tree().get_network_unique_id():
@@ -147,7 +147,7 @@ func start(startpos = "S"):
 			print("sending map")
 			rpc('send_map')
 			print("waiting for map")
-			yield(self,'data_rcvd')
+			yield(self,'data_rcvd') #wait for signal to indicate data has been received
 		print(mapgrid)
 		add_enemies = false
 		for i in $Enemies.get_children():
@@ -274,6 +274,12 @@ sync func show_stairs(i):
 		found_hidden = true
 
 func chg_level(pos, next = 0):
+	var lvlEmpty = false
+	for i in N.players:
+		if N.players[i].Dlevel == G.Dlevel:
+			lvlEmpty = true
+			break
+	print("Level ", str(G.Dlevel), " empty? ", str(lvlEmpty))
 	pos = world_to_map(pos)
 	var chg = false
 	var spos

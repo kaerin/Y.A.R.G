@@ -8,9 +8,9 @@ var is_connected = false
 var is_server = false
 var is_client = false
 var players = {}	#this represents all connected players, "Others" is for visual representation on grid ?
-var data = { name = '', pos = Vector2(), Dlevel = 0 }
+var data = { name = '', pos = Vector2(), Dlevel = 1 }
 remote var levels = {}
-sync var on_level = {}
+sync var on_level = {} #use Dlevel to determine which player is on whcih level
 
 signal peer_connect
 
@@ -37,7 +37,7 @@ sync func sync_lvl():
 func create_server(i):
 	is_server = true
 	data.name = i
-	data.Dlevel = 0
+	data.Dlevel = 1
 	players[1] = data
 	players[0] = data
 	var peer = NetworkedMultiplayerENet.new()
