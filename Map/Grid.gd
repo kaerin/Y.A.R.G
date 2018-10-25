@@ -33,7 +33,11 @@ sync var test = "one" #UNUSED?
 var level = 0
 var add_enemies = false
 
+signal enemy_move
 signal data_rcvd #used to wait for data
+
+master func move_enemy():
+	emit_signal('enemy_move')
 
 func _ready():
 	if N.levels.has(G.Dlevel):
@@ -209,6 +213,9 @@ func start(startpos = "S"):
 		add_enemies()
 #	print("grid size",grid_size)
 	#TEMP add random enemies for testing
+	rpc('get_enemies')
+
+
 
 func create_grid():
 	grid = []
@@ -306,52 +313,63 @@ func chg_level(pos, next = 0):
 		self.clear()
 		GridFloor.clear()
 		Game.chg_lvl(spos)
+		Player.chk_grid()
 
 
 master func add_enemies(num = false):
-	if N.is_server:
-		var numEnemies = 0
-		for i in Enemies.get_children():
-			if i.is_in_group("Enemy"):
-				numEnemies += 1
-		if numEnemies > maxEnemies:
-			return
-		if G.Dlevel == 0:
-			return
-		if not num:
-			num = int(grid_size.x*grid_size.y/enemy_factor)
-		var positions = []
-		randomize()
-		for n in num:
-			var grid_pos = Vector2(randi() % int(grid_size.x), randi() % int(grid_size.y))
-			while not is_cell_empty(map_to_world(grid_pos)):
-				grid_pos = Vector2(randi() % int(grid_size.x), randi() % int(grid_size.y))
-			positions.append(grid_pos)
+#	if N.is_server:
+	var numEnemies = 0
+	for i in Enemies.get_children():
+		if i.is_in_group("Enemy"):
+			numEnemies += 1
+	if numEnemies > maxEnemies:
+		return
+	if G.Dlevel == 0:
+		return
+	if not num:
+		num = int(grid_size.x*grid_size.y/enemy_factor)
+	var positions = []
+	randomize()
+	for n in num:
+		var grid_pos = Vector2(randi() % int(grid_size.x), randi() % int(grid_size.y))
+		while not is_cell_empty(map_to_world(grid_pos)):
+			grid_pos = Vector2(randi() % int(grid_size.x), randi() % int(grid_size.y))
+		positions.append(grid_pos)
+	
+	for pos in positions:
+		var new_object = enemy.instance()
+		var pos2 = (map_to_world(pos) + half_tile_size)
+		new_object.set_position(pos2)
+		Enemies.add_child(new_object)
+		grid[pos.x][pos.y] = new_object.type
+		new_object.set_name(new_object.get_name())			#annoying BS that wont work without this. Godot adds @ symbols to instanced names, which dont copy properly when setting same name to another node. 
 		
-		for pos in positions:
-			var new_object = enemy.instance()
-			var pos2 = (map_to_world(pos) + half_tile_size)
-			new_object.set_position(pos2)
-			Enemies.add_child(new_object)
-			grid[pos.x][pos.y] = new_object.type
-			new_object.set_name(new_object.get_name())			#annoying BS that wont work without this. Godot adds @ symbols to instanced names, which dont copy properly when setting same name to another node. 
-			
-			#Vars for RPC call, only for readability
-			var a = new_object.get_name()
-			var b = new_object.enemy
-			var c = new_object.get_node('Sprite').get_region_rect()
-			rpc('server_add_enemies', pos2, a, b, c)
-			#var name_ = new_object.get_name()
-			#print('new name ' + new_object.get_name())
-			#print('sent name ' + name_)
+		#Vars for RPC call, only for readability
+		var a = new_object.get_name()
+		var b = new_object.enemy
+		var c = new_object.get_node('Sprite').get_region_rect()
+		rpc('server_add_enemies', pos2, a, b, c)
+		#var name_ = new_object.get_name()
+		#print('new name ' + new_object.get_name())
+		#print('sent name ' + name_)
+
+master func get_enemies():
+	var id = get_tree().get_rpc_sender_id()
+	for i in $Enemies.get_children():
+		if i.is_in_group('Enemy'):
+			print(i.get_name())
+			rpc_id(id, 'server_add_enemies', i.position, i.get_name(), i.enemy, i.get_node('Sprite').get_region_rect())
 
 remote func server_add_enemies(pos2, node_name, enemy, region):
-	var new_object = enemy_dummy.instance()
-	new_object.enemy = enemy
-	new_object.set_position(pos2)
-	new_object.set_name(node_name)
-	new_object.get_node('Sprite').set_region_rect(region)
-	Enemies.add_child(new_object)
+#	print("server add enemies ", node_name)
+#	print($Enemies.find_node(node_name,false,false))
+	if not $Enemies.find_node(node_name,false,false):
+		var new_object = enemy_dummy.instance()
+		new_object.enemy = enemy
+		new_object.set_position(pos2)
+		new_object.set_name(node_name)
+		new_object.get_node('Sprite').set_region_rect(region)
+		Enemies.add_child(new_object)
 
 func get_item(child): #Returns dropped item
 	var grid_pos = world_to_map(child.get_position())

@@ -66,7 +66,8 @@ func _ready():
 	stats.set_attributes(attributes)
 	
 	
-	player.connect("enemy_move", self, "set_move")
+	grid_map.connect("enemy_move", self, "set_move")
+	
 	type = Game.ENEMY
 #	weapon = Weapon.new(G.CHAR.ENEMY) #enemies can be given the same weapon class and weapon inventory
 #	armour = Armour.new(G.CHAR.ENEMY)

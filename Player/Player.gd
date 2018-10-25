@@ -46,14 +46,18 @@ var Dialog
 #var weap #weapon class
 
 func chk_level():
+	
 	pass
 #	Game.stats.set_level(stats.level)
+remote func chk_grid():
+	grid = get_node("../Level-"+str(G.Dlevel))
 
 func set_gm(i):
 	grid_map = i
 	print(i)
 
 func _ready():
+	grid = get_node("../Level-"+str(G.Dlevel))
 #	grid_map = get_node("../Level-"+str(G.Dlevel)) #hmmmm needs to be executed later
 	print("ready")
 	var genItems = GenItems.new()
@@ -106,7 +110,7 @@ func _process(delta):
 		if stats.hp > stats.hp_max:
 			stats.hp = stats.hp_max
 		print("Resting hp:",stats.hp)
-		emit_signal("enemy_move")
+		get_node("../Level-"+str(G.Dlevel)).rpc("move_enemy")
 	direction = Vector2()
 	if Input.is_action_pressed("ui_up") and not chat_displayed:
 		direction.y = -1
@@ -149,11 +153,11 @@ func _process(delta):
 		if abs(velocity.x) > distance_to_target.x:
 			velocity.x = distance_to_target.x * target_direction.x
 			is_moving = false
-			emit_signal("enemy_move")
+			get_node("../Level-"+str(G.Dlevel)).rpc("move_enemy")
 		if abs(velocity.y) > distance_to_target.y:
 			velocity.y = distance_to_target.y * target_direction.y
 			is_moving = false
-			emit_signal("enemy_move")
+			get_node("../Level-"+str(G.Dlevel)).rpc("move_enemy")
 
 func attack():
 	
