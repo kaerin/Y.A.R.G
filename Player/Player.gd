@@ -17,6 +17,7 @@ onready var Stats = load("res://Player/Stats.gd")
 onready var GenItems = load("res://Items/GenItems.gd")
 onready var Combat = load("res://Player/Combat.gd")
 onready var Chat = load("res://Network/Chat.tscn")
+onready var Admin = preload("res://Admin/Admin.tscn")
 #onready var weapons = load("res://Items/Weapon.gd") #load class
 #onready var Map = get_node("../../Map")
 
@@ -33,6 +34,7 @@ var target_pos = Vector2()
 var target_direction = Vector2()
 var facing = false
 var chat_displayed
+var admin = false
 
 var combat
 var skills
@@ -87,7 +89,16 @@ func _ready():
 #	grid_map.set_grid_pos(self, Map.start)
 
 func _process(delta):
-
+	if Input.is_action_just_pressed("admin") and not chat_displayed:
+		if not admin:
+			add_child(Admin.instance())
+			admin = true
+		else:
+			var an = get_node("Admin")
+			an.clear()
+			an.queue_free()
+			admin = false
+			
 	if Input.is_action_just_pressed("Chat"):
 		chat()
 	if Input.is_action_just_pressed("ui_p") and not chat_displayed:

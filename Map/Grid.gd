@@ -86,13 +86,13 @@ func _process(delta):
 		print("grid master is: ", self.get_network_master())
 		print(N.levels)
 		
-	if Input.is_action_just_pressed("admin") and not Player.chat_displayed:
-		if not admin:
-			Player.add_child(Admin.instance())
-			admin = true
-		else:
-			Player.get_node("Admin").queue_free()
-			admin = false
+#	if Input.is_action_just_pressed("admin") and not Player.chat_displayed:
+#		if not admin:
+#			Player.add_child(Admin.instance())
+#			admin = true
+#		else:
+#			Player.get_node("Admin").queue_free()
+#			admin = false
 
 func sync_map():#UNUSED?
 	rset("map_levels", map_levels) #UNUSED?

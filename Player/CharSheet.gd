@@ -4,7 +4,7 @@ extends Node
 # var a = 2
 # var b = "textvar"
 
-var charsheet_displayed
+var charsheet_displayed = false
 onready var Char_Visu = load("res://Player/Char_Visu.tscn")
 
 func _ready():
