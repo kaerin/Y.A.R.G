@@ -56,7 +56,7 @@ _sections_unfolded = [ "Cell", "Z Index" ]
 [node name="EnemyTimer" type="Timer" parent="Enemies" index="0"]
 
 process_mode = 1
-wait_time = 10.0
+wait_time = 60.0
 one_shot = false
 autostart = false
 

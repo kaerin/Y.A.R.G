@@ -32,6 +32,7 @@ sync func sync_lvl():
 	levels[i] = get_tree().get_network_unique_id()
 	rset('levels', levels)
 	print("Set lvl ",i," to ", get_tree().get_network_unique_id())
+	get_node("/root/BaseNode/Level-"+str(i)).rpc_id(get_tree().get_network_unique_id(),'set_master')
 	print (levels)
 
 func create_server(i):

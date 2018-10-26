@@ -37,6 +37,7 @@ signal enemy_move
 signal data_rcvd #used to wait for data
 
 master func move_enemy():
+#	print("moving ", self.name)
 	emit_signal('enemy_move')
 
 func _ready():
@@ -75,6 +76,8 @@ func _ready():
 #	print("Remote function executed")
 #sync func test_sync():
 #	print("Sync function execute")
+sync func set_master():
+	set_network_master(get_tree().get_network_unique_id())
 
 func _process(delta):
 
@@ -226,12 +229,16 @@ func create_grid():
 
 func is_cell_empty(pos, direction = Vector2()):
 	var grid_pos = world_to_map(pos) + direction
+#	print(grid[grid_pos.x][grid_pos.y])
 	if G.is_within(grid_pos,grid_size):
+#		print("in grid")
 #	if grid_pos.x < grid_size.x and grid_pos.x >= 0:
 #		if grid_pos.y < grid_size.y and grid_pos.y >= 0:
 		if grid[grid_pos.x][grid_pos.y] == Game.EMPTY or grid[grid_pos.x][grid_pos.y] == Game.ITEM:
+#			print("return true")
 			return true
 		else:
+#			print("return false")
 			return false
 	return false
 
@@ -401,6 +408,6 @@ remote func server_kill_me(name_):
 	if Enemies.has_node(name_):
 		Enemies.get_node(name_).queue_free()
 
-func _on_EnemyTimer_timeout():
-	$Enemies/EnemyTimer.wait_time = randi() % 10 + 10
+func _on_EnemyTimer_timeout(): #Auto start turned off
+	$Enemies/EnemyTimer.wait_time = randi() % 60 + 60
 	add_enemies()

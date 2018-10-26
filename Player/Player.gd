@@ -51,6 +51,7 @@ func chk_level():
 #	Game.stats.set_level(stats.level)
 remote func chk_grid():
 	grid = get_node("../Level-"+str(G.Dlevel))
+	print("Grid:",grid)
 
 func set_gm(i):
 	grid_map = i

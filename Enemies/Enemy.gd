@@ -120,7 +120,7 @@ func _ready():
 	rnd_item = randi() % dic_wear.size() 
 #		inventory.append(dic_wear[rnd_item])
 	inv.add_item(genItems.gen_wear(dic_wear[rnd_item]),equip)
-	$Timer.wait_time = randi() % 10 + 1
+	$Timer.wait_time = randi() % 60 + 60 #Enemies move every 1-2 minutes
 
 
 
@@ -155,11 +155,13 @@ func attack():
 	#hacked above in Take_damage that only first attack does acctual damage.
 	
 func set_move():
+	
 #	if not $Timer.is_stopped():
 #		$Timer.stop()
-	$Timer.wait_time = randi() % 5 + 1
+	$Timer.wait_time = randi() % 60 + 60 #Enemies move every 1-2 minutes
 	var i = 0
 	while not grid_map.is_cell_empty(get_position(), direction):
+#		print("moving enemy")
 		i += 1
 		direction = Vector2()
 		var temp = randi() % 5
@@ -182,7 +184,7 @@ func set_move():
 			break
 
 func _process(delta):
-	if N.is_server:
+	if get_parent().get_parent().is_network_master(): #this bug took a long time to find
 		if not is_moving and not direction == Vector2():
 			target_direction = direction
 			var attacking = false
