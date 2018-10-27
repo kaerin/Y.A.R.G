@@ -266,7 +266,11 @@ func get_cell_node(pos, direction  = Vector2()):
 		if i.is_in_group("Enemy"):
 			if grid_pos == world_to_map(i.get_position()):
 				return i
-
+	for j in Game.get_children():
+		if j.is_in_group("Player"):
+			if grid_pos == world_to_map(j.get_position()):
+				return j
+			
 func update_child_pos(child_node):
 	var grid_pos = world_to_map(child_node.get_position())
 	grid[grid_pos.x][grid_pos.y] = Game.EMPTY

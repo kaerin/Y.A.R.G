@@ -13,6 +13,7 @@ var wearable
 var type
 var facing = true
 var Name
+var Exp = 10
 
 var CHARTYPE = G.CHAR.ENEMY
 var direction = Vector2()
@@ -50,6 +51,7 @@ var combat
 var skills
 var spells
 var enemy
+var player_id = 1 #default to server. This is used a lot to send data to correct player
 
 func _ready():
 #	print(G.MAT.CLOTH)
@@ -131,34 +133,21 @@ func chg_name():
 	
 #TEMP ONLY for basic player enemy interaction test.
 func take_dmg(dmg):
-#	print("Incorrect function")
-#	if roll > stats.get_res(dmg):
-#		hp -= dmg[0][1]		# THIS IS SHITTY. was working on resistance and just needed a hack here for now.
-#		print("roll:",roll, " target:", stats.get_res(dmg), " ",Name, " took " + str(dmg) + " damage. HP:" + str(hp))
 	stats.hp -= dmg
 	if stats.hp <= 0:
-		#####################################
-		### need to RPC experienc to attacker later
-		#############################################
-		#var i = stats.attacker
-		#i.stats.expr += 10
-		#Game.stats.set_exp(i.stats.expr)
+		if player_id == self.get_tree().get_network_unique_id():
+			player.gain_exp(Exp)			#send Exp to attacker
+		else:
+			player.rpc_id(player_id, 'gain_exp', Exp)			#send Exp to attacker
 		grid_map.set_kill_me(self)
 	else:
-		combat.attack(stats.get_dmg(),player) #Fight player
-		
-		
-#after player moves all enemies are triggered to move from Grid_Map		
-func attack():
-	print("Incorrect function")
-	var roll = randi() % 20 + G.Dlevel
-	print("Attacks with ", inv.weapon.get_name(), " rolls:", roll)
-	player.take_dmg(roll, stats.get_dmg())#+G.Dlevel)
-	#this should call for each individual attack type. but im out of time.
-	#hacked above in Take_damage that only first attack does acctual damage.
+		if player_id == self.get_tree().get_network_unique_id():
+			player.attacked(stats.get_dmg()) #Fight player
+		else:
+			player.rpc_id(player_id, 'attacked', stats.get_dmg()) #Fight player
 
-master func attack2(dmg):
-	print('attack rpc call')
+master func attacked(dmg, id):
+	player_id = id
 	combat.attack(dmg,self)
 
 func set_move():
@@ -197,16 +186,28 @@ func _process(delta):
 			var attacking = false
 			for i in DIRS:
 				if grid_map.is_cell_player(get_position(), i):
-					player.rpc('attack2', stats.get_dmg())
-					#combat.attack(self,enemy)					
-					#combat.attack(self, player)
-					attacking = true
+					var node = grid_map.get_cell_node(get_position(), i)
+					if node && node.is_in_group('Player'):
+						player_id = node.id
+						print('send dmg to ' + str(node.id))
+						if player_id == self.get_tree().get_network_unique_id():
+							player.attacked(stats.get_dmg())
+						else:
+							player.rpc_id(player_id, 'attacked', stats.get_dmg()) # <--- this needs to get correct players id
+						attacking = true
 			if grid_map.is_cell_empty(get_position(), target_direction) and not attacking:
 				target_pos = grid_map.update_child_pos(self)
 				is_moving = true
 				rpc('sync_move', target_pos, target_direction)
 			elif grid_map.is_cell_player(get_position(), target_direction) and not attacking:
-				combat.attack(stats.get_dmg(),player) #Fight player
+				var node = grid_map.get_cell_node(get_position(), target_direction)
+				if node && node.is_in_group('Player'):
+					player_id = node.id
+					print('send dmg to ' + str(node.id))
+					if player_id == self.get_tree().get_network_unique_id():
+						player.attacked(stats.get_dmg())
+					else:
+						player.rpc_id(player_id, 'attacked', stats.get_dmg()) # <--- this needs to get correct players id
 		elif is_moving:
 			speed = MAX_SPEED
 			velocity = speed * target_direction.normalized() * delta
@@ -222,14 +223,3 @@ func _process(delta):
 				velocity.y = distance_to_target.y * target_direction.y
 				is_moving = false
 		direction = Vector2()
-
-
-
-#		if not direction == Vector2():
-#
-#			if grid_map.is_target_grid_valid(self,direction):
-#				#check target cell contents in gridmap 
-#				var obsticle = grid_map.has_target_grid_obsticle(self, direction)
-#					#if empty move to position
-#				if obsticle == null: 
-#					position = grid_map.set_new_grid_pos(self, direction)

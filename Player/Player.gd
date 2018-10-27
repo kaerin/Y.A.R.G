@@ -35,6 +35,7 @@ var target_direction = Vector2()
 var facing = false
 var chat_displayed
 var admin = false
+var id = 1
 
 var combat
 var skills
@@ -146,11 +147,11 @@ func _process(delta):
 			target_pos = grid_map.update_child_pos(self)
 			is_moving = true
 		elif grid_map.is_cell_enemy(get_position(), target_direction) and not is_fighting:
-			var enemy = grid_map.get_cell_node(get_position(), target_direction)
-			if enemy:
+			var node = grid_map.get_cell_node(get_position(), target_direction)
+			if node && node.is_in_group("Enemy"):
 				is_fighting = true
 				$Timer.start()
-				enemy.rpc('attack2', stats.get_dmg())
+				node.rpc('attacked', stats.get_dmg(), get_tree().get_network_unique_id())
 				#combat.attack(self,enemy)
 	elif is_moving:
 		if N.is_connected:
@@ -172,27 +173,15 @@ func _process(delta):
 			is_moving = false
 			get_node("../Level-"+str(G.Dlevel)).rpc("move_enemy")
 
-func attack():
-	
-	print("Incorrect function")
-	var enemy = grid_map.get_cell_node(get_position(), target_direction)
-	if enemy:
-		is_fighting = true
-		var roll = randi() % 20
-		enemy.take_dmg(roll, stats.get_dmg()) #weapon needs to get equippped
-		$Timer.start()
+remote func attacked(dmg):
+	combat.attack(dmg,self)
 
-master func attack2(from):
-	print('attack rpc call')
-	combat.attack(from,self)
+remote func gain_exp(Exp):
+	stats.expr += Exp
+	Game.stats.set_exp(stats.expr)	
 
 func take_dmg(dmg):
-#	print("Incorrect function")
-#	stats.test_print_method() #4. Used as a trigger to call methods in wepaon from attrib
-#	if roll > stats.get_res(dmg):
 	stats.hp -= dmg		# THIS IS SHITTY. was working on resistance and just needed a hack here for now.
-#	Game.stats.set_hp(stats.hp)
-#	print("roll:",roll, " target:",stats.get_res(dmg), "You took " + str(dmg) + " damage. HP:" + str(hp))
 	if stats.hp < 0:
 		get_tree().change_scene("res://Scenes/End.tscn")
 

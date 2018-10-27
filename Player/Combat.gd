@@ -25,7 +25,7 @@ func attack(dmg, to):
 		for r in res:
 			if d[0] == r[0]:
 				noRes = false
-				var roll = randi() % 20 #+ from.stats.level
+				var roll = randi() % 20 #+ from.stats.level   <--- readd this again later somehow somewhere
 				print("Rolls:",roll)
 				if roll > r[1]:
 					print("Hits take ",d[1]," dmg")

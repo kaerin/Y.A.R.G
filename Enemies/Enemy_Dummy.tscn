@@ -3,7 +3,7 @@
 [ext_resource path="res://Enemies/Enemy_Dummy.gd" type="Script" id=1]
 [ext_resource path="res://Data/ProjectUtumno_full.png" type="Texture" id=2]
 
-[node name="Enemy" type="KinematicBody2D" index="0" groups=[
+[node name="Enemy" type="KinematicBody2D" groups=[
 "Enemy",
 ]]
 
