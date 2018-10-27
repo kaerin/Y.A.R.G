@@ -350,6 +350,7 @@ master func add_enemies(num = false):
 		var new_object = enemy.instance()
 		var pos2 = (map_to_world(pos) + half_tile_size)
 		new_object.set_position(pos2)
+		new_object.set_network_master(get_tree().get_network_unique_id())
 		Enemies.add_child(new_object)
 		grid[pos.x][pos.y] = new_object.type
 		rset('grid',grid)

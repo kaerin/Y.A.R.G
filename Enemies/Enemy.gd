@@ -137,12 +137,15 @@ func take_dmg(dmg):
 #		print("roll:",roll, " target:", stats.get_res(dmg), " ",Name, " took " + str(dmg) + " damage. HP:" + str(hp))
 	stats.hp -= dmg
 	if stats.hp <= 0:
-		var i = stats.attacker
-		i.stats.expr += 10
-		Game.stats.set_exp(i.stats.expr)
+		#####################################
+		### need to RPC experienc to attacker later
+		#############################################
+		#var i = stats.attacker
+		#i.stats.expr += 10
+		#Game.stats.set_exp(i.stats.expr)
 		grid_map.set_kill_me(self)
 	else:
-		combat.attack(self,player) #Fight player
+		combat.attack(stats.get_dmg(),player) #Fight player
 		
 		
 #after player moves all enemies are triggered to move from Grid_Map		
@@ -153,7 +156,11 @@ func attack():
 	player.take_dmg(roll, stats.get_dmg())#+G.Dlevel)
 	#this should call for each individual attack type. but im out of time.
 	#hacked above in Take_damage that only first attack does acctual damage.
-	
+
+master func attack2(dmg):
+	print('attack rpc call')
+	combat.attack(dmg,self)
+
 func set_move():
 	
 #	if not $Timer.is_stopped():
@@ -190,14 +197,16 @@ func _process(delta):
 			var attacking = false
 			for i in DIRS:
 				if grid_map.is_cell_player(get_position(), i):
-					combat.attack(self, player)
+					player.rpc('attack2', stats.get_dmg())
+					#combat.attack(self,enemy)					
+					#combat.attack(self, player)
 					attacking = true
 			if grid_map.is_cell_empty(get_position(), target_direction) and not attacking:
 				target_pos = grid_map.update_child_pos(self)
 				is_moving = true
 				rpc('sync_move', target_pos, target_direction)
 			elif grid_map.is_cell_player(get_position(), target_direction) and not attacking:
-				combat.attack(self,player) #Fight player
+				combat.attack(stats.get_dmg(),player) #Fight player
 		elif is_moving:
 			speed = MAX_SPEED
 			velocity = speed * target_direction.normalized() * delta

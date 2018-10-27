@@ -12,10 +12,10 @@
 #func time_out():
 #	print("Timed out")
 
-func attack(from,to):
+func attack(dmg, to):
 	print("Attacking")
-	to.stats.attacker = from
-	var dmg = from.stats.get_dmg()
+	#to.stats.attacker = dmg
+	#var dmg = from.stats.get_dmg()
 	var res = to.stats.get_res(dmg)
 	var totDmg = 0
 	print(dmg, " -> ", res)
@@ -25,7 +25,7 @@ func attack(from,to):
 		for r in res:
 			if d[0] == r[0]:
 				noRes = false
-				var roll = randi() % 20 + from.stats.level
+				var roll = randi() % 20 #+ from.stats.level
 				print("Rolls:",roll)
 				if roll > r[1]:
 					print("Hits take ",d[1]," dmg")

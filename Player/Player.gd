@@ -150,7 +150,8 @@ func _process(delta):
 			if enemy:
 				is_fighting = true
 				$Timer.start()
-				combat.attack(self,enemy)
+				enemy.rpc('attack2', stats.get_dmg())
+				#combat.attack(self,enemy)
 	elif is_moving:
 		if N.is_connected:
 			$Name.text = N.players[get_tree().get_network_unique_id()].name
@@ -180,6 +181,10 @@ func attack():
 		var roll = randi() % 20
 		enemy.take_dmg(roll, stats.get_dmg()) #weapon needs to get equippped
 		$Timer.start()
+
+master func attack2(from):
+	print('attack rpc call')
+	combat.attack(from,self)
 
 func take_dmg(dmg):
 #	print("Incorrect function")
