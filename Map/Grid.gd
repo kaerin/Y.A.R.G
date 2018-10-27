@@ -4,7 +4,7 @@ var tile_size = get_cell_size()
 var half_tile_size = tile_size / 2
 var enemy_factor = 25 #Lower to get more enemies
 var grid_size = Vector2()
-var grid = []
+remote var grid = []
 
 var FLOOR = ["Floor1","Floor2","Floor3","Floor4"]
 var ROOF = ["Wall1","Wall2","Wall3","Wall4"]
@@ -217,8 +217,10 @@ func start(startpos = "S"):
 #	print("grid size",grid_size)
 	#TEMP add random enemies for testing
 	rpc('get_enemies')
+	rpc_id(get_network_master(),'get_grid')
 
-
+master func get_grid():
+	rset_id(get_tree().get_rpc_sender_id(),'grid',grid)
 
 func create_grid():
 	grid = []
@@ -270,6 +272,7 @@ func update_child_pos(child_node):
 	grid[grid_pos.x][grid_pos.y] = Game.EMPTY
 	var new_grid_pos = grid_pos + child_node.direction
 	grid[new_grid_pos.x][new_grid_pos.y] = child_node.type
+	rset('grid',grid)
 	var target_pos = map_to_world(new_grid_pos) + half_tile_size
 	if child_node.is_in_group("Player"):
 		N.sync_pos(target_pos)
@@ -349,6 +352,7 @@ master func add_enemies(num = false):
 		new_object.set_position(pos2)
 		Enemies.add_child(new_object)
 		grid[pos.x][pos.y] = new_object.type
+		rset('grid',grid)
 		new_object.set_name(new_object.get_name())			#annoying BS that wont work without this. Godot adds @ symbols to instanced names, which dont copy properly when setting same name to another node. 
 		
 		#Vars for RPC call, only for readability
@@ -384,6 +388,7 @@ func get_item(child): #Returns dropped item
 		if i.is_in_group("Item"):
 			if grid_pos == world_to_map(i.get_position()):
 				grid[grid_pos.x][grid_pos.y] = Game.EMPTY
+				rset('grid',grid)
 				var obj = i.item
 				i.queue_free()
 				return obj
@@ -395,6 +400,7 @@ func set_kill_me(child):
 	var new_object = item.instance()
 	new_object.set_position(map_to_world(cur_pos) + half_tile_size)
 	grid[cur_pos.x][cur_pos.y] = Game.ITEM #Mark grid with ITEM
+	rset('grid',grid)
 	var j = child.inv.find_rnd_item() #.inv. wont work for player only enemy
 #	while j.BaseType == G.BaseType.BodyWeap:
 #		j = i[randi() % i.size()] #find a non body weapon item
