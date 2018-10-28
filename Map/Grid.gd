@@ -411,13 +411,14 @@ func set_kill_me(child):
 #		j = i[randi() % i.size()] #find a non body weapon item
 	new_object.item = j
 	add_child(new_object)
-	rpc('server_kill_me', child.get_name())
+	rpc('server_kill_me', child.get_name(), cur_pos)
 	child.queue_free()
 
-remote func server_kill_me(name_):
+remote func server_kill_me(name_, cur_pos):
 	print('to kill ' + name_)
 	if Enemies.has_node(name_):
 		Enemies.get_node(name_).queue_free()
+		GridFloor.set_blood(cur_pos)
 
 func _on_EnemyTimer_timeout(): #Auto start turned off
 	$Enemies/EnemyTimer.wait_time = randi() % 60 + 60
