@@ -396,13 +396,21 @@ func get_item(child): #Returns dropped item
 				rset('grid',grid)
 				var obj = i.item
 				i.queue_free()
-				return obj
+				rpc('item_picked_up', i.get_name())
+				return obj				# <---- this is problematic for slave items, node passing is not possible. all important info is missing.
+										# means slave will 'pickup' item, but inventory is empty.
+				
+remote func item_picked_up(name_):
+	if has_node(name_):
+		get_node(name_).queue_free()
 
 func set_kill_me(child):
 	var cur_pos = world_to_map(child.get_position())
 	GridFloor.set_blood(cur_pos)
 	grid[cur_pos.x][cur_pos.y] = Game.EMPTY #Mark grid as empty
 	var new_object = item.instance()
+	new_object.set_network_master(get_tree().get_network_unique_id())
+	new_object.set_name(new_object.get_name())			#annoying BS that wont work without this. Godot adds @ symbols to instanced names, which dont copy properly when setting same name to another node. 
 	new_object.set_position(map_to_world(cur_pos) + half_tile_size)
 	grid[cur_pos.x][cur_pos.y] = Game.ITEM #Mark grid with ITEM
 	rset('grid',grid)
@@ -412,6 +420,7 @@ func set_kill_me(child):
 	new_object.item = j
 	add_child(new_object)
 	rpc('server_kill_me', child.get_name(), cur_pos)
+	rpc('server_item_drop', new_object.get_name(), (map_to_world(cur_pos) + half_tile_size), j.get_name(), j.get_sprite_texture(), j.get_sprite_rect())
 	child.queue_free()
 
 remote func server_kill_me(name_, cur_pos):
@@ -419,6 +428,15 @@ remote func server_kill_me(name_, cur_pos):
 	if Enemies.has_node(name_):
 		Enemies.get_node(name_).queue_free()
 		GridFloor.set_blood(cur_pos)
+
+remote func server_item_drop(node_name, pos, name_, texture, rect):
+	var new_object = item.instance()
+	new_object.name_ = name_
+	new_object.texture = texture
+	new_object.rect = rect	
+	new_object.set_position(pos)
+	new_object.set_name(node_name)
+	add_child(new_object)	
 
 func _on_EnemyTimer_timeout(): #Auto start turned off
 	$Enemies/EnemyTimer.wait_time = randi() % 60 + 60

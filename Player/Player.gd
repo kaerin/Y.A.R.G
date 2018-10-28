@@ -105,7 +105,7 @@ func _process(delta):
 	if Input.is_action_just_pressed("ui_p") and not chat_displayed:
 		var item = grid_map.get_item(self)
 		if item:
-			inv.add_item(item)
+			inv.add_item(item)			# <------ problematic for slave items, they dont have all info due to godot not passing all node information.
 	if Input.is_action_just_pressed("level") and not chat_displayed:
 		grid_map.chg_level(get_position()) #Make this better
 	if Input.is_action_just_pressed("sell_items") and not chat_displayed:
