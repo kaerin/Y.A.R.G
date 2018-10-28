@@ -5,7 +5,7 @@ onready var dic_weapon = get_parent().get_parent().get_node("Dictionaries/Items"
 onready var dic_chest = get_parent().get_parent().get_node("Dictionaries/Items").chest
 
 var object = {}
-var item
+var item			#<---- this wont pass properlly through RPC, making the existing concept difficult for multiplayer.
 var name_
 var texture
 var rect
