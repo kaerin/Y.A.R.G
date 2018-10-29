@@ -12,6 +12,7 @@ var name_
 var texture
 var rect
 var rpc_data = {}
+var packedData
 
 func _ready():
 	#TODO random instancing of enemies in dictionary
@@ -20,7 +21,7 @@ func _ready():
 		$Label.text = item.get_name()
 		self.texture = item.get_sprite_texture()
 		set_region_rect(item.get_sprite_rect())
-	else:
+	else: #Else call the unpack data function within the class itself instead of coding each type here
 		if rpc_data.has('Type'):
 			if rpc_data.Type == 'Weapon':
 				var a = Weapons.new()

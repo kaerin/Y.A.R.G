@@ -12,6 +12,14 @@ var Res = [] #resistance array of array like weapons
 var ImgRect
 var rpc_data = {}
 
+func pack(): #pack and unpack the data within the class
+	packBase()
+	packedData['Res'] = Res
+	
+func unpack():
+	unpackBase()
+	Res = packedData['Res']
+
 #set data
 func add_res(i):
 	Res.append([i[0],i[1]+G.Dlevel])

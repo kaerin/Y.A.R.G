@@ -10,6 +10,14 @@ var Res = []
 var Dmg = []
 var rpc_data = {}
 
+func pack():
+	packBase()
+	packedData['Res'] = Res
+	
+func unpack():
+	unpackBase()
+	Res = packedData['Res']
+	
 #set data
 func add_res(i,j):
 	Res.append([i,j])

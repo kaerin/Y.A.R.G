@@ -8,8 +8,15 @@ var sprite_rect = G.TODO_img
 var Name
 var is_equipped
 var droppable = true
+var packedData = {}
 
 #set data
+func packBase():
+	packedData['texture'] = texture
+
+func unpackBase():
+	texture = packedData['texture']
+
 func set_sprite_rect(i):
 	sprite_rect = i
 
