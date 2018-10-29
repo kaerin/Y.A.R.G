@@ -10,6 +10,7 @@ var LocName
 var BonusRes = 0
 var Res = [] #resistance array of array like weapons
 var ImgRect
+var rpc_data = {}
 
 #set data
 func add_res(i):

@@ -396,11 +396,11 @@ func get_item(child): #Returns dropped item
 				rset('grid',grid)
 				var obj = i.item
 				i.queue_free()
-				rpc('item_picked_up', i.get_name())
+				rpc('server_get_item', i.get_name())
 				return obj				# <---- this is problematic for slave items, node passing is not possible. all important info is missing.
 										# means slave will 'pickup' item, but inventory is empty.
 				
-remote func item_picked_up(name_):
+remote func server_get_item(name_):
 	if has_node(name_):
 		get_node(name_).queue_free()
 
@@ -420,7 +420,7 @@ func set_kill_me(child):
 	new_object.item = j
 	add_child(new_object)
 	rpc('server_kill_me', child.get_name(), cur_pos)
-	rpc('server_item_drop', new_object.get_name(), (map_to_world(cur_pos) + half_tile_size), j.get_name(), j.get_sprite_texture(), j.get_sprite_rect())
+	rpc('server_item_drop', new_object.get_name(), (map_to_world(cur_pos) + half_tile_size), j.get_name(), j.get_sprite_texture(), j.get_sprite_rect(), j.rpc_data)
 	child.queue_free()
 
 remote func server_kill_me(name_, cur_pos):
@@ -429,11 +429,12 @@ remote func server_kill_me(name_, cur_pos):
 		Enemies.get_node(name_).queue_free()
 		GridFloor.set_blood(cur_pos)
 
-remote func server_item_drop(node_name, pos, name_, texture, rect):
+remote func server_item_drop(node_name, pos, name_, texture, rect, rpc_data):
 	var new_object = item.instance()
 	new_object.name_ = name_
 	new_object.texture = texture
 	new_object.rect = rect	
+	new_object.rpc_data = rpc_data	
 	new_object.set_position(pos)
 	new_object.set_name(node_name)
 	add_child(new_object)	

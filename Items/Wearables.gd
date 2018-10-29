@@ -8,6 +8,7 @@ var BonusRes = 0
 var BonusDmg = 0
 var Res = []
 var Dmg = []
+var rpc_data = {}
 
 #set data
 func add_res(i,j):
