@@ -4,7 +4,7 @@ var tile_size = get_cell_size()
 var half_tile_size = tile_size / 2
 var enemy_factor = 25 #Lower to get more enemies
 var grid_size = Vector2()
-remote var grid = []
+slave var grid = []
 
 var FLOOR = ["Floor1","Floor2","Floor3","Floor4"]
 var ROOF = ["Wall1","Wall2","Wall3","Wall4"]
@@ -224,6 +224,11 @@ func start(startpos = "S"):
 master func get_grid():
 	rset_id(get_tree().get_rpc_sender_id(),'grid',grid)
 
+master func update_grid(pos, value, send = false):
+	grid[pos.x][pos.y] = value
+	if send:
+		rset('grid',grid)
+
 func create_grid():
 	grid = []
 	for x in grid_size.x:
@@ -275,10 +280,12 @@ func get_cell_node(pos, direction  = Vector2()):
 			
 func update_child_pos(child_node):
 	var grid_pos = world_to_map(child_node.get_position())
-	grid[grid_pos.x][grid_pos.y] = Game.EMPTY
+#	grid[grid_pos.x][grid_pos.y] = Game.EMPTY
+	rpc('update_grid',grid_pos, Game.EMPTY)
 	var new_grid_pos = grid_pos + child_node.direction
-	grid[new_grid_pos.x][new_grid_pos.y] = child_node.type
-	rset('grid',grid)
+#	grid[new_grid_pos.x][new_grid_pos.y] = child_node.type
+	rpc('update_grid',new_grid_pos, child_node.type, true)
+#	rset('grid',grid) 
 	var target_pos = map_to_world(new_grid_pos) + half_tile_size
 	if child_node.is_in_group("Player"):
 		N.sync_pos(target_pos)
@@ -358,8 +365,9 @@ master func add_enemies(num = false):
 		new_object.set_position(pos2)
 		new_object.set_network_master(get_tree().get_network_unique_id())
 		Enemies.add_child(new_object)
-		grid[pos.x][pos.y] = new_object.type
-		rset('grid',grid)
+#		grid[pos.x][pos.y] = new_object.type
+		rpc('update_grid',pos, new_object.type, true)
+#		rset('grid',grid)
 		new_object.set_name(new_object.get_name())			#annoying BS that wont work without this. Godot adds @ symbols to instanced names, which dont copy properly when setting same name to another node. 
 		
 		#Vars for RPC call, only for readability
@@ -394,8 +402,9 @@ func get_item(child): #Returns dropped item
 	for i in get_children():
 		if i.is_in_group("Item"):
 			if grid_pos == world_to_map(i.get_position()):
-				grid[grid_pos.x][grid_pos.y] = Game.EMPTY
-				rset('grid',grid)
+#				grid[grid_pos.x][grid_pos.y] = Game.EMPTY
+				rpc('update_grid',grid_pos, Game.EMPTY, true)
+#				rset('grid',grid)
 				var obj = i.item
 				i.queue_free()
 				rpc('server_get_item', i.get_name())
@@ -409,13 +418,15 @@ remote func server_get_item(name_):
 func set_kill_me(child):
 	var cur_pos = world_to_map(child.get_position())
 	GridFloor.set_blood(cur_pos)
-	grid[cur_pos.x][cur_pos.y] = Game.EMPTY #Mark grid as empty
+#	grid[cur_pos.x][cur_pos.y] = Game.EMPTY #Mark grid as empty
+	rpc('update_grid',cur_pos, Game.EMPTY)
 	var new_object = item.instance()
 	new_object.set_network_master(get_tree().get_network_unique_id())
 	new_object.set_name(new_object.get_name())			#annoying BS that wont work without this. Godot adds @ symbols to instanced names, which dont copy properly when setting same name to another node. 
 	new_object.set_position(map_to_world(cur_pos) + half_tile_size)
-	grid[cur_pos.x][cur_pos.y] = Game.ITEM #Mark grid with ITEM
-	rset('grid',grid)
+#	grid[cur_pos.x][cur_pos.y] = Game.ITEM #Mark grid with ITEM
+	rpc('update_grid',cur_pos, Game.ITEM, true)
+#	rset('grid',grid)
 	var j = child.inv.find_rnd_item() #.inv. wont work for player only enemy
 #	while j.BaseType == G.BaseType.BodyWeap:
 #		j = i[randi() % i.size()] #find a non body weapon item
