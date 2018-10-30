@@ -60,6 +60,8 @@ wait_time = 60.0
 one_shot = false
 autostart = false
 
+[node name="Items" type="Node" parent="." index="2"]
+
 [connection signal="timeout" from="Enemies/EnemyTimer" to="." method="_on_EnemyTimer_timeout"]
 
 

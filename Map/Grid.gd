@@ -162,6 +162,9 @@ func start(startpos = "S"):
 		for i in $Enemies.get_children():
 			if i.is_in_group("Enemy"):
 				i.show()
+		for i in $Items.get_children():
+			if i.is_in_group("Item"):
+				i.show()
 	
 	if startpos == "E":
 		found_hidden = true
@@ -329,6 +332,9 @@ func chg_level(pos, next = 0):
 		for i in $Enemies.get_children():
 			if i.is_in_group("Enemy"):
 				i.hide()
+		for i in $Items.get_children():
+			if i.is_in_group("Item"):
+				i.hide()
 		N.rpc('sync_dlevel', G.Dlevel)
 #		for i in get_children(): #Dont kill enemies
 #			if i.is_in_group("Enemy") or i.is_in_group("Item"):
@@ -399,7 +405,7 @@ remote func server_add_enemies(pos2, node_name, enemy, region):
 
 func get_item(child): #Returns dropped item
 	var grid_pos = world_to_map(child.get_position())
-	for i in get_children():
+	for i in $Items.get_children():
 		if i.is_in_group("Item"):
 			if grid_pos == world_to_map(i.get_position()):
 #				grid[grid_pos.x][grid_pos.y] = Game.EMPTY
@@ -431,7 +437,7 @@ func set_kill_me(child):
 #	while j.BaseType == G.BaseType.BodyWeap:
 #		j = i[randi() % i.size()] #find a non body weapon item
 	new_object.item = j
-	add_child(new_object)
+	$Items.add_child(new_object)
 	j.pack()
 	rpc('server_kill_me', child.get_name(), cur_pos)
 	rpc('server_item_drop', new_object.get_name(), (map_to_world(cur_pos) + half_tile_size), j.get_name(), j.get_sprite_texture(), j.get_sprite_rect(), j.rpc_data, j.packedData)
@@ -452,7 +458,7 @@ remote func server_item_drop(node_name, pos, name_, texture, rect, rpc_data, pac
 	new_object.set_position(pos)
 	new_object.set_name(node_name)
 	new_object.packedData = packedData
-	add_child(new_object)	
+	$Items.add_child(new_object)	
 	
 func _on_EnemyTimer_timeout(): #Auto start turned off
 	$Enemies/EnemyTimer.wait_time = randi() % 60 + 60
