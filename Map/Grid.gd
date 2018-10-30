@@ -96,17 +96,12 @@ func _process(delta):
 #			Player.get_node("Admin").queue_free()
 #			admin = false
 
-func sync_map():#UNUSED?
-	rset("map_levels", map_levels) #UNUSED?
 
-master func send_map():
-	print("master sending map")
-	var id = get_tree().get_rpc_sender_id()
-	rpc_id(id, 'rcv_map', mapgrid)
-slave func rcv_map(i):
-	print("slave received map")
-	mapgrid = i
-	emit_signal('data_rcvd') #emit signal once data received
+#########################################################
+#####	Map Generation
+#########################################################
+
+
 	
 func start(startpos = "S"):
 	if not N.is_connected and not get_tree().is_network_server():
@@ -224,6 +219,18 @@ func start(startpos = "S"):
 	rpc('get_enemies')
 	rpc_id(get_network_master(),'get_grid')
 
+func create_grid():
+	grid = []
+	for x in grid_size.x:
+		grid.append([])
+		for y in grid_size.y:
+			grid[x].append(null)
+
+#######################################################
+####	Network Grid Updates
+#######################################################
+
+
 master func get_grid():
 	rset_id(get_tree().get_rpc_sender_id(),'grid',grid)
 
@@ -231,13 +238,24 @@ master func update_grid(pos, value, send = false):
 	grid[pos.x][pos.y] = value
 	if send:
 		rset('grid',grid)
+		
+master func send_map():
+	print("master sending map")
+	var id = get_tree().get_rpc_sender_id()
+	rpc_id(id, 'rcv_map', mapgrid)
+	
+slave func rcv_map(i):
+	print("slave received map")
+	mapgrid = i
+	emit_signal('data_rcvd') #emit signal once data received
 
-func create_grid():
-	grid = []
-	for x in grid_size.x:
-		grid.append([])
-		for y in grid_size.y:
-			grid[x].append(null)
+func sync_map():#UNUSED? is used when player connects to game
+	rset("map_levels", map_levels) #UNUSED?
+
+#######################################################
+####	Grid Queries
+#######################################################
+
 
 func is_cell_empty(pos, direction = Vector2()):
 	var grid_pos = world_to_map(pos) + direction
@@ -300,6 +318,10 @@ func update_child_pos(child_node):
 #		N.sync_enemy(child_node.get_path(), target_pos)
 	return target_pos
 
+##################################################
+####### Level changes
+##################################################
+
 
 sync func show_stairs(i):
 	if i == G.Dlevel:
@@ -344,6 +366,9 @@ func chg_level(pos, next = 0):
 		Game.chg_lvl(spos)
 		Player.chk_grid()
 
+###################################################
+##### Enemies in grid
+###################################################
 
 master func add_enemies(num = false):
 #	if N.is_server:
@@ -403,6 +428,42 @@ remote func server_add_enemies(pos2, node_name, enemy, region):
 		new_object.get_node('Sprite').set_region_rect(region)
 		Enemies.add_child(new_object)
 
+func set_kill_me(child):
+	var cur_pos = world_to_map(child.get_position())
+	GridFloor.set_blood(cur_pos)
+#	grid[cur_pos.x][cur_pos.y] = Game.EMPTY #Mark grid as empty
+	rpc('update_grid',cur_pos, Game.EMPTY)
+	var i = item.instance()
+	i.set_network_master(get_tree().get_network_unique_id())
+	i.set_name(i.get_name())			#annoying BS that wont work without this. Godot adds @ symbols to instanced names, which dont copy properly when setting same name to another node. 
+	i.set_position(map_to_world(cur_pos) + half_tile_size)
+#	grid[cur_pos.x][cur_pos.y] = Game.ITEM #Mark grid with ITEM
+	rpc('update_grid',cur_pos, Game.ITEM, true)
+#	rset('grid',grid)
+	var j = child.inv.find_rnd_item() #.inv. wont work for player only enemy
+#	while j.BaseType == G.BaseType.BodyWeap:
+#		j = i[randi() % i.size()] #find a non body weapon item
+	j.pack()
+	i.PackedData = j.PackedData
+	$Items.add_child(i)
+	rpc('server_kill_me', child.get_name(), cur_pos)
+	rpc('server_item_drop', i.get_name(), (map_to_world(cur_pos) + half_tile_size), j.get_name(), j.PackedData)
+	child.queue_free()
+
+remote func server_kill_me(name_, cur_pos):
+	print('to kill ' + name_)
+	if Enemies.has_node(name_):
+		Enemies.get_node(name_).queue_free()
+		GridFloor.set_blood(cur_pos)
+
+func _on_EnemyTimer_timeout(): #Auto start turned off
+	$Enemies/EnemyTimer.wait_time = randi() % 60 + 60
+	add_enemies()
+	
+######################################################
+#### Items in Grid
+######################################################
+
 func get_item(child): #Returns dropped item
 	var grid_pos = world_to_map(child.get_position())
 	for i in $Items.get_children():
@@ -414,52 +475,17 @@ func get_item(child): #Returns dropped item
 				var obj = i.item
 				i.queue_free()
 				rpc('server_get_item', i.get_name())
-				return obj				# <---- this is problematic for slave items, node passing is not possible. all important info is missing.
-										# means slave will 'pickup' item, but inventory is empty.
+				return obj
 				
 remote func server_get_item(name_):
 	if $Items.has_node(name_):
 		$Items.get_node(name_).queue_free()
 
-func set_kill_me(child):
-	var cur_pos = world_to_map(child.get_position())
-	GridFloor.set_blood(cur_pos)
-#	grid[cur_pos.x][cur_pos.y] = Game.EMPTY #Mark grid as empty
-	rpc('update_grid',cur_pos, Game.EMPTY)
-	var new_object = item.instance()
-	new_object.set_network_master(get_tree().get_network_unique_id())
-	new_object.set_name(new_object.get_name())			#annoying BS that wont work without this. Godot adds @ symbols to instanced names, which dont copy properly when setting same name to another node. 
-	new_object.set_position(map_to_world(cur_pos) + half_tile_size)
-#	grid[cur_pos.x][cur_pos.y] = Game.ITEM #Mark grid with ITEM
-	rpc('update_grid',cur_pos, Game.ITEM, true)
-#	rset('grid',grid)
-	var j = child.inv.find_rnd_item() #.inv. wont work for player only enemy
-#	while j.BaseType == G.BaseType.BodyWeap:
-#		j = i[randi() % i.size()] #find a non body weapon item
-	new_object.item = j
-	$Items.add_child(new_object)
-	j.pack()
-	rpc('server_kill_me', child.get_name(), cur_pos)
-	rpc('server_item_drop', new_object.get_name(), (map_to_world(cur_pos) + half_tile_size), j.get_name(), j.get_sprite_texture(), j.get_sprite_rect(), j.rpc_data, j.packedData)
-	child.queue_free()
-
-remote func server_kill_me(name_, cur_pos):
-	print('to kill ' + name_)
-	if Enemies.has_node(name_):
-		Enemies.get_node(name_).queue_free()
-		GridFloor.set_blood(cur_pos)
-
-remote func server_item_drop(node_name, pos, name_, texture, rect, rpc_data, packedData):
-	var new_object = item.instance()
-	new_object.name_ = name_
-	new_object.texture = packedData.texture #example packedData contains texture
-	new_object.rect = rect	
-	new_object.rpc_data = rpc_data	
-	new_object.set_position(pos)
-	new_object.set_name(node_name)
-	new_object.packedData = packedData
-	$Items.add_child(new_object)	
+remote func server_item_drop(node_name, pos, name_, PackedData):
+	var i = item.instance()
+	i.set_position(pos)
+	i.set_name(node_name)
+	i.PackedData = PackedData
+	$Items.add_child(i)	
 	
-func _on_EnemyTimer_timeout(): #Auto start turned off
-	$Enemies/EnemyTimer.wait_time = randi() % 60 + 60
-	add_enemies()
+

@@ -8,15 +8,25 @@ var BonusRes = 0
 var BonusDmg = 0
 var Res = []
 var Dmg = []
-var rpc_data = {}
+#var rpc_data = {}
 
 func pack():
 	packBase()
-	packedData['Res'] = Res
+	PackedData['BaseType'] = BaseType
+	PackedData['Type'] = Type
+	PackedData['BonusRes'] = BonusRes
+	PackedData['BonusDmg'] = BonusDmg
+	PackedData['Res'] = Res
+	PackedData['Dmg'] = Dmg
 	
 func unpack():
 	unpackBase()
-	Res = packedData['Res']
+	BaseType = PackedData['BaseType']
+	Type = PackedData['Type']
+	BonusRes = PackedData['BonusRes']
+	BonusDmg = PackedData['BonusDmg']
+	Res = PackedData['Res']
+	Dmg = PackedData['Dmg']
 	
 #set data
 func add_res(i,j):

@@ -9,16 +9,26 @@ var Location
 var LocName
 var BonusRes = 0
 var Res = [] #resistance array of array like weapons
-var ImgRect
-var rpc_data = {}
+#var ImgRect
+#var rpc_data = {}
 
 func pack(): #pack and unpack the data within the class
 	packBase()
-	packedData['Res'] = Res
+	PackedData['BaseType'] = BaseType
+	PackedData['Mat'] = Mat
+	PackedData['Location'] = Location
+	PackedData['LocName'] = LocName
+	PackedData['BonusRes'] = BonusRes
+	PackedData['Res'] = Res
 	
 func unpack():
 	unpackBase()
-	Res = packedData['Res']
+	BaseType = PackedData['BaseType']
+	Mat = PackedData['Mat']
+	Location = PackedData['Location']
+	LocName = PackedData['LocName']
+	BonusRes = PackedData['BonusRes']
+	Res = PackedData['Res']
 
 #set data
 func add_res(i):

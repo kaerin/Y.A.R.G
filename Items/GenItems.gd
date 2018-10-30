@@ -36,7 +36,7 @@ func gen_weap(item):
 		var post = ["of spikes","of bluntness","that is on fire","made of plastic","covered in blood","cutting air","of distraction","with razors"]
 		w.set_name(pre[randi() % pre.size()] + " " + w.get_name() + " " + post[randi() % post.size()])
 		w.set_bonus_dmg(randi() % (G.Dlevel+1))
-		w.gen_rpc_data()
+#		w.gen_rpc_data()
 	return w
 	
 func gen_armour(item):

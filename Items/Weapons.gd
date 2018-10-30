@@ -4,18 +4,22 @@ extends "res://Items/Base.gd"
 var BaseType = G.BaseType.Weap
 var Dmg = [] #Dmg is now an array or arrays, Type, min dmg, max dmg. See items a regular attack and a fire attack
 var BonusDamage = 0
-var rpc_data = {}
+#var rpc_data = {}
 
 func pack():
 	packBase()
-	packedData['Dmg'] = Dmg
+	PackedData['Dmg'] = Dmg
+	PackedData['BonusDamage'] = BonusDamage
+	PackedData['BaseType'] = BaseType
 	
 func unpack():
 	unpackBase()
-	Dmg = packedData['Dmg']
+	Dmg = PackedData['Dmg']
+	BaseType = PackedData['BaseType']
+	BonusDamage = PackedData['BonusDamage']
 	
-func gen_rpc_data():
-	rpc_data = {'Type' : BaseType, 'Dmg' : Dmg, 'BonusDamage' : BonusDamage, 'Name' : Name, 'Rect' : sprite_rect}
+#func gen_rpc_data():
+#	rpc_data = {'Type' : BaseType, 'Dmg' : Dmg, 'BonusDamage' : BonusDamage, 'Name' : Name, 'Rect' : sprite_rect}
 
 #set data
 func add_dmg(i):
