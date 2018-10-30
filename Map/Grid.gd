@@ -418,8 +418,8 @@ func get_item(child): #Returns dropped item
 										# means slave will 'pickup' item, but inventory is empty.
 				
 remote func server_get_item(name_):
-	if has_node(name_):
-		get_node(name_).queue_free()
+	if $Items.has_node(name_):
+		$Items.get_node(name_).queue_free()
 
 func set_kill_me(child):
 	var cur_pos = world_to_map(child.get_position())
