@@ -217,6 +217,7 @@ func start(startpos = "S"):
 #	print("grid size",grid_size)
 	#TEMP add random enemies for testing
 	rpc('get_enemies')
+	rpc('get_items')
 	rpc_id(get_network_master(),'get_grid')
 
 func create_grid():
@@ -438,23 +439,24 @@ func set_kill_me(child):
 	i.set_name(i.get_name())			#annoying BS that wont work without this. Godot adds @ symbols to instanced names, which dont copy properly when setting same name to another node. 
 	i.set_position(map_to_world(cur_pos) + half_tile_size)
 #	grid[cur_pos.x][cur_pos.y] = Game.ITEM #Mark grid with ITEM
-	rpc('update_grid',cur_pos, Game.ITEM, true)
+#	rpc('update_grid',cur_pos, Game.ITEM, true)
 #	rset('grid',grid)
 	var j = child.inv.find_rnd_item() #.inv. wont work for player only enemy
 #	while j.BaseType == G.BaseType.BodyWeap:
 #		j = i[randi() % i.size()] #find a non body weapon item
 	j.pack()
 	i.PackedData = j.PackedData
-	$Items.add_child(i)
-	rpc('server_kill_me', child.get_name(), cur_pos)
-	rpc('server_item_drop', i.get_name(), (map_to_world(cur_pos) + half_tile_size), j.get_name(), j.PackedData)
+#	$Items.add_child(i)
+	rpc('server_kill_me', child.get_name(), cur_pos, G.Dlevel)
+	rpc('item_drop', i.get_name(), (map_to_world(cur_pos) + half_tile_size), cur_pos, j.get_name(), j.PackedData)
 	child.queue_free()
 
-remote func server_kill_me(name_, cur_pos):
-	print('to kill ' + name_)
-	if Enemies.has_node(name_):
-		Enemies.get_node(name_).queue_free()
-		GridFloor.set_blood(cur_pos)
+remote func server_kill_me(name_, cur_pos, master_lvl):
+	if G.Dlevel == master_lvl:
+		print('to kill ' + name_)
+		if Enemies.has_node(name_):
+			Enemies.get_node(name_).queue_free()
+			GridFloor.set_blood(cur_pos)
 
 func _on_EnemyTimer_timeout(): #Auto start turned off
 	$Enemies/EnemyTimer.wait_time = randi() % 60 + 60
@@ -481,11 +483,29 @@ remote func server_get_item(name_):
 	if $Items.has_node(name_):
 		$Items.get_node(name_).queue_free()
 
-remote func server_item_drop(node_name, pos, name_, PackedData):
+master func get_items():
+	var id = get_tree().get_rpc_sender_id()
+	for i in $Items.get_children():
+		if i.is_in_group('Item'):
+			print(i.get_name())
+			rpc_id(id, 'server_item_drop', i.get_name(), i.position, i.PackedData['Name'], i.PackedData, G.Dlevel)
+
+master func item_drop(node_name, pos_world, pos_map, name_, PackedData):
 	var i = item.instance()
-	i.set_position(pos)
-	i.set_name(node_name)
+	i.set_position(pos_world)
 	i.PackedData = PackedData
-	$Items.add_child(i)	
+	$Items.add_child(i)
+	i.set_name(i.get_name())
+	rpc('update_grid', pos_map, Game.ITEM, true)
+	rpc('server_item_drop', node_name, pos_world, name_, PackedData, G.Dlevel)
+
+remote func server_item_drop(node_name, pos_world, name_, PackedData, master_lvl):
+	if G.Dlevel == master_lvl:			#Do not add item if on different level. Player Level change will update the grid.
+		if not $Items.find_node(node_name,false,false):
+			var i = item.instance()
+			i.set_position(pos_world)
+			i.set_name(node_name)
+			i.PackedData = PackedData
+			$Items.add_child(i)
 	
 
