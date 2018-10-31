@@ -42,6 +42,7 @@ func create_server(i):
 	players[1] = data
 	players[0] = data
 	var peer = NetworkedMultiplayerENet.new()
+	peer.set_compression_mode(NetworkedMultiplayerENet.COMPRESS_RANGE_CODER)
 	peer.create_server(DEF_PORT, MAX_PLAYERS)
 	get_tree().set_network_peer(peer)
 	
@@ -52,6 +53,7 @@ func join_server(i):
 	data.name = i
 	players[0] = data
 	var peer = NetworkedMultiplayerENet.new()
+	peer.set_compression_mode(NetworkedMultiplayerENet.COMPRESS_RANGE_CODER)
 	peer.create_client(DEF_IP, DEF_PORT)
 	get_tree().set_network_peer(peer)
 
