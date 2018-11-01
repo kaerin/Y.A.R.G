@@ -17,7 +17,7 @@ func _ready():
 	self.add_child(stats) #Create then show hide label as needed
 	var level = Level.instance()
 	level.name = "Level-1"
-	level.level = 0
+	level.level = 1
 	self.add_child(level)
 	$Player.grid_map = get_node("Level-1")
 	$Player.grid_map.start()

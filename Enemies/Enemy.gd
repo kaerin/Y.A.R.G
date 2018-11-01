@@ -139,7 +139,7 @@ func take_dmg(dmg):
 			player.gain_exp(Exp)			#send Exp to attacker
 		else:
 			player.rpc_id(player_id, 'gain_exp', Exp)			#send Exp to attacker
-		grid_map.set_kill_me(self)
+		grid_map.set_kill_me(self, player_id)
 	else:
 		if player_id == self.get_tree().get_network_unique_id():
 			player.attacked(stats.get_dmg()) #Fight player
