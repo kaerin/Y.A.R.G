@@ -448,7 +448,7 @@ func set_kill_me(child, player_id):
 	i.PackedData = j.PackedData
 #	$Items.add_child(i)
 	rpc('server_kill_me', child.get_name(), cur_pos)
-	rpc('item_drop', (map_to_world(cur_pos) + half_tile_size), cur_pos, j.get_name(), j.PackedData, N.players[player_id].Dlevel)
+	rpc('item_drop', (map_to_world(cur_pos) + half_tile_size), cur_pos, j.get_name(), j.PackedData)
 	child.queue_free()
 
 remote func server_kill_me(name_, cur_pos):
@@ -486,25 +486,25 @@ master func get_items():
 	var id = get_tree().get_rpc_sender_id()
 	for i in $Items.get_children():
 		if i.is_in_group('Item'):
-			rpc_id(id, 'server_item_drop', i.get_name(), i.position, i.PackedData['Name'], i.PackedData, level)
+			rpc_id(id, 'server_item_drop', i.get_name(), i.position, i.PackedData['Name'], i.PackedData)
 
-master func item_drop(pos_world, pos_map, name_, PackedData, grid_level):
+master func item_drop(pos_world, pos_map, name_, PackedData):
 	var i = item.instance()
 	i.set_position(pos_world)
 	i.PackedData = PackedData
-	get_node('../Level-' + str(grid_level) + '/Items').add_child(i)
+	get_node('../Level-' + str(level) + '/Items').add_child(i)
 	i.set_name(i.get_name())
 	var node_name = i.get_name()
 	rpc('update_grid',pos_map, Game.ITEM)
-	if not grid_level == G.Dlevel:
+	if not level == G.Dlevel:
 		i.hide() 
-	rpc('server_item_drop', node_name, pos_world, name_, PackedData, grid_level)
-	print('master add item ' + name_ + ' to lvl: ' + str(grid_level))
+	rpc('server_item_drop', node_name, pos_world, name_, PackedData)
+	print('master add item ' + name_ + ' to lvl: ' + str(level))
 
-remote func server_item_drop(node_name, pos_world, name_, PackedData, grid_level):
+remote func server_item_drop(node_name, pos_world, name_, PackedData):
 	print(node_name)
 	print($Items.get_children())
-	if grid_level == G.Dlevel:
+	if level == G.Dlevel:
 		if not $Items.find_node(node_name,false,false):
 			var i = item.instance()
 			i.set_position(pos_world)
@@ -512,6 +512,6 @@ remote func server_item_drop(node_name, pos_world, name_, PackedData, grid_level
 			$Items.add_child(i)
 			#get_node('../Level-' + str(grid_level) + '/Items').add_child(i)
 			i.set_name(node_name)
-			print('client add item ' + name_ + ' to lvl: ' + str(grid_level))
+			print('client add item ' + name_ + ' to lvl: ' + str(level))
 	
 
