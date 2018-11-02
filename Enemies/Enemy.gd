@@ -41,6 +41,7 @@ onready var Inventory = load("res://Inv/Inv.gd")
 onready var Spells = load("res://Spells/Spells.gd")
 onready var GenItems = load("res://Items/GenItems.gd")
 onready var Combat = load("res://Player/Combat.gd")
+onready var Blood = preload("res://Animations/Blood_Splatter/Blood.tscn")
 
 onready var Attrib = load("res://Player/Attributes.gd")
 onready var Stats = load("res://Player/Stats.gd")
@@ -141,6 +142,9 @@ func take_dmg(dmg):
 			player.rpc_id(player_id, 'gain_exp', Exp)			#send Exp to attacker
 		grid_map.set_kill_me(self, player_id)
 	else:
+		if dmg > 0:
+			var i = Blood.instance()
+			add_child(i)
 		if player_id == self.get_tree().get_network_unique_id():
 			player.attacked(stats.get_dmg()) #Fight player
 		else:

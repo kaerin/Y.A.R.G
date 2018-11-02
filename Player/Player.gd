@@ -18,6 +18,7 @@ onready var GenItems = load("res://Items/GenItems.gd")
 onready var Combat = load("res://Player/Combat.gd")
 onready var Chat = load("res://Network/Chat.tscn")
 onready var Admin = preload("res://Admin/Admin.tscn")
+onready var Blood = preload("res://Animations/Blood_Splatter/Blood.tscn")
 #onready var weapons = load("res://Items/Weapon.gd") #load class
 #onready var Map = get_node("../../Map")
 
@@ -184,6 +185,10 @@ func take_dmg(dmg):
 	stats.hp -= dmg		# THIS IS SHITTY. was working on resistance and just needed a hack here for now.
 	if stats.hp < 0:
 		get_tree().change_scene("res://Scenes/End.tscn")
+	else:
+		if dmg > 0:
+			var i = Blood.instance()
+			add_child(i)
 
 func _on_Timer_timeout():
 	is_fighting = false
