@@ -329,7 +329,7 @@ sync func show_stairs(i):
 		set_cellv(end, tile_set.find_tile_by_name("StairDown1"))
 		found_hidden = true
 
-func chg_level(pos, next = 0):
+func chg_level(pos, next = 0):				#<---- TODO. grid map not udpating with adding and removing player from grid map when moving up and down
 	var lvlEmpty = false
 	for i in N.players:
 		if N.players[i].Dlevel == G.Dlevel:
@@ -340,6 +340,8 @@ func chg_level(pos, next = 0):
 	var chg = false
 	var spos
 	var genmap = true
+
+	rpc('update_grid',pos, Game.EMPTY, true)	
 	
 	if (pos == end and found_hidden and not next < 0) or next > 0:
 		found_hidden = false
