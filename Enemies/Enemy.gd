@@ -42,6 +42,7 @@ onready var Spells = load("res://Spells/Spells.gd")
 onready var GenItems = load("res://Items/GenItems.gd")
 onready var Combat = load("res://Player/Combat.gd")
 onready var Blood = preload("res://Animations/Blood_Splatter/Blood.tscn")
+onready var Dmg_Counter = preload("res://Animations/Damage_Counter/Dmg_Count.tscn")
 
 onready var Attrib = load("res://Player/Attributes.gd")
 onready var Stats = load("res://Player/Stats.gd")
@@ -143,8 +144,8 @@ func take_dmg(dmg):
 		grid_map.set_kill_me(self, player_id)
 	else:
 		if dmg > 0:
-			var i = Blood.instance()
-			add_child(i)
+			blood_splatter()
+			dmg_counter(dmg)
 		if player_id == self.get_tree().get_network_unique_id():
 			player.attacked(stats.get_dmg()) #Fight player
 		else:
@@ -227,3 +228,14 @@ func _process(delta):
 				velocity.y = distance_to_target.y * target_direction.y
 				is_moving = false
 		direction = Vector2()
+		
+func blood_splatter():
+	var i = Blood.instance()
+	add_child(i)
+	rpc('blood_splatter')
+	
+func dmg_counter(dmg):
+	var j = Dmg_Counter.instance()
+	j.dmg = dmg
+	add_child(j)
+	rpc('dmg_counter', dmg)

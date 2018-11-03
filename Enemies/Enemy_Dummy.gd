@@ -13,6 +13,9 @@ var target_pos = Vector2()
 var target_direction = Vector2()
 var enemy
 
+onready var Blood = preload("res://Animations/Blood_Splatter/Blood.tscn")
+onready var Dmg_Counter = preload("res://Animations/Damage_Counter/Dmg_Count.tscn")
+
 func _ready():
 	$Name.text = enemy.base_name
 
@@ -39,4 +42,13 @@ remote func sync_move(pos, dir):
 	target_pos = pos
 	target_direction = dir
 	is_moving = true
+	
+remote func blood_splatter():
+	var i = Blood.instance()
+	add_child(i)
+	
+remote func dmg_counter(dmg):
+	var j = Dmg_Counter.instance()
+	j.dmg = dmg
+	add_child(j)
 	

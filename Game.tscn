@@ -6,10 +6,10 @@
 [ext_resource path="res://Dictionaries/Classes.gd" type="Script" id=4]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=5]
 
-[node name="BaseNode" type="Node" index="0"]
+[node name="BaseNode" type="Node"]
 
 script = ExtResource( 1 )
-_sections_unfolded = [ "Pause" ]
+_sections_unfolded = [ "Pause", "Z Index" ]
 
 [node name="Dictionaries" type="Node" parent="." index="0"]
 
