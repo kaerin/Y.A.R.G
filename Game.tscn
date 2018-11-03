@@ -6,12 +6,14 @@
 [ext_resource path="res://Dictionaries/Classes.gd" type="Script" id=4]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=5]
 
-[node name="BaseNode" type="Node"]
+[node name="BaseNode" type="Node" index="0"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Pause", "Z Index" ]
 
 [node name="Dictionaries" type="Node" parent="." index="0"]
+
+editor/display_folded = true
 
 [node name="Items" type="Node" parent="Dictionaries" index="0"]
 

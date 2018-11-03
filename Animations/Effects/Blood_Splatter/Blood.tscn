@@ -1,13 +1,13 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Animations/Blood_Splatter/Blood.gd" type="Script" id=1]
+[ext_resource path="res://Animations/Effects/Blood_Splatter/Blood.gd" type="Script" id=1]
 
 [sub_resource type="ParticlesMaterial" id=1]
 
 render_priority = 0
-trail_divisor = 10
+trail_divisor = 25
 emission_shape = 1
-emission_sphere_radius = 5.0
+emission_sphere_radius = 0.01
 flag_align_y = false
 flag_rotate_y = false
 flag_disable_z = true
@@ -15,14 +15,14 @@ spread = 180.0
 flatness = 0.0
 gravity = Vector3( 0, 0, 0 )
 initial_velocity = 200.0
-initial_velocity_random = 1.0
+initial_velocity_random = 0.4
 angular_velocity = 0.0
 angular_velocity_random = 0.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 linear_accel = 0.0
 linear_accel_random = 0.0
-radial_accel = 10.0
+radial_accel = 0.0
 radial_accel_random = 0.0
 tangential_accel = 0.0
 tangential_accel_random = 0.0
@@ -40,7 +40,7 @@ anim_speed_random = 0.0
 anim_offset = 0.0
 anim_offset_random = 0.0
 anim_loop = false
-_sections_unfolded = [ "Angular Velocity", "Color", "Emission Shape", "Flags", "Gravity", "Initial Velocity", "Orbit Velocity", "Radial Accel", "Scale", "Spread", "Trail" ]
+_sections_unfolded = [ "Angle", "Angular Velocity", "Animation", "Color", "Damping", "Emission Shape", "Flags", "Gravity", "Initial Velocity", "Orbit Velocity", "Radial Accel", "Scale", "Spread", "Tangential Accel", "Trail" ]
 
 [node name="Blood" type="Particles2D"]
 
