@@ -191,8 +191,8 @@ func _process(delta):
 				if grid_map.is_cell_player(get_position(), i):
 					var node = grid_map.get_cell_node(get_position(), i)
 					if node && node.is_in_group('Player'):
-						player_id = node.id
-						print('send dmg to ' + str(node.id))
+						player_id = node.get_tree().get_network_unique_id()
+						print('send dmg to ' + str(node.get_tree().get_network_unique_id()))
 						if player_id == self.get_tree().get_network_unique_id():
 							player.attacked(stats.get_dmg())
 						else:
@@ -205,8 +205,8 @@ func _process(delta):
 			elif grid_map.is_cell_player(get_position(), target_direction) and not attacking:
 				var node = grid_map.get_cell_node(get_position(), target_direction)
 				if node && node.is_in_group('Player'):
-					player_id = node.id
-					print('send dmg to ' + str(node.id))
+					player_id = node.get_tree().get_network_unique_id()
+					print('send dmg to ' + str(node.get_tree().get_network_unique_id()))
 					if player_id == self.get_tree().get_network_unique_id():
 						player.attacked(stats.get_dmg())
 					else:
