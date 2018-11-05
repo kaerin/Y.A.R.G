@@ -99,7 +99,9 @@ func _process(delta):
 			an.clear()
 			an.queue_free()
 			admin = false
-			
+
+	if Input.is_action_just_pressed("Quickslot_1"):		# <--- Ultra hack. temporary for testing spell stuff.
+		$Spells.cast_spell()								# <--- Ultra hack. temporary for testing spell stuff.			
 	if Input.is_action_just_pressed("Chat"):
 		chat()
 	if Input.is_action_just_pressed("ui_p") and not chat_displayed:

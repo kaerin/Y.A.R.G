@@ -8,8 +8,9 @@ var direction = Vector2(0,0)
 
 func _ready():
 	emitting = true
-	one_shot = true
-	$Timer.wait_time = 0.5
+	one_shot = false
+	$Timer.wait_time = 5
+	$Timer.start()
 	
 	if direction == Vector2(0,0):		#if no direction vector spread blood in all directions. eg. AOE effects.
 		process_material.spread = 180

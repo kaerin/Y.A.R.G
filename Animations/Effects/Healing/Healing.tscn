@@ -1,20 +1,20 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Animations/Effects/Blood_Splatter/Blood.gd" type="Script" id=1]
+[ext_resource path="res://Animations/Effects/Healing/Healing.gd" type="Script" id=1]
 
 [sub_resource type="ParticlesMaterial" id=1]
 
 render_priority = 0
-trail_divisor = 2
+trail_divisor = 20
 emission_shape = 1
 emission_sphere_radius = 0.01
 flag_align_y = false
 flag_rotate_y = false
 flag_disable_z = true
-spread = 35.0
+spread = 180.0
 flatness = 0.0
 gravity = Vector3( 0, 0, 0 )
-initial_velocity = 100.0
+initial_velocity = 50.0
 initial_velocity_random = 0.4
 angular_velocity = 0.0
 angular_velocity_random = 0.0
@@ -26,13 +26,13 @@ radial_accel = 0.0
 radial_accel_random = 0.0
 tangential_accel = 0.0
 tangential_accel_random = 0.0
-damping = 100.0
-damping_random = 0.2
+damping = 0.0
+damping_random = 0.0
 angle = 0.0
 angle_random = 0.0
-scale = 3.0
+scale = 5.0
 scale_random = 0.0
-color = Color( 0.945313, 0.0406189, 0.0406189, 1 )
+color = Color( 0.124207, 0.859375, 0.290768, 1 )
 hue_variation = 0.0
 hue_variation_random = 0.0
 anim_speed = 0.0
@@ -42,20 +42,20 @@ anim_offset_random = 0.0
 anim_loop = false
 _sections_unfolded = [ "Angle", "Angular Velocity", "Animation", "Color", "Damping", "Emission Shape", "Flags", "Gravity", "Initial Velocity", "Orbit Velocity", "Radial Accel", "Scale", "Spread", "Tangential Accel", "Trail" ]
 
-[node name="Blood" type="Particles2D" index="0"]
+[node name="Healing" type="Particles2D"]
 
 emitting = true
-amount = 16
-lifetime = 10.0
+amount = 150
+lifetime = 1.0
 one_shot = false
 preprocess = 0.0
 speed_scale = 2.0
-explosiveness = 0.98
+explosiveness = 0.0
 randomness = 1.0
 fixed_fps = 0
 fract_delta = true
 visibility_rect = Rect2( -100, -100, 200, 200 )
-local_coords = false
+local_coords = true
 draw_order = 0
 process_material = SubResource( 1 )
 texture = null
@@ -68,9 +68,9 @@ _sections_unfolded = [ "Drawing", "Material", "Process Material", "Textures", "T
 [node name="Timer" type="Timer" parent="." index="0"]
 
 process_mode = 1
-wait_time = 0.25
+wait_time = 5.0
 one_shot = false
-autostart = false
+autostart = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 
