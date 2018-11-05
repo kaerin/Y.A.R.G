@@ -40,7 +40,7 @@ func attack(dmg, to):
 			print("No ",d[0]," res taking all damage")
 			totDmg += d[1]
 	print("Dmg taken:",totDmg)
-	to.take_dmg(totDmg)
+	return totDmg
 	
 	
 #	var enemy = grid_map.get_cell_node(get_position(), target_direction)

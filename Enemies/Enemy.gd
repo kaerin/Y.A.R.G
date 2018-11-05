@@ -132,7 +132,7 @@ func chg_name():
 	Name = pre[randi() % pre.size()] + " " + Name + " " + post[randi() % post.size()]
 	
 #TEMP ONLY for basic player enemy interaction test.
-func take_dmg(dmg):
+func take_dmg(dmg, direction):
 	stats.hp -= dmg
 	if stats.hp <= 0:
 		if player_id == self.get_tree().get_network_unique_id():
@@ -142,16 +142,17 @@ func take_dmg(dmg):
 		grid_map.set_kill_me(self, player_id)
 	else:
 		if dmg > 0:
-			$Effects.blood_splatter()
+			$Effects.blood_splatter(direction)
 			$Effects.dmg_counter(dmg)
 		if player_id == self.get_tree().get_network_unique_id():
-			player.attacked(stats.get_dmg()) #Fight player
+			player.attacked(stats.get_dmg(), -direction) #Direction inverted as this is originallz from player
 		else:
-			player.rpc_id(player_id, 'attacked', stats.get_dmg()) #Fight player
+			player.rpc_id(player_id, 'attacked', stats.get_dmg(), -direction) #Direction inverted as this is originally from player
 
-master func attacked(dmg, id):
+master func attacked(dmg, id, direction = vector2(0,0)):
 	player_id = id
-	combat.attack(dmg,self)
+	dmg = combat.attack(dmg,self)
+	take_dmg(dmg, direction)
 
 func set_move():
 	
@@ -194,9 +195,9 @@ func _process(delta):
 						player_id = node.get_tree().get_network_unique_id()
 						print('send dmg to ' + str(node.get_tree().get_network_unique_id()))
 						if player_id == self.get_tree().get_network_unique_id():
-							player.attacked(stats.get_dmg())
+							player.attacked(stats.get_dmg(), i)
 						else:
-							player.rpc_id(player_id, 'attacked', stats.get_dmg()) # <--- this needs to get correct players id
+							player.rpc_id(player_id, 'attacked', stats.get_dmg(), i) # <--- this needs to get correct players id
 						attacking = true
 			if grid_map.is_cell_empty(get_position(), target_direction) and not attacking:
 				target_pos = grid_map.update_child_pos(self)
@@ -208,9 +209,9 @@ func _process(delta):
 					player_id = node.get_tree().get_network_unique_id()
 					print('send dmg to ' + str(node.get_tree().get_network_unique_id()))
 					if player_id == self.get_tree().get_network_unique_id():
-						player.attacked(stats.get_dmg())
+						player.attacked(stats.get_dmg(), target_direction)
 					else:
-						player.rpc_id(player_id, 'attacked', stats.get_dmg()) # <--- this needs to get correct players id
+						player.rpc_id(player_id, 'attacked', stats.get_dmg(), target_direction) # <--- this needs to get correct players id
 		elif is_moving:
 			speed = MAX_SPEED
 			velocity = speed * target_direction.normalized() * delta
