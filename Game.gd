@@ -38,6 +38,5 @@ func chg_lvl(spos):
 	print (get_node("Player/Effects").get_children())
 	for i in get_node("Player/Effects").get_children():
 		if i.is_in_group('Blood'):
-			print('blood found')
 			i.hide()
 	

@@ -20,7 +20,11 @@ remote func set_blood_splatter(direction, is_player = false):
 		node = get_node('../..').get_node(str(id))
 	var i = Blood.instance()	# <--- maybe consider instancing to grid_map, so is not deleted by early enemy death.
 	i.direction = direction
-	node.get_node("Effects").add_child(i)
+	if node.is_in_group("Enemy"):
+		i.position = node.position
+		node.get_node("../..").add_child(i)  # <--- adds enemy blood to grid map. doesnt delete by enemy death.
+	else:	
+		node.get_node("Effects").add_child(i)
 	
 #############################
 ## Display damage counter
@@ -37,7 +41,7 @@ remote func set_dmg_counter(dmg, is_player = false):
 		node = get_node('../..').get_node(str(id))
 	var i = Dmg_Counter.instance()
 	i.dmg = dmg
-	node.add_child(i)
+	node.get_node("Effects").add_child(i)
 	
 #############################
 ## Test
