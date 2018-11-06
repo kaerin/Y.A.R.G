@@ -20,7 +20,7 @@ remote func set_blood_splatter(direction, is_player = false):
 		node = get_node('../..').get_node(str(id))
 	var i = Blood.instance()	# <--- maybe consider instancing to grid_map, so is not deleted by early enemy death.
 	i.direction = direction
-	node.add_child(i)
+	node.get_node("Effects").add_child(i)
 	
 #############################
 ## Display damage counter

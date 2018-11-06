@@ -45,7 +45,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_colors" ]
 
-[node name="Effects" type="Node" parent="." index="2"]
+[node name="Effects" type="Node2D" parent="." index="2"]
 
 script = ExtResource( 3 )
 

@@ -59,7 +59,7 @@ autostart = true
 
 script = ExtResource( 3 )
 
-[node name="Effects" type="Node" parent="." index="3"]
+[node name="Effects" type="Node2D" parent="." index="3"]
 
 script = ExtResource( 4 )
 

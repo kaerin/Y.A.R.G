@@ -73,7 +73,7 @@ script = ExtResource( 4 )
 
 script = ExtResource( 5 )
 
-[node name="Effects" type="Node" parent="." index="6"]
+[node name="Effects" type="Node2D" parent="." index="6"]
 
 script = ExtResource( 6 )
 
