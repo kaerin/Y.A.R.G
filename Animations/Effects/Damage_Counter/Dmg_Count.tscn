@@ -23,13 +23,14 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 4
 size_flags_vertical = 4
+custom_colors/font_color = Color( 0.90625, 0.102661, 0.159163, 1 )
 text = "test"
 align = 1
 valign = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-_sections_unfolded = [ "Rect", "Visibility" ]
+_sections_unfolded = [ "Rect", "Visibility", "custom_colors" ]
 
 [node name="Tween" type="Tween" parent="." index="1"]
 

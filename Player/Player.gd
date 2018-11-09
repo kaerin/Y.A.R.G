@@ -101,7 +101,9 @@ func _process(delta):
 			admin = false
 
 	if Input.is_action_just_pressed("Quickslot_1"):		# <--- Ultra hack. temporary for testing spell stuff.
-		$Spells.cast_spell()								# <--- Ultra hack. temporary for testing spell stuff.			
+		$Spells.cast_spell1()								# <--- Ultra hack. temporary for testing spell stuff.			
+	if Input.is_action_just_pressed("Quickslot_2"):		# <--- Ultra hack. temporary for testing spell stuff.
+		$Spells.cast_spell2()								# <--- Ultra hack. temporary for testing spell stuff.			
 	if Input.is_action_just_pressed("Chat"):
 		chat()
 	if Input.is_action_just_pressed("ui_p") and not chat_displayed:
@@ -175,7 +177,7 @@ func _process(delta):
 			is_moving = false
 			get_node("../Level-"+str(G.Dlevel)).rpc("move_enemy")
 
-remote func attacked(dmg, direction = Vector2(0,0)):
+remote func attacked(dmg, direction):
 	dmg = combat.attack(dmg,self)
 	take_dmg(dmg, direction)
 	
@@ -183,14 +185,15 @@ remote func gain_exp(Exp):
 	stats.expr += Exp
 	Game.stats.set_exp(stats.expr)	
 
-func take_dmg(dmg, direction):
+func take_dmg(dmg, direction = Vector2(0,0), blood_splatter = true):
 	stats.hp -= dmg		# THIS IS SHITTY. was working on resistance and just needed a hack here for now.
 	if stats.hp < 0:
 		get_tree().change_scene("res://Scenes/End.tscn")
 	else:
-		if dmg > 0:
-			$Effects.blood_splatter(direction, dmg)
+		if not dmg == 0:
 			$Effects.dmg_counter(dmg)
+		if dmg > 0 && blood_splatter:
+			$Effects.blood_splatter(direction, dmg)
 
 func _on_Timer_timeout():
 	is_fighting = false

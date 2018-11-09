@@ -16,8 +16,11 @@ func _ready():
 	damage = Damage.new()
 	buff = Buff.new()
 	
-func cast_spell():
-	Effects.healing(heal.spells[0].get_duration())	# <---- Ultra hack. will clean up later as below.
+func cast_spell1():
+	Effects.healing(heal.spells[0])
+
+func cast_spell2():
+	Effects.bleeding(damage.spells[0])
 	
 	#need way to add cyclical health boosts here, x amount y times. (plus other types of spells)
 	#likely add a insatnced scene under spells that handles this, easy handling of timers and self destruction in node tree.

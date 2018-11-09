@@ -3,6 +3,7 @@ extends Node
 onready var Blood = preload("res://Animations/Effects/Blood_Splatter/Blood.tscn")
 onready var Dmg_Counter = preload("res://Animations/Effects/Damage_Counter/Dmg_Count.tscn")
 onready var Healing = preload("res://Animations/Effects/Healing/Healing.tscn")
+onready var Bleeding = preload("res://Animations/Effects/Healing/Bleeding.tscn")
 	
 	
 #############################
@@ -45,10 +46,19 @@ remote func set_dmg_counter(dmg, is_player = false):
 	node.get_node("Effects").add_child(i)
 	
 #############################
-## Test
+## effect for HP (damage or healing etc)
 #############################
 
-func healing(duration):
-	var i = Healing.instance()
-	i.duration = duration
-	get_parent().add_child(i)
+func healing(i):
+	var j = Healing.instance()
+	j.duration = i.get_duration()
+	j.cycle = i.get_cycle()
+	j.amount_ = i.get_amount()
+	add_child(j)
+	
+func bleeding(i):
+	var j = Bleeding.instance()
+	j.duration = i.get_duration()
+	j.cycle = i.get_cycle()
+	j.amount_ = i.get_amount()
+	add_child(j)	

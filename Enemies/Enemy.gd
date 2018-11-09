@@ -134,6 +134,8 @@ func chg_name():
 #TEMP ONLY for basic player enemy interaction test.
 func take_dmg(dmg, direction):
 	stats.hp -= dmg
+	if not dmg == 0:
+		$Effects.dmg_counter(dmg)
 	if dmg > 0:
 		$Effects.blood_splatter(direction, dmg)
 	if stats.hp <= 0:
@@ -143,8 +145,7 @@ func take_dmg(dmg, direction):
 			player.rpc_id(player_id, 'gain_exp', Exp)			#send Exp to attacker
 		grid_map.set_kill_me(self, player_id)
 	else:
-		if dmg > 0:
-			$Effects.dmg_counter(dmg)
+		#if dmg > 0:
 		if player_id == self.get_tree().get_network_unique_id():
 			player.attacked(stats.get_dmg(), -direction) #Direction inverted as this is originallz from player
 		else:
