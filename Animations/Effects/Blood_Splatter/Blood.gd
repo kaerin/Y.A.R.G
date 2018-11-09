@@ -5,6 +5,7 @@ extends Particles2D
 # var b = "textvar"
 
 var direction = Vector2(0,0)
+var particle_count = 0
 
 func _ready():
 	emitting = true
@@ -16,6 +17,8 @@ func _ready():
 		process_material.spread = 180
 	else:
 		rotation_degrees = rad2deg(direction.angle())
+		
+	amount = particle_count
 
 func _on_Timer_timeout():
 	queue_free()

@@ -189,7 +189,7 @@ func take_dmg(dmg, direction):
 		get_tree().change_scene("res://Scenes/End.tscn")
 	else:
 		if dmg > 0:
-			$Effects.blood_splatter(direction)
+			$Effects.blood_splatter(direction, dmg)
 			$Effects.dmg_counter(dmg)
 
 func _on_Timer_timeout():

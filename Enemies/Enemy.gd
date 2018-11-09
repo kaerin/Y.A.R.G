@@ -134,7 +134,8 @@ func chg_name():
 #TEMP ONLY for basic player enemy interaction test.
 func take_dmg(dmg, direction):
 	stats.hp -= dmg
-	$Effects.blood_splatter(direction)
+	if dmg > 0:
+		$Effects.blood_splatter(direction, dmg)
 	if stats.hp <= 0:
 		if player_id == self.get_tree().get_network_unique_id():
 			player.gain_exp(Exp)			#send Exp to attacker

@@ -9,17 +9,18 @@ onready var Healing = preload("res://Animations/Effects/Healing/Healing.tscn")
 ### Dsiplay blood splatter
 #############################
 
-func blood_splatter(direction): 
-	set_blood_splatter(direction)
-	rpc('set_blood_splatter', direction, get_parent().is_in_group('Player'))	#<---- functional, but maybe theres a better way
+func blood_splatter(direction, dmg): 
+	set_blood_splatter(direction, dmg)
+	rpc('set_blood_splatter', direction, dmg, get_parent().is_in_group('Player'))	#<---- functional, but maybe theres a better way
 
-remote func set_blood_splatter(direction, is_player = false):
+remote func set_blood_splatter(direction, dmg , is_player = false):
 	var node = get_parent()
 	if is_player:
 		var id = get_tree().get_rpc_sender_id()
 		node = get_node('../..').get_node(str(id))
 	var i = Blood.instance()	# <--- maybe consider instancing to grid_map, so is not deleted by early enemy death.
 	i.direction = direction
+	i.particle_count = dmg	
 	if node.is_in_group("Enemy"):
 		i.position = node.position
 		node.get_node("../..").add_child(i)  # <--- adds enemy blood to grid map. doesnt delete by enemy death.
