@@ -157,7 +157,13 @@ master func attacked(dmg, id, direction = vector2(0,0)):
 	take_dmg(dmg, direction)
 
 func set_move():
-	
+	var j = randi() % 4 #Quick hack to make enemies move
+	match j:
+		0: 	direction = Vector2(1,0) #Quick hack to make enemies move
+		1: 	direction = Vector2(-1,0) #Quick hack to make enemies move
+		2: 	direction = Vector2(0,1) #Quick hack to make enemies move
+		3: 	direction = Vector2(0,-1) #Quick hack to make enemies move
+#	print("enemy moves")
 #	if not $Timer.is_stopped():
 #		$Timer.stop()
 	$Timer.wait_time = randi() % 60 + 60 #Enemies move every 1-2 minutes
