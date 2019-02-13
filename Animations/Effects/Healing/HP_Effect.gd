@@ -16,7 +16,8 @@ func _ready():
 	$Cycle.wait_time = cycle
 	
 func _on_Cycle_timeout():
-	parent.take_dmg(amount_, Vector2(0,0), false)
+	if not get_node("../..").is_in_group("Others"):			#Actual Players already RPC "dmg", "Others" would duplicate this
+		parent.take_dmg(amount_, Vector2(0,0), false)
 
 func _on_Kill_timeout():
 	queue_free()
