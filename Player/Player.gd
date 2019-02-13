@@ -147,6 +147,9 @@ func _process(delta):
 	if not is_moving and not direction == Vector2():
 		target_direction = direction
 #		print(target_direction)
+		#Wrong way to do this but update cell if player
+		if type == Game.PLAYER:
+			grid_map.update_cell(get_position(), target_direction)
 		if grid_map.is_cell_empty(get_position(), target_direction):
 			target_pos = grid_map.update_child_pos(self)
 			is_moving = true

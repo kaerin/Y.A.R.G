@@ -19,6 +19,10 @@ config/icon="res://icon.png"
 G="*res://Global.gd"
 N="*res://Network/Network.gd"
 
+[debug]
+
+settings/profiler/max_functions=16385
+
 [display]
 
 window/size/width=800

@@ -35,6 +35,7 @@ var add_enemies = false
 
 signal enemy_move
 signal data_rcvd #used to wait for data
+signal grid_cts_rcvd
 
 remote var rsetData
 
@@ -87,6 +88,8 @@ func _process(delta):
 		print("id", get_tree().get_network_unique_id())
 		print("grid master is: ", self.get_network_master())
 		print(N.levels)
+		print(mapgrid)
+		print(grid)
 		
 #	if Input.is_action_just_pressed("admin") and not Player.chat_displayed:
 #		if not admin:
@@ -235,6 +238,17 @@ func create_grid():
 master func get_grid():
 	rset_id(get_tree().get_rpc_sender_id(),'grid',grid)
 
+master func send_grid_cts(pos):
+	var value = grid[pos.x][pos.y]
+	print("Sending pos:",pos," value:",value)
+	var id = get_tree().get_rpc_sender_id()
+	rpc_id(id, 'rcv_grid_cts', pos, value)
+
+slave func rcv_grid_cts(pos,value):
+	print("Received pos:",pos," value:",value)
+	grid[pos.x][pos.y] = value
+	emit_signal('grid_cts_rcvd')
+
 master func update_grid(pos, value, send = false):
 	grid[pos.x][pos.y] = value
 	if send:
@@ -256,11 +270,16 @@ func sync_map():#UNUSED? is used when player connects to game
 #######################################################
 ####	Grid Queries
 #######################################################
-
+func update_cell(pos, direction = Vector2()):
+	var grid_pos = world_to_map(pos) + direction
+	if not self.is_network_master() and G.is_within(grid_pos,grid_size):
+		print("updating cell contents")
+		rpc('send_grid_cts',grid_pos)
+		yield(self,'grid_cts_rcvd')
+#	
 
 func is_cell_empty(pos, direction = Vector2()):
 	var grid_pos = world_to_map(pos) + direction
-#	print(grid[grid_pos.x][grid_pos.y])
 	if G.is_within(grid_pos,grid_size):
 #		print("in grid")
 #	if grid_pos.x < grid_size.x and grid_pos.x >= 0:
