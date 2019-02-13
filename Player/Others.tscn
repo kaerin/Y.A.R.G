@@ -6,6 +6,7 @@
 
 [node name="Sprite" type="Sprite" index="0" groups=[
 "Player",
+"Others",
 ]]
 
 z_index = 3
