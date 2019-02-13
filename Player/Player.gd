@@ -90,7 +90,7 @@ func _ready():
 #	grid_map.set_grid_pos(self, Map.start)
 
 func _process(delta):
-	if Input.is_action_just_pressed("admin") and not chat_displayed:
+	if Input.is_action_just_pressed("admin") and not chat_displayed and grid_map.is_network_master():
 		if not admin:
 			add_child(Admin.instance())
 			admin = true
