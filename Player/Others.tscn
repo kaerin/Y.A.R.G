@@ -4,7 +4,7 @@
 [ext_resource path="res://Player/Others.gd" type="Script" id=2]
 [ext_resource path="res://Player/Effects.gd" type="Script" id=3]
 
-[node name="Sprite" type="Sprite" index="0" groups=[
+[node name="Sprite" type="Sprite" groups=[
 "Player",
 "Others",
 ]]
