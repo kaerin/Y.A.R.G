@@ -191,6 +191,7 @@ remote func gain_exp(Exp):
 func take_dmg(dmg, direction = Vector2(0,0), blood_splatter = true):
 	stats.hp -= dmg		# THIS IS SHITTY. was working on resistance and just needed a hack here for now.
 	if stats.hp < 0:
+		grid_map.update_grid_pos(get_position(), Game.EMPTY)
 		get_tree().change_scene("res://Scenes/End.tscn")
 	else:
 		if not dmg == 0:

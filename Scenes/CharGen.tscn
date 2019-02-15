@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Scenes/CharGen.gd" type="Script" id=1]
 
-[node name="CharGen" type="Label"]
+[node name="CharGen" type="Label" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -49,7 +49,32 @@ text = "Continue"
 flat = false
 align = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." index="1"]
+[node name="GetIP" type="Button" parent="." index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 238.0
+margin_top = 81.0
+margin_right = 307.0
+margin_bottom = 101.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "GetIP"
+flat = false
+align = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." index="2"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -199,7 +224,7 @@ caret_blink = false
 caret_blink_speed = 0.65
 caret_position = 0
 
-[node name="cur_class" type="Label" parent="." index="2"]
+[node name="cur_class" type="Label" parent="." index="3"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -220,7 +245,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="VBox_Class" type="VBoxContainer" parent="." index="3"]
+[node name="VBox_Class" type="VBoxContainer" parent="." index="4"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -260,7 +285,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="Template" type="Node" parent="." index="4"]
+[node name="Template" type="Node" parent="." index="5"]
 
 [node name="Button" type="Button" parent="Template" index="0"]
 
@@ -285,7 +310,7 @@ group = null
 flat = false
 align = 1
 
-[node name="IPadr" type="LineEdit" parent="." index="5"]
+[node name="IPadr" type="LineEdit" parent="." index="6"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -309,7 +334,7 @@ caret_blink = false
 caret_blink_speed = 0.65
 caret_position = 0
 
-[node name="HTTPRequest" type="HTTPRequest" parent="." index="6"]
+[node name="HTTPRequest" type="HTTPRequest" parent="." index="7"]
 
 download_file = ""
 use_threads = false
@@ -317,6 +342,8 @@ body_size_limit = -1
 max_redirects = 8
 
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
+
+[connection signal="pressed" from="GetIP" to="." method="_on_GetIP_pressed"]
 
 [connection signal="pressed" from="VBoxContainer/CheckBox" to="." method="_on_CheckBox_pressed"]
 

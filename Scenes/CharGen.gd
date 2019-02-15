@@ -49,3 +49,6 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 #	print(body.get_string_from_utf8())
 #	var json = JSON.parse(body.get_string_from_utf8())
 	$IPadr.text = body.get_string_from_utf8()
+
+func _on_GetIP_pressed():
+	$HTTPRequest.request("https://api.ipify.org/")
