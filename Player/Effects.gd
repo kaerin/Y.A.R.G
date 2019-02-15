@@ -77,11 +77,7 @@ func get_obj_root(is_master=true):
 
 func add_effect(node, j, effect_after_death=false):
 	if effect_after_death == true:
-		if node.is_in_group('Player'):
-			print(str("Level-",G.Dlevel))
-			node.get_node(str("../Level-",G.Dlevel)+'/Effects').add_child(j)  # <--- adds to grid map. doesnt delete by death. (eg. blood splatter)
-		else:
-			node.get_node("../../Effects").add_child(j)  # <--- adds to grid map. doesnt delete by death. (eg. blood splatter)
+		node.get_node("../..").add_child(j)  # <--- adds to grid map. doesnt delete by death. (eg. blood splatter)
 	else:
 		node.get_node("Effects").add_child(j)	# <--- adds to object, deleted by death (eg. spell effect)
 

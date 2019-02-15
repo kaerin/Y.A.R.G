@@ -62,8 +62,6 @@ autostart = false
 
 [node name="Items" type="Node" parent="." index="2"]
 
-[node name="Effects" type="Node" parent="." index="3"]
-
 [connection signal="timeout" from="Enemies/EnemyTimer" to="." method="_on_EnemyTimer_timeout"]
 
 
