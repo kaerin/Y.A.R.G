@@ -36,6 +36,7 @@ var facing = false
 var chat_displayed
 var admin = false
 var id = 1
+var last_request = Vector2(-1,-1)
 
 var combat
 var skills
@@ -149,7 +150,12 @@ func _process(delta):
 #		print(target_direction)
 		#Wrong way to do this but update cell if player
 		if type == Game.PLAYER:
-			grid_map.update_cell(get_position(), target_direction)
+			if not last_request == (get_position() + target_direction):
+				last_request = get_position() + target_direction
+				grid_map.update_cell(get_position(), target_direction)
+			else:
+				if $ReqTimer.is_stopped():
+					$ReqTimer.start()
 		if grid_map.is_cell_empty(get_position(), target_direction):
 			target_pos = grid_map.update_child_pos(self)
 			is_moving = true
@@ -191,7 +197,7 @@ remote func gain_exp(Exp):
 func take_dmg(dmg, direction = Vector2(0,0), blood_splatter = true):
 	stats.hp -= dmg		# THIS IS SHITTY. was working on resistance and just needed a hack here for now.
 	if stats.hp < 0:
-		grid_map.update_grid_pos(get_position(), Game.EMPTY)
+		grid_map.update_grid_cts(get_position(), Game.EMPTY)
 		get_tree().change_scene("res://Scenes/End.tscn")
 	else:
 		if not dmg == 0:
@@ -210,3 +216,6 @@ func chat():
 		chat_displayed = true #To keep things clean only need to set something when its not
 		var chat = Chat.instance()
 		add_child(chat)
+
+func _on_ReqTimer_timeout():
+	last_request = Vector2(-1,-1)

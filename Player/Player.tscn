@@ -39,7 +39,14 @@ wait_time = 1.0
 one_shot = true
 autostart = false
 
-[node name="PlayerCam" type="Camera2D" parent="." index="3"]
+[node name="ReqTimer" type="Timer" parent="." index="3"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = true
+autostart = false
+
+[node name="PlayerCam" type="Camera2D" parent="." index="4"]
 
 anchor_mode = 1
 rotating = false
@@ -65,19 +72,19 @@ editor_draw_limits = false
 editor_draw_drag_margin = false
 _sections_unfolded = [ "Offset", "Smoothing", "Transform" ]
 
-[node name="CharSheet" type="Node" parent="." index="4"]
+[node name="CharSheet" type="Node" parent="." index="5"]
 
 script = ExtResource( 4 )
 
-[node name="Spells" type="Node" parent="." index="5"]
+[node name="Spells" type="Node" parent="." index="6"]
 
 script = ExtResource( 5 )
 
-[node name="Effects" type="Node2D" parent="." index="6"]
+[node name="Effects" type="Node2D" parent="." index="7"]
 
 script = ExtResource( 6 )
 
-[node name="Name" type="Label" parent="." index="7"]
+[node name="Name" type="Label" parent="." index="8"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -99,5 +106,7 @@ lines_skipped = 0
 max_lines_visible = -1
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+
+[connection signal="timeout" from="ReqTimer" to="." method="_on_ReqTimer_timeout"]
 
 
