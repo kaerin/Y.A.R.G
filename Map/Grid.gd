@@ -250,7 +250,7 @@ slave func rcv_grid_cts(pos,value):
 	emit_signal('grid_cts_rcvd')
 
 func update_grid_pos(pos,value):
-	rpc('update_grid',(map_to_world(pos) + half_tile_size), value, true)
+	rpc('update_grid',world_to_map(pos), value, true)
 
 master func update_grid(pos, value, send = false):
 	grid[pos.x][pos.y] = value
