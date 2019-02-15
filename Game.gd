@@ -35,8 +35,8 @@ func chg_lvl(spos):
 		print("map node exists: ", G.Dlevel)
 		$Player.grid_map = get_node("Level-"+str(G.Dlevel))
 		$Player.grid_map.start(spos)
-	print (get_node("Player/Effects").get_children())
-	for i in get_node("Player/Effects").get_children():
-		if i.is_in_group('Blood'):
-			i.hide()
+	#print (get_node("Player/Effects").get_children())
+	#for i in get_node("Player/Effects").get_children():
+	#	if i.is_in_group('Blood'):
+	#		i.hide()
 	
