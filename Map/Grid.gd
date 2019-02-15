@@ -253,6 +253,9 @@ func update_grid_pos(pos,value):
 	rpc('update_grid',world_to_map(pos), value, true)
 
 master func update_grid(pos, value, send = false):
+	if pos.x > grid_size.x or pos.y > grid_size.y :
+		print("**** Invalid grid position.... something is wrong ***", pos)
+		return
 	grid[pos.x][pos.y] = value
 	if send:
 		rset('grid',grid)
