@@ -43,3 +43,9 @@ func _ready():
 				print("Wearable drop")
 			_:
 				print("Dropped something else")
+
+func _process(delta):
+	if Input.is_action_just_pressed("alt"):
+		$Label.show()
+	if Input.is_action_just_released("alt"):
+		$Label.hide()
