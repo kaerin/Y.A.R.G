@@ -163,6 +163,9 @@ func start(startpos = "S"):
 		for i in $Items.get_children():
 			if i.is_in_group("Item"):
 				i.show()
+		for i in $Effects.get_children():
+			#if i.is_in_group("Effects"):
+			i.show()
 	
 	if startpos == "E":
 		found_hidden = true
@@ -385,6 +388,9 @@ func chg_level(pos, next = 0):				#<---- TODO. grid map not udpating with adding
 		for i in $Items.get_children():
 			if i.is_in_group("Item"):
 				i.hide()
+		for i in $Effects.get_children():
+			#if i.is_in_group("Effects"):
+			i.hide()
 		N.rpc('sync_dlevel', G.Dlevel)
 #		for i in get_children(): #Dont kill enemies
 #			if i.is_in_group("Enemy") or i.is_in_group("Item"):

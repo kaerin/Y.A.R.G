@@ -12,15 +12,15 @@ onready var Bleeding = preload("res://Animations/Effects/Healing/Bleeding.tscn")
 
 func blood_splatter(direction, dmg): 
 	set_blood_splatter(direction, dmg, true)
-	rpc('set_blood_splatter', direction, dmg)
+	rpc('set_blood_splatter', direction, dmg, false, G.Dlevel)
 
-remote func set_blood_splatter(direction, dmg, is_master=false):
+remote func set_blood_splatter(direction, dmg, is_master=false, dlevel=G.Dlevel):
 	var node = get_obj_root(is_master)
 	var j = Blood.instance()
 	j.direction = direction
 	j.particle_count = dmg	
 	j.position = node.position
-	add_effect(node, j, true)
+	add_effect(node, j, true, dlevel)
 	
 #############################
 ## Display damage counter
@@ -75,9 +75,19 @@ func get_obj_root(is_master=true):
 		node = get_node('../..').get_node(str(id))	
 	return node
 
-func add_effect(node, j, effect_after_death=false):
+func add_effect(node, j, effect_after_death=false, dlevel=G.Dlevel):
 	if effect_after_death == true:
-		node.get_node("../..").add_child(j)  # <--- adds to grid map. doesnt delete by death. (eg. blood splatter)
+		if dlevel == G.Dlevel:
+			j.show()
+		else:
+			j.hide()
+		if node.is_in_group('Player'):
+			if node.has_node(str('../Level-',dlevel,'/Effects')):  
+				node.get_node(str('../Level-',dlevel,'/Effects')).add_child(j)# <--- adds to grid map. doesnt delete by death. (eg. blood splatter)
+		elif node.is_in_group('Enemy'):
+			if node.has_node(str('../../Effects')):  
+				node.get_node(str('../../Effects')).add_child(j)# <--- adds to grid map. doesnt delete by death. (eg. blood splatter)
+			
 	else:
 		node.get_node("Effects").add_child(j)	# <--- adds to object, deleted by death (eg. spell effect)
 
