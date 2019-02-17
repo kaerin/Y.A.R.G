@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Data/map.tres" type="TileSet" id=1]
 [ext_resource path="res://Map/Grid.gd" type="Script" id=2]
 [ext_resource path="res://Map/GridFloor.gd" type="Script" id=3]
+[ext_resource path="res://Map/Map_Effects.gd" type="Script" id=4]
 
 [node name="Grid" type="TileMap" index="0"]
 
@@ -63,6 +64,8 @@ autostart = false
 [node name="Items" type="Node" parent="." index="2"]
 
 [node name="Effects" type="Node" parent="." index="3"]
+
+script = ExtResource( 4 )
 
 [connection signal="timeout" from="Enemies/EnemyTimer" to="." method="_on_EnemyTimer_timeout"]
 
